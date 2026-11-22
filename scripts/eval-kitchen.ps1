@@ -105,8 +105,8 @@ Assert-Eval "Suite 2" "nextjs-supabase has 0-token Mechanical Architecture Linte
 Assert-Eval "Suite 2" "python-fastapi has 0-token Mechanical Architecture Linter (test_architecture.py.template)" (
     Test-Path (Join-Path $RepoRoot "stacks\python-fastapi\skills\cook\examples\test_architecture.py.template")
 )
-Assert-Eval "Suite 2" "wp-modular-oop has 0-token Mechanical Architecture Linter (ArchitectureTest.php.template)" (
-    Test-Path (Join-Path $RepoRoot "stacks\wp-modular-oop\skills\cook\examples\ArchitectureTest.php.template")
+Assert-Eval "Suite 2" "wp-hexagonal has 0-token Mechanical Architecture Linter (HexagonalArchitectureTest.php.template)" (
+    Test-Path (Join-Path $RepoRoot "stacks\wp-hexagonal\skills\cook\examples\HexagonalArchitectureTest.php.template")
 )
 
 # ==============================================================================

@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
   Syncs the shikamaru-kitchen Michelin Brigade Engine (core + stack pack) into a target project.
-  Supports `nextjs-supabase`, `python-fastapi`, and `wp-modular-oop`.
+  Supports `nextjs-supabase`, `python-fastapi`, and `wp-hexagonal`.
 
 .EXAMPLE
   .\scripts\sync-kitchen.ps1 -ProjectPath "..\my-crafted-app" -Stack "nextjs-supabase"

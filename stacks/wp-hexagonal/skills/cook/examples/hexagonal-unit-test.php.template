@@ -1,0 +1,49 @@
+<?php
+/**
+ * Canonical Zero-WP Hexagonal Unit Test Template (PHPUnit)
+ * Location: tests/Unit/Modules/[Feature]/GenerateReportHandlerTest.php
+ * Runs in milliseconds via `vendor/bin/phpunit --testsuite Unit` WITHOUT booting WordPress.
+ */
+
+declare(strict_types=1);
+
+namespace PluginNamespace\Tests\Unit\Modules\Reporting;
+
+use PHPUnit\Framework\TestCase;
+use PluginNamespace\Modules\Reporting\Application\Handlers\GenerateReportHandler;
+use PluginNamespace\Modules\Reporting\Domain\Contracts\EmployeeRepositoryInterface;
+use PluginNamespace\Modules\Reporting\Domain\Entities\Employee;
+use RuntimeException;
+
+final class GenerateReportHandlerTest extends TestCase {
+
+    public function test_generates_accreditation_report_for_valid_employee(): void {
+        $inMemoryRepo = new class implements EmployeeRepositoryInterface {
+            public function findById( int $employeeId ): ?Employee {
+                return new Employee(
+                    id: $employeeId,
+                    email: 'engineer@example.com',
+                    displayName: 'Jane Doe'
+                );
+            }
+        };
+
+        $handler = new GenerateReportHandler( $inMemoryRepo );
+        $report  = $handler->execute( 42 );
+
+        $this->assertSame( 42, $report->employeeId() );
+    }
+
+    public function test_throws_exception_when_employee_does_not_exist(): void {
+        $emptyRepo = new class implements EmployeeRepositoryInterface {
+            public function findById( int $employeeId ): ?Employee {
+                return null;
+            }
+        };
+
+        $handler = new GenerateReportHandler( $emptyRepo );
+
+        $this->expectException( RuntimeException::class );
+        $handler->execute( 999 );
+    }
+}

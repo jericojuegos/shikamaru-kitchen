@@ -1,8 +1,8 @@
 # 👨‍🍳 [PROJECT NAME] — Michelin Kitchen Brain (`AGENTS.md`)
 
 **Project:** [Project Name] — [One line description]
-**Stack Pack:** `wp-modular-oop` (PHP 8.2+ · WordPress Modular OOP · REST API · PHPUnit)
-**Architecture Pattern:** Isolated Feature-Module OOP (`includes/modules/[feature]/`)
+**Stack Pack:** `wp-hexagonal` (PHP 8.2+ · Composer PSR-4 · Ports & Adapters · React/TypeScript Admin · PHPUnit)
+**Architecture Pattern:** Feature-First Hexagonal Modular Monolith (`src/Modules/<Feature>/{Domain,Application,Infrastructure,Presentation}/`)
 **Kitchen Engine:** `shikamaru-kitchen` (`v1.0` — YYYY-MM-DD)
 
 ---
@@ -14,7 +14,7 @@
 | Stage | Meaning | Next Culinary Command |
 | :--- | :--- | :--- |
 | `menu-locked` | Menu & Taste System ready, *mise en place* not run yet | Run **`/prep`** (`docs/dishes/00-prep/courses.md`) |
-| `prepped` | Base plugin/theme & Mechanical Architecture Linter active | Run **`/taste <01-dish-slug>`** to sample the first Tasting Spoon |
+| `prepped` | Base hexagonal plugin & 0-token Mechanical Architecture Linter active | Run **`/taste <01-dish-slug>`** to sample the first Tasting Spoon |
 | `service` | Active dish crafting in progress | **`/taste`** → **`/cook`** (3 Courses) → **`/plate`** (4-Star Audit) |
 
 ---
@@ -22,4 +22,5 @@
 ## ⚡ Deterministic Food-Safety Commands
 
 Run after every course before marking `[x]`:
-- **Syntax Check & Mechanical Architecture Linter:** `php -l <file.php>` and `vendor/bin/phpunit`
+- **Syntax, Pure Zero-WP Unit Tests & Hexagonal Architecture Linter:** `php -l <file.php>` and `vendor/bin/phpunit`
+- **Frontend Admin Build (When `resources/js/` or `resources/scss/` changed):** `npm run build`

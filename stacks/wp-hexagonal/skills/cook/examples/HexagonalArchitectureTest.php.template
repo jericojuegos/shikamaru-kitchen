@@ -1,0 +1,118 @@
+<?php
+/**
+ * ==============================================================================
+ * Mechanical Hexagonal Architecture Linter ("The Codebase Does the Reviewing")
+ * Location: tests/Architecture/HexagonalArchitectureTest.php
+ *
+ * Runs in < 50ms via `vendor/bin/phpunit` WITHOUT booting WordPress and enforces:
+ *   1. Domain Purity: `src/Modules/<Feature>/Domain/` has ZERO `$wpdb`, `WP_REST_Request`, or WP globals
+ *   2. Application Purity: `src/Modules/<Feature>/Application/` has ZERO direct `$wpdb` or `$_POST`/`$_GET`
+ *   3. Module Isolation: `src/Modules/<FeatureA>/` never imports sibling `src/Modules/<FeatureB>/`
+ *   4. Anti-Slop Modularity Cap: Classes stay under 350 lines
+ *   5. No Linter Escape Hatches or Unfinished Slop Placeholders (`phpcs:ignore`, `@phpstan-ignore`, `TODO:`, `FIXME:`)
+ * ==============================================================================
+ */
+
+declare(strict_types=1);
+
+namespace PluginNamespace\Tests\Architecture;
+
+use PHPUnit\Framework\TestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
+
+final class HexagonalArchitectureTest extends TestCase {
+
+    private const MAX_FILE_LINES = 350;
+
+    /**
+     * @return list<string>
+     */
+    private function getModulePhpFiles(): array {
+        $modulesDir = dirname( __DIR__, 2 ) . '/src/Modules';
+        if ( ! is_dir( $modulesDir ) ) {
+            return [];
+        }
+
+        $files    = [];
+        $iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $modulesDir ) );
+        /** @var SplFileInfo $file */
+        foreach ( $iterator as $file ) {
+            if ( $file->isFile() && $file->getExtension() === 'php' ) {
+                $files[] = str_replace( '\\', '/', $file->getPathname() );
+            }
+        }
+        return $files;
+    }
+
+    public function test_domain_and_application_layers_remain_pure_of_wordpress_infrastructure(): void {
+        $violations = [];
+        $forbidden  = [ '$wpdb', 'WP_REST_Request', 'WP_User', '$_POST', '$_GET', 'register_rest_route' ];
+
+        foreach ( $this->getModulePhpFiles() as $file ) {
+            if ( ! str_contains( $file, '/Domain/' ) && ! str_contains( $file, '/Application/' ) ) {
+                continue;
+            }
+            $content = (string) file_get_contents( $file );
+            foreach ( $forbidden as $token ) {
+                if ( str_contains( $content, $token ) ) {
+                    $violations[] = basename( $file ) . " references infrastructure token '{$token}' inside Domain/Application";
+                }
+            }
+        }
+
+        $this->assertSame( [], $violations, "Hexagonal purity violations:\n" . implode( "\n", $violations ) );
+    }
+
+    public function test_sibling_modules_never_import_each_other_directly(): void {
+        $violations = [];
+
+        foreach ( $this->getModulePhpFiles() as $file ) {
+            if ( ! preg_match( '#/src/Modules/([A-Za-z0-9_]+)/#', $file, $m ) ) {
+                continue;
+            }
+            $ownModule = $m[1];
+            $content   = (string) file_get_contents( $file );
+
+            if ( preg_match_all( '#use\s+[A-Za-z0-9_\\\\]+\\\\Modules\\\\([A-Za-z0-9_]+)\\\\#', $content, $imports ) ) {
+                foreach ( $imports[1] as $importedModule ) {
+                    if ( $importedModule !== $ownModule ) {
+                        $violations[] = basename( $file ) . " ({$ownModule}) imports sibling module '{$importedModule}' (use src/Shared/Contracts/)";
+                    }
+                }
+            }
+        }
+
+        $this->assertSame( [], $violations, "Cross-module coupling violations:\n" . implode( "\n", $violations ) );
+    }
+
+    public function test_module_classes_respect_anti_slop_line_count_cap(): void {
+        $violations = [];
+
+        foreach ( $this->getModulePhpFiles() as $file ) {
+            $lines = substr_count( (string) file_get_contents( $file ), "\n" ) + 1;
+            if ( $lines > self::MAX_FILE_LINES ) {
+                $violations[] = basename( $file ) . " is {$lines} lines (cap: " . self::MAX_FILE_LINES . ')';
+            }
+        }
+
+        $this->assertSame( [], $violations, "Modularity cap violations:\n" . implode( "\n", $violations ) );
+    }
+
+    public function test_module_classes_contain_zero_escape_hatches_or_unfinished_todo_placeholders(): void {
+        $violations = [];
+
+        foreach ( $this->getModulePhpFiles() as $file ) {
+            $content = (string) file_get_contents( $file );
+            if ( preg_match( '/phpcs:(?:ignore|disable)|@phpstan-ignore/', $content ) ) {
+                $violations[] = basename( $file ) . ' contains linter escape hatch (phpcs:ignore / @phpstan-ignore)';
+            }
+            if ( preg_match( '/\/\/\s*(?:TODO|FIXME|HACK)\b|\/\*\s*(?:TODO|FIXME|HACK)\b/i', $content ) ) {
+                $violations[] = basename( $file ) . ' contains unfinished TODO/FIXME/HACK placeholder comment';
+            }
+        }
+
+        $this->assertSame( [], $violations, "Escape-hatch or placeholder violations:\n" . implode( "\n", $violations ) );
+    }
+}

@@ -17,7 +17,7 @@
 | [`core/templates/`](core/templates/) | Root initialization templates (`CLAUDE.md.template`, `INDEX.md.template`, `issues.md.template`) |
 | [`stacks/nextjs-supabase/`](stacks/nextjs-supabase/) | Next.js 15+ · React 19 · TypeScript · Supabase · Vercel AI SDK stack pack (`v1.0`) |
 | [`stacks/python-fastapi/`](stacks/python-fastapi/) | Python 3.12+ · `uv` · FastAPI · Pydantic v2 · Pytest stack pack (`v1.0`) |
-| [`stacks/wp-modular-oop/`](stacks/wp-modular-oop/) | WordPress Modular OOP Plugin & Block Theme stack pack (`v1.0`) |
+| [`stacks/wp-hexagonal/`](stacks/wp-hexagonal/) | WordPress Hexagonal Modular Monolith (PSR-4, Ports & Adapters, Pure Domain, React/TS Admin) stack pack (`v1.0`) |
 | [`scripts/`](scripts/) | Sync & Kitchen Eval scripts (`sync-kitchen.ps1`, `sync-kitchen.sh`, `eval-kitchen.ps1`, `eval-kitchen.sh`) |
 
 ---

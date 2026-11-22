@@ -32,7 +32,7 @@ flowchart LR
 | Command | Culinary Stage | What Happens | Output Artifacts |
 | :--- | :--- | :--- | :--- |
 | **`/menu`** | **1. Menu Design & Taste Profile** | Interactive session with the Executive Chef to define **Signature Dishes** (core differentiating UX) vs. **House Staples** (plumbing), aesthetic direction, and the **Anti-Slop Manifesto**. | `AGENTS.md`, `docs/foundation/{menu-vision,architecture,taste-system}.md`, `docs/planning/service-board.md` |
-| **`/prep`** | **2. Automated *Mise en Place*** | AI Prep Cooks scaffold the repo, configure design tokens, set up CI, and install the **0-token Mechanical Architecture Linter** (`architecture.test.ts` / `test_architecture.py` / `ArchitectureTest.php`). | `docs/dishes/00-prep/`, clean compiling base app + mechanical boundary tests |
+| **`/prep`** | **2. Automated *Mise en Place*** | AI Prep Cooks scaffold the repo, configure design tokens, set up CI, and install the **0-token Mechanical Architecture Linter** (`architecture.test.ts` / `test_architecture.py` / `HexagonalArchitectureTest.php`). | `docs/dishes/00-prep/`, clean compiling base app + mechanical boundary tests |
 | **`/taste`** | **3. The Tasting Spoon** | Generates an interactive HTML/UI Tasting Prototype (`design-reference/preview.html` + inline `<agent-embed>`) showing Happy, Empty, Loading, and Error states *before* writing production code. Locks EARS recipe criteria once approved. | `docs/dishes/<NN-dish-slug>/{recipe,design,courses,plating}.md` + `design-reference/preview.html` |
 | **`/cook`** | **4. Course-by-Course Station Craft** | Implements the dish across 3 structured Courses (Domain Engine → Interactive UI → Edge-Case Seasoning) with atomic git checkpoints and live tasting pauses. | Verified production code + unit/invariant tests |
 | **`/plate`** | **5. Michelin Plating & Serve** | Runs Food Safety (types, tests, mechanical linter) + **4-Star Culinary Craft Audit** + real browser proof (`evidence/*.png`), waits for the Head Chef's final nod, and serves (commits/PRs). | `docs/dishes/<NN-dish-slug>/evidence/*.png`, updated `service-board.md`, clean Git PR |
@@ -52,7 +52,7 @@ flowchart LR
 | [`core/skills/plate/`](core/skills/plate/SKILL.md) | **`/plate`** — Food Safety verification + 4-Star Culinary Craft Audit + Browser Evidence & Serve |
 | [`stacks/nextjs-supabase/`](stacks/nextjs-supabase/) | Next.js 15+ · React 19 · TypeScript · Supabase · Vercel AI SDK stack pack |
 | [`stacks/python-fastapi/`](stacks/python-fastapi/) | Python 3.12+ · `uv` · FastAPI · Pydantic v2 · Pytest stack pack |
-| [`stacks/wp-modular-oop/`](stacks/wp-modular-oop/) | WordPress Modular OOP Plugin & Block Theme stack pack |
+| [`stacks/wp-hexagonal/`](stacks/wp-hexagonal/) | WordPress Hexagonal Modular Monolith (PSR-4, Ports & Adapters, Pure Domain, React/TS Admin) stack pack |
 | [`scripts/sync-kitchen.ps1`](scripts/sync-kitchen.ps1) | Syncs the `shikamaru-kitchen` `.agents/` engine into any target project (also available in Bash: `scripts/sync-kitchen.sh`) |
 | [`scripts/eval-kitchen.ps1`](scripts/eval-kitchen.ps1) | Automated 5-Suite Kitchen Quality & Integrity Eval (`scripts/eval-kitchen.sh`) |
 

@@ -45,7 +45,7 @@ echo ""
 echo "[Suite 2] Stack Packs & 0-Token Mechanical Architecture Linters"
 assert_eval "nextjs-supabase has architecture.test.ts.template" "[ -f '$REPO_ROOT/stacks/nextjs-supabase/skills/cook/examples/architecture.test.ts.template' ]"
 assert_eval "python-fastapi has test_architecture.py.template" "[ -f '$REPO_ROOT/stacks/python-fastapi/skills/cook/examples/test_architecture.py.template' ]"
-assert_eval "wp-modular-oop has ArchitectureTest.php.template" "[ -f '$REPO_ROOT/stacks/wp-modular-oop/skills/cook/examples/ArchitectureTest.php.template' ]"
+assert_eval "wp-hexagonal has HexagonalArchitectureTest.php.template" "[ -f '$REPO_ROOT/stacks/wp-hexagonal/skills/cook/examples/HexagonalArchitectureTest.php.template' ]"
 
 echo ""
 echo "[Suite 3] Tasting Spoon 4-State Prototype & Recipe Templates"

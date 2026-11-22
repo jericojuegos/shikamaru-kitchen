@@ -16,10 +16,10 @@ description: >-
 
 ## Step 1 — Read Kitchen Inventory & Ask Round 1 (The Concept & Diners)
 
-1. Read `INVENTORY.md` (if present) to see active stack packs (`nextjs-supabase`, `python-fastapi`, `wp-modular-oop`).
+1. Read `INVENTORY.md` (if present) to see active stack packs (`nextjs-supabase`, `python-fastapi`, `wp-hexagonal`).
 2. Summarize the user's product idea in 2 sentences and ask **Round 1 (Concept & Stack)**:
    - **Q1. Target Diners & Core Problem:** Who is the primary user and what is the #1 painful job this software makes effortless?
-   - **Q2. Kitchen Stack:** Present the available stacks from `INVENTORY.md` as lettered options (`A) nextjs-supabase`, `B) python-fastapi`, `C) wp-modular-oop`, `Z) Custom`).
+   - **Q2. Kitchen Stack:** Present the available stacks from `INVENTORY.md` as lettered options (`A) nextjs-supabase`, `B) python-fastapi`, `C) wp-hexagonal`, `Z) Custom`).
 
 Wait for the Chef's reply, then print a `🔒 Locked: Round 1` summary.
 

@@ -10,7 +10,7 @@
 |------|--------|-------|----------------------|--------|
 | `nextjs-supabase` | `stacks/nextjs-supabase/` | Next.js 15+ · React 19 · TypeScript · Supabase (`@supabase/ssr`) · Vercel AI SDK v4+ | Pragmatic Feature-Driven Architecture (`src/features/[domain]/`) | ✅ Active — v1.0 |
 | `python-fastapi` | `stacks/python-fastapi/` | Python 3.12+ · `uv` · FastAPI · Pydantic v2 · SQLAlchemy / Supabase · Pytest | Modular Domain Architecture (`app/modules/[domain]/`) | ✅ Active — v1.0 |
-| `wp-modular-oop` | `stacks/wp-modular-oop/` | PHP 8.2+ · WordPress · REST API / AJAX · `$wpdb` · FSE Block Themes | Isolated Feature-Module OOP (`includes/modules/[feature]/`) | ✅ Active — v1.0 |
+| `wp-hexagonal` | `stacks/wp-hexagonal/` | PHP 8.2+ · Composer PSR-4 · WordPress · React/TypeScript (`@wordpress/scripts`) · PHPUnit / PHPStan | Feature-First Hexagonal Modular Monolith (`src/Modules/<Feature>/{Domain,Application,Infrastructure,Presentation}/`) | ✅ Active — v1.0 |
 
 ---
 
@@ -47,7 +47,7 @@
 | `nextjs-supabase` | `feature.test.ts.template` | Vitest unit & invariant test skeleton (`src/features/[domain]/__tests__/`) |
 | `python-fastapi` | `test_architecture.py.template` | **0-Token Mechanical Architecture Linter** (blocks cross-module imports, SQL in `router.py`, `> 300-line` files, `# type: ignore`/`# noqa`, and `TODO` slop) |
 | `python-fastapi` | `test_ai_eval.py.template` | Pytest AI prompt & Pydantic v2 structured output eval suite (`tests/evals/`) |
-| `wp-modular-oop` | `ArchitectureTest.php.template` | **0-Token Mechanical Architecture Linter** (enforces `ABSPATH` guards, zero `$wpdb` in `templates/`, `<= 350-line` cap, and zero `phpcs:ignore` or `TODO` slop) |
-| `wp-modular-oop` | `plugin-main.php.template` | WordPress plugin header, constants, activation hooks, bootstrap |
-| `wp-modular-oop` | `loader.php.template` | Centralized hook loader class |
-| `wp-modular-oop` | `unit-test.php.template` | PHPUnit unit & invariant test skeleton (`tests/Unit/[Domain]/`) |
+| `wp-hexagonal` | `HexagonalArchitectureTest.php.template` | **0-Token Mechanical Hexagonal Architecture Linter** (enforces pure `Domain`/`Application` with zero `$wpdb`/WP globals, sibling module isolation, `<= 350-line` cap, and zero `phpcs:ignore` or `TODO` slop) |
+| `wp-hexagonal` | `hexagonal-module.php.template` | Pure PHP `Domain` Entity/Port + `Application` Command/Handler + `$wpdb` `Infrastructure` Repository |
+| `wp-hexagonal` | `hexagonal-rest-provider.php.template` | `Presentation/Rest/` controller with capability/nonce gate + `<Feature>ServiceProvider.php` |
+| `wp-hexagonal` | `hexagonal-unit-test.php.template` | Zero-WP pure PHPUnit `Domain` & `Application` unit test skeleton (`tests/Unit/Modules/<Feature>/`) |

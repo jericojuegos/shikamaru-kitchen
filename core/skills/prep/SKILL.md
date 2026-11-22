@@ -23,8 +23,8 @@ description: >-
 
 ## Step 2 — Scaffold Base Application & Golden Plumbing
 
-1. Scaffold the base application according to the project stack (`nextjs-supabase`, `python-fastapi`, `wp-modular-oop`).
-2. Copy canonical starter templates from `.agents/skills/cook/examples/` (e.g., `supabase-server.ts.template`, `rls-policies.sql.template`, `plugin-main.php.template`, `loader.php.template`).
+1. Scaffold the base application according to the project stack (`nextjs-supabase`, `python-fastapi`, `wp-hexagonal`).
+2. Copy canonical starter templates from `.agents/skills/cook/examples/` (e.g., `supabase-server.ts.template`, `rls-policies.sql.template`, `hexagonal-module.php.template`, `hexagonal-rest-provider.php.template`).
 3. Apply the exact color, typography, and spacing tokens from `docs/foundation/taste-system.md` into the global theme/CSS config.
 
 ---
@@ -37,8 +37,8 @@ So AI agents never drift or ignore `.agents/rules/stack-rules.md`, copy the stac
   Copy `architecture.test.ts.template` → `src/shared/__tests__/architecture.test.ts`
 - **Python / FastAPI (`python-fastapi`):**
   Copy `test_architecture.py.template` → `tests/test_architecture.py`
-- **WordPress Modular OOP (`wp-modular-oop`):**
-  Copy `ArchitectureTest.php.template` → `tests/Unit/ArchitectureTest.php`
+- **WordPress Hexagonal (`wp-hexagonal`):**
+  Copy `HexagonalArchitectureTest.php.template` → `tests/Architecture/HexagonalArchitectureTest.php`
 
 This test runs automatically in `< 50ms` on every test run and mechanically blocks:
 1. Cross-feature / cross-module internal imports
