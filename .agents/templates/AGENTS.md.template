@@ -1,40 +1,40 @@
-# 👨‍🍳 [PROJECT NAME] — Michelin Kitchen Brain (`AGENTS.md`)
+# 👨‍🍳 [PROJECT NAME] — Software Craft Brain (`AGENTS.md`)
 
 **Project:** [Project Name] — [One line description]
-**Tech Stack:** [Auto-Detected or Chosen by `/menu` — e.g., Next.js 15+ / Python FastAPI / WordPress Hexagonal / Go / Rust]
-**Architecture Pattern:** [Modular Station / Feature Isolation]
-**Kitchen Engine:** `shikamaru-kitchen` (`v1.0` — YYYY-MM-DD)
+**Tech Stack:** [Auto-Detected or Chosen by `/design` — e.g., Next.js 15+ / Python FastAPI / WordPress Hexagonal / Go / Rust]
+**Architecture Pattern:** [Modular Feature / Domain Isolation]
+**Craft Engine:** `shikamaru-kitchen` (`v1.0` — YYYY-MM-DD)
 
 ---
 
-## 🚦 Kitchen Service State
+## 🚦 Project State
 
 **Stage:** `initialized`
 
-| Stage | Meaning | Next Culinary Command |
+| Stage | Meaning | Next Command |
 | :--- | :--- | :--- |
-| `initialized` | Kitchen engine synced, Menu & Taste System not designed yet | Run **`/menu`** to design Signature Dishes vs. House Staples, lock `taste-system.md`, and auto-tailor `.agents/rules/stack-rules.md` (`<= 80` lines) |
-| `menu-locked` | Menu & Taste System ready, *mise en place* not run yet | Run **`/prep`** (`docs/dishes/00-prep/recipe.md`) |
-| `service` | 0-Token Mechanical Linter active & dish crafting in progress | **`/taste`** (4-State Tasting Spoon) → **`/cook`** (3 Courses) → **`/plate`** (4-Star Audit) |
+| `initialized` | Engine synced, Product Vision & Design System not locked yet | Run **`/design`** to triage Signature Craft vs. Plumbing, lock `design-system.md`, and auto-tailor `.agents/rules/stack-rules.md` (`<= 80` lines) |
+| `designed` | Vision & Design System ready, base scaffold not run yet | Run **`/scaffold`** (`docs/specs/00-scaffold/spec.md`) |
+| `active` | 0-Token Mechanical Linter active & feature crafting in progress | **`/prototype`** (4-State UI Prototype) → **`/craft`** (3 Passes) → **`/polish`** (4-Point Craft Audit) |
 
 ---
 
-## ⚡ Deterministic Food-Safety Commands
+## ⚡ Deterministic Verification Commands
 
-Run after every course before marking `[x]`:
-- **Typecheck / Lint, Unit Tests & 0-Token Mechanical Architecture Linter:** *(Populated by `/menu` & `/prep` for your exact stack — e.g., `pnpm tsc --noEmit && pnpm test --run`, `uv run ruff check . && uv run pytest`, `vendor/bin/phpunit`, `go test ./...`)*
+Run after every pass before marking `[x]`:
+- **Typecheck / Lint, Unit Tests & 0-Token Mechanical Architecture Linter:** *(Populated by `/design` & `/scaffold` for your exact stack — e.g., `pnpm tsc --noEmit && pnpm test --run`, `uv run ruff check . && uv run pytest`, `vendor/bin/phpunit`, `go test ./...`)*
 
 ---
 
-## 🗺️ Kitchen Context Map (`docs/INDEX.md`) & Culinary Skills (`.agents/skills/`)
+## 🗺️ Context Map (`docs/INDEX.md`) & Software Craft Skills (`.agents/skills/`)
 
 | Question / Action | File or Skill |
 | :--- | :--- |
-| What is on the Service Board (`👨‍🍳 SIGNATURE` vs. `🔪 STAPLE`)? | [`docs/planning/service-board.md`](docs/planning/service-board.md) |
-| Design the product menu, Taste System & auto-tailor `stack-rules.md` | **`/menu`** ([`.agents/skills/menu/SKILL.md`](.agents/skills/menu/SKILL.md)) |
-| Run Phase 0 *Mise en Place* & dynamically generate Mechanical Architecture Linter | **`/prep`** ([`.agents/skills/prep/SKILL.md`](.agents/skills/prep/SKILL.md)) |
-| Generate interactive 4-state Tasting Spoon (`preview.html`) & lock unified `recipe.md` | **`/taste`** ([`.agents/skills/taste/SKILL.md`](.agents/skills/taste/SKILL.md)) |
-| Cook a dish across 3 Courses (Domain → Interactive UI → Seasoning) | **`/cook`** ([`.agents/skills/cook/SKILL.md`](.agents/skills/cook/SKILL.md)) |
-| Run Food Safety + 4-Star Culinary Craft Audit + Browser Proof & Serve | **`/plate`** ([`.agents/skills/plate/SKILL.md`](.agents/skills/plate/SKILL.md)) |
-| What are the color tokens, motion rules & Anti-Slop Manifesto? | [`docs/foundation/taste-system.md`](docs/foundation/taste-system.md) |
-| What are the brigade & station rules? | [`.agents/rules/kitchen-protocol.md`](.agents/rules/kitchen-protocol.md) & [`.agents/rules/stack-rules.md`](.agents/rules/stack-rules.md) |
+| What is on the Feature Roadmap (`✨ SIGNATURE CRAFT` vs. `⚙️ PLUMBING`)? | [`docs/planning/roadmap.md`](docs/planning/roadmap.md) |
+| Design product vision, Design System & auto-tailor `stack-rules.md` | **`/design`** ([`.agents/skills/design/SKILL.md`](.agents/skills/design/SKILL.md)) |
+| Run Phase 0 setup & dynamically generate 0-Token Mechanical Architecture Linter | **`/scaffold`** ([`.agents/skills/scaffold/SKILL.md`](.agents/skills/scaffold/SKILL.md)) |
+| Generate interactive 4-state UI Prototype (`preview.html`) & unified `spec.md` | **`/prototype`** ([`.agents/skills/prototype/SKILL.md`](.agents/skills/prototype/SKILL.md)) |
+| Build a feature across 3 Passes (Domain → Interactive UI → Micro-Interactions) | **`/craft`** ([`.agents/skills/craft/SKILL.md`](.agents/skills/craft/SKILL.md)) |
+| Run Mechanical Verification + 4-Point UX & Code Craft Audit + Browser Proof & Ship | **`/polish`** ([`.agents/skills/polish/SKILL.md`](.agents/skills/polish/SKILL.md)) |
+| What are the color tokens, motion rules & Anti-Slop Craft Manifesto? | [`docs/foundation/design-system.md`](docs/foundation/design-system.md) |
+| What are the craft & layer boundary rules? | [`.agents/rules/kitchen-protocol.md`](.agents/rules/kitchen-protocol.md) & [`.agents/rules/stack-rules.md`](.agents/rules/stack-rules.md) |

@@ -39,13 +39,13 @@ New-Item -ItemType Directory -Force -Path `
     (Join-Path $AgentsDir "skills"), `
     (Join-Path $DocsDir "foundation\design-reference"), `
     (Join-Path $DocsDir "planning"), `
-    (Join-Path $DocsDir "dishes") | Out-Null
+    (Join-Path $DocsDir "specs") | Out-Null
 
-# 1. Copy Core Rules & 5 Culinary Skills -> .agents/{rules,skills}
+# 1. Copy Core Rules & 5 Craft Skills -> .agents/{rules,skills}
 Copy-Item -Path (Join-Path $CoreDir "rules\*") -Destination (Join-Path $AgentsDir "rules\") -Recurse -Force
 Copy-Item -Path (Join-Path $CoreDir "skills\*") -Destination (Join-Path $AgentsDir "skills\") -Recurse -Force
 
-# 2. Initialize starter .agents/rules/stack-rules.md (if missing — /menu tailors it to <= 80 lines for any stack)
+# 2. Initialize starter .agents/rules/stack-rules.md (if missing — /design tailors it to <= 80 lines for any stack)
 $StackRulesMd = Join-Path $AgentsDir "rules\stack-rules.md"
 if (-not (Test-Path $StackRulesMd)) {
     Copy-Item (Join-Path $CoreDir "templates\stack-rules.md.template") $StackRulesMd -Force
@@ -98,4 +98,4 @@ if ($LocalExclude) {
 }
 
 Write-Host ""
-Write-Host "[DONE] Universal Kitchen Sync Complete! Run /menu -> /prep -> /taste -> /cook -> /plate" -ForegroundColor Cyan
+Write-Host "[DONE] Universal Kitchen Sync Complete! Run /design -> /scaffold -> /prototype -> /craft -> /polish" -ForegroundColor Cyan

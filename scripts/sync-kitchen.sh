@@ -26,7 +26,7 @@ mkdir -p "$TARGET_ROOT/.agents/rules" \
          "$TARGET_ROOT/.agents/skills" \
          "$TARGET_ROOT/docs/foundation/design-reference" \
          "$TARGET_ROOT/docs/planning" \
-         "$TARGET_ROOT/docs/dishes"
+         "$TARGET_ROOT/docs/specs"
 
 cp "$CORE_DIR/rules/"* "$TARGET_ROOT/.agents/rules/"
 cp -r "$CORE_DIR/skills/"* "$TARGET_ROOT/.agents/skills/"
@@ -43,4 +43,4 @@ if [ "$FLAG" = "--local-exclude" ]; then
   printf "\nAGENTS.md\nCLAUDE.md\n.agents/\ndocs/\n" >> "$TARGET_ROOT/.git/info/exclude"
 fi
 
-echo "✅ Universal Kitchen Sync Complete! Run /menu -> /prep -> /taste -> /cook -> /plate"
+echo "✅ Universal Kitchen Sync Complete! Run /design -> /scaffold -> /prototype -> /craft -> /polish"

@@ -1,7 +1,7 @@
 ﻿#!/usr/bin/env bash
 # ==============================================================================
 # shikamaru-kitchen/scripts/eval-kitchen.sh
-# Validates Universal Michelin Kitchen contracts
+# Validates Universal Michelin-Grade Software Craft contracts
 # ==============================================================================
 set -euo pipefail
 
@@ -27,15 +27,15 @@ assert_eval() {
 
 echo ""
 echo "=================================================================="
-echo " SHIKAMARU-KITCHEN UNIVERSAL MICHELIN BRIGADE EVAL SUITE (v1.0)"
+echo " SHIKAMARU-KITCHEN UNIVERSAL SOFTWARE CRAFT EVAL SUITE (v1.0)"
 echo "=================================================================="
 
 assert_eval ".agents/rules/kitchen-protocol.md exists" "[ -f '$REPO_ROOT/.agents/rules/kitchen-protocol.md' ]"
 assert_eval "No hardcoded stacks/ directory exists" "[ ! -d '$REPO_ROOT/stacks' ]"
 assert_eval ".agents/templates/stack-rules.md.template exists" "[ -f '$REPO_ROOT/.agents/templates/stack-rules.md.template' ]"
-assert_eval "taste unified recipe.md.template exists" "[ -f '$REPO_ROOT/.agents/skills/taste/resources/recipe.md.template' ]"
+assert_eval "prototype unified spec.md.template exists" "[ -f '$REPO_ROOT/.agents/skills/prototype/resources/spec.md.template' ]"
 
-for skill in menu prep taste cook plate; do
+for skill in design scaffold prototype craft polish; do
   assert_eval ".agents/skills/$skill/SKILL.md exists" "[ -f '$REPO_ROOT/.agents/skills/$skill/SKILL.md' ]"
 done
 

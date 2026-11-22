@@ -1,100 +1,93 @@
 ---
 trigger: always_on
-description: Universal Michelin Kitchen Protocol — 5-Stage Culinary Brigade (/menu -> /prep -> /taste -> /cook -> /plate), Tasting Spoon First, 3-Course Station Craft, 4-Star Culinary Audit, and Mechanical Food-Safety Guardrails
+description: Universal Michelin-Grade Software Craft Protocol — 5-Stage Lifecycle (/design -> /scaffold -> /prototype -> /craft -> /polish), Interactive Prototype First, 3-Pass Implementation, 4-Point UX & Code Craft Audit, and 0-Token Mechanical Architecture Guardrails
 ---
 
-# 👨‍🍳 Rule: Michelin Kitchen Execution Protocol (`kitchen-protocol.md`)
+# 👨‍🍳 Rule: Michelin-Grade Software Craft Protocol (`kitchen-protocol.md`)
 
-**Purpose:** High-craft, taste-driven software engineering. Automate the repetitive *mise en place* (`/prep`) and enforce 0-token mechanical food-safety checks so the human **Executive Chef** can focus on **interactive prototyping (`/taste`), course-by-course craft (`/cook`), and 4-star plating (`/plate`)**.
+**Purpose:** High-craft, product-obsessed software engineering inspired by Cillian Myles (*"Build a Michelin-star kitchen, not a software factory"*). Automate the repetitive setup (*mise en place* via `/scaffold`) and enforce 0-token mechanical architecture checks so the human engineer can spend 80% of their energy on **interactive UX prototyping (`/prototype`), incremental 3-pass craft (`/craft`), and deep UX/code polish (`/polish`)**.
 
 ---
 
-## 1. The Kitchen Brain (`docs/`) & Brigade Engine (`.agents/`)
+## 1. The Project Brain (`docs/`) & Craft Engine (`.agents/`)
 
-Every project managed by `shikamaru-kitchen` separates **Culinary Foundation**, **Service Board**, **Dish Recipes**, and the **`.agents/` Brigade Engine**:
+Every project separates **System Foundation**, **Planning Roadmap**, **Unified Feature Specs**, and the **`.agents/` Craft Engine**:
 
-1. **Culinary Foundation (`docs/foundation/`):**
-   - `menu-vision.md` — Product thesis, target diners (users), and **Signature Dishes vs. House Staples**.
-   - `architecture.md` — Station boundaries, folder layout, and dependency rules.
-   - `taste-system.md` — Typography, color tokens, motion rules, copy voice, and the **Anti-Slop Manifesto** (explicitly banned generic AI UI/code patterns).
+1. **System Foundation (`docs/foundation/`):**
+   - `prd.md` — Product thesis, user personas, and **Signature Craft Features vs. Standard Plumbing**.
+   - `architecture.md` — Layer boundaries, modular folder layout, and dependency rules.
+   - `design-system.md` — Typography, color tokens, motion rules, copy voice, and the **Anti-Slop Craft Manifesto** (explicitly banned generic AI UI/code patterns).
    - `decisions.md` — Architectural Decision Records (ADRs).
-2. **Service Board (`docs/planning/`):**
-   - `service-board.md` — The master menu roadmap classifying every dish as **`👨‍🍳 SIGNATURE DISH`** (core differentiating UX) or **`🔪 HOUSE STAPLE`** (infrastructure/CRUD plumbing), along with `Wave`, `Depends On`, and `Station (Touches)` paths.
-   - `issues.md` — Kitchen retrospective & self-healing incident log.
-3. **Dish Folders (`docs/dishes/<NN-dish-slug>/`):**
-   - `design-reference/preview.html` — **The Tasting Spoon:** Playable HTML/Tailwind prototype (`<agent-embed>`) showing Happy, Empty, Loading, and Error states *before* production code is cooked.
-   - `recipe.md` — **Single Unified Dish Recipe (`~80` lines):** Combines numbered EARS Criteria (`Req 1.1..N`), Correctness Properties (`Property 1`, `Property 2`), Mermaid data-flow diagram, exact `[NEW]` / `[MODIFY]` files, the **3-Course Cooking Plan** (Course 1: Domain & Unit Tests → Course 2: Core Interactive UX → Course 3: Micro-Interactions & Edge-Case Seasoning), and the **4-Star Culinary Craft Audit** in **1 zero-drift file**.
-   - `evidence/*.png` — Plated browser proof screenshots captured during `/plate`.
-4. **Brigade Engine (`.agents/`):**
-   - `.agents/rules/` — Always-on guardrails (`kitchen-protocol.md` + `stack-rules.md`)
-   - `.agents/skills/` — 5 Culinary Lifecycle Skills:
-     - [`menu/SKILL.md`](../skills/menu/SKILL.md) (`/menu`) — Executive Chef Menu & Taste System Designer
-     - [`prep/SKILL.md`](../skills/prep/SKILL.md) (`/prep`) — Automated *Mise en Place* & Mechanical Linter Setup
-     - [`taste/SKILL.md`](../skills/taste/SKILL.md) (`/taste`) — Interactive Tasting Spoon Prototyper & Recipe Locker
-     - [`cook/SKILL.md`](../skills/cook/SKILL.md) (`/cook`) — 3-Course Guided Implementation Engine
-     - [`plate/SKILL.md`](../skills/plate/SKILL.md) (`/plate`) — Food Safety + 4-Star Culinary Craft Audit & Serve
+2. **Planning Roadmap (`docs/planning/`):**
+   - `roadmap.md` — Master feature registry classifying every feature as **`✨ SIGNATURE CRAFT`** (core differentiating UX) or **`⚙️ PLUMBING`** (infrastructure/CRUD setup), along with `Wave`, `Depends On`, and `Touches (Isolation Zone)` paths.
+   - `issues.md` — Retrospective & self-healing incident log.
+3. **Feature Spec Folders (`docs/specs/<NN-feature-slug>/`):**
+   - `design-reference/preview.html` — **Interactive 4-State UI Prototype (`<agent-embed>`):** Playable HTML/Tailwind prototype showing Happy, Empty, Loading Skeleton, and Error states *before* production code is built.
+   - `spec.md` — **Single Unified Feature Spec (`~80` lines):** Combines numbered EARS Criteria (`Req 1.1..N`), Correctness Properties (`Property 1`, `Property 2`), Mermaid data-flow diagram, exact `[NEW]` / `[MODIFY]` files, the **3-Pass Implementation Plan**, and the **4-Point UX & Code Craft Audit** in **1 zero-drift file**.
+   - `evidence/*.png` — Real rendered browser proof screenshots captured during `/polish`.
+4. **Craft Engine (`.agents/`):**
+   - `.agents/rules/` — Always-on guardrails (`kitchen-protocol.md` + `stack-rules.md`, strictly `<= 80` lines)
+   - `.agents/skills/` — 5 Software Craft Lifecycle Skills:
+     - [`design/SKILL.md`](../skills/design/SKILL.md) (`/design`) — Product Vision, Design System & Anti-Slop Manifesto Designer
+     - [`scaffold/SKILL.md`](../skills/scaffold/SKILL.md) (`/scaffold`) — Automated *Mise en Place* & 0-Token Mechanical Architecture Linter Generator
+     - [`prototype/SKILL.md`](../skills/prototype/SKILL.md) (`/prototype`) — Interactive 4-State UI Prototyper (`preview.html`) & Unified `spec.md` Author
+     - [`craft/SKILL.md`](../skills/craft/SKILL.md) (`/craft`) — 3-Pass Guided Implementation Engine
+     - [`polish/SKILL.md`](../skills/polish/SKILL.md) (`/polish`) — Mechanical Verification + 4-Point UX & Code Craft Audit + Ship
 
 ---
 
-## 2. Signature Dishes (`👨‍🍳 SIGNATURE`) vs. House Staples (`🔪 STAPLE`)
+## 2. Signature Craft (`✨ SIGNATURE CRAFT`) vs. Standard Plumbing (`⚙️ PLUMBING`)
 
-Not every feature deserves the same ceremony. Triage every item on `docs/planning/service-board.md`:
+Not every feature deserves the same ceremony. Triage every feature in `docs/planning/roadmap.md`:
 
-| Dish Category | Examples | `/taste` & `/cook` Behavior | `/plate` Behavior |
+| Feature Tier | Examples | `/prototype` & `/craft` Behavior | `/polish` Behavior |
 | :--- | :--- | :--- | :--- |
-| **`🔪 HOUSE STAPLE`** *(Prep Cook Automation)* | `00-prep` scaffold, DB migrations, auth middleware, standard CRUD endpoints, webhooks, background jobs. | **Fast Prep Execution:** AI Prep Cooks execute all courses back-to-back using golden templates from `.agents/skills/cook/examples/`. | **Auto-Plate on Green Food Safety:** Once types, unit tests, and the Mechanical Architecture Linter pass, commit atomically and mark `[x]` on `service-board.md`. |
-| **`👨‍🍳 SIGNATURE DISH`** *(Executive Chef Craft)* | Core Product Value Loop, differentiating UI/UX, interactive editors/canvases, novel domain algorithms. | **Mandatory Tasting Spoon First:** Must generate `design-reference/preview.html` (`<agent-embed>`) during `/taste` and pause after **Course 2** during `/cook` for a live localhost taste check. | **4-Star Craft Audit + Chef Pass Gate:** Runs the full **4-Star Culinary Craft Audit**, captures `evidence/*.png`, and pauses at **`👨‍🍳 READY FOR CHEF PASS`** for human tasting before marking `[x]`. |
+| **`⚙️ PLUMBING`** *(Automated Mise en Place)* | `00-scaffold`, DB migrations, auth middleware, standard CRUD endpoints, webhooks, background jobs. | **Fast Automated Execution:** Builds all passes back-to-back with deterministic unit tests and mechanical linter verification. | **Auto-Ship on Green Checks:** Once types, unit tests, and the Mechanical Architecture Linter pass, commit atomically and mark `[x]` in `roadmap.md`. |
+| **`✨ SIGNATURE CRAFT`** *(High-Taste Product UX)* | Core Product Value Loop, differentiating UI/UX workflows, interactive editors/builders, novel domain algorithms. | **Mandatory Interactive Prototype First:** Must generate `design-reference/preview.html` (`<agent-embed>`) during `/prototype` so the human can feel and tweak the UX before coding starts. | **4-Point Craft Audit + Human Taste Gate:** Runs the full **4-Point UX & Code Craft Audit**, captures `evidence/*.png`, and pauses at **`✨ READY FOR HUMAN SIGN-OFF`** before marking `[x]`. |
 
 ---
 
-## 3. The 3-Course Cooking Loop (`/cook`)
+## 3. The 3-Pass Implementation Loop (`/craft`)
 
-Never dump a 1,500-line feature in a single unverified turn. Every dish in `docs/dishes/<NN-dish-slug>/courses.md` is cooked across **3 Courses**:
+Never dump a 1,500-line feature in a single unverified turn. Every feature in `docs/specs/<NN-feature-slug>/spec.md` is built across **3 Incremental Passes**:
 
-1. **Course 1 — Domain Engine, Data & Unit Tests (`[BE]`):**
-   - Build pure domain logic, schemas, and server handlers within the station's isolation zone.
+1. **Pass 1 — Domain Engine, Data & Unit Tests (`[BE]`):**
+   - Build pure domain logic, schemas, and server handlers within the feature's `Touches` isolation zone.
    - Write and pass mandatory unit/invariant tests (`Property 1` happy path + `Property 2` invalid/unauthorized rejection) and the **0-Token Mechanical Architecture Linter**.
-   - Create an atomic Git checkpoint commit (`feat(<dish-slug>): course 1 domain and unit tests`).
-2. **Course 2 — Core Interactive Experience (`[FE]`):**
-   - Implement the primary UI components matching `design-reference/preview.html` and `docs/foundation/taste-system.md`.
-   - For **`👨‍🍳 SIGNATURE DISH`** features in interactive sessions: pause briefly for a **Mid-Cook Tasting Check** so the Chef can feel the core interaction before final seasoning.
-3. **Course 3 — Seasoning, Micro-Interactions & Edge-Case Empathy (`[CRAFT]`):**
-   - Layer in instantaneous hover/active/loading feedback, zero-CLS skeletons, keyboard ergonomics (`Enter`, `Escape`, focus rings), and human-empathetic empty/error states.
-   - Run full terminal verification and hand off to **`/plate`**.
+   - Create an atomic Git checkpoint commit (`feat(<feature-slug>): pass 1 domain engine and unit tests`).
+2. **Pass 2 — Core Interactive Experience (`[FE]`):**
+   - Implement modular UI components (`<= 250` lines) matching `design-reference/preview.html` and `docs/foundation/design-system.md`.
+   - Verify build & types and create the Pass 2 checkpoint commit.
+3. **Pass 3 — Micro-Interactions, Keyboard Ergonomics & Edge-Case Empathy (`[CRAFT]`):**
+   - Layer in instantaneous hover/active/loading feedback, zero-CLS skeletons, keyboard ergonomics (`Enter`, `Escape`, focus rings), human-empathetic empty/error states, and Golden-Path Playwright E2E coverage.
+   - Run full terminal verification and hand off to **`/polish`**.
 
 ---
 
-## 4. The Inverse Trust Pyramid & 4-Star Culinary Craft Standard
+## 4. The Inverse Trust Pyramid & 4-Point Craft Standard
 
-Inspired by Lauren Tan's *Inverse Trust Pyramid* and Cillian Myles' *Michelin Kitchen*:
-
-1. **Layer 1 — Mechanical Food Safety (0-Token Deterministic Code Constraints):**
-   - The test runner enforces architecture boundaries (`architecture.test.ts` / `ArchitectureTest.php` / `test_architecture.py`), blocking cross-feature imports, missing `server-only`/`ABSPATH` guards, files `> 300` lines, `@ts-ignore`/`any` escape hatches, and unfinished `TODO:`/`FIXME:` placeholders.
-2. **Layer 2 — Runtime & Visual Evidence ("Test-Before-Notify"):**
-   - Never use the Head Chef as a first-pass functional QA tester. Drive the real browser (via Playwright or `flash` Browser QA subagent), verify zero console/network errors, and save proof screenshots to `docs/dishes/<NN-dish-slug>/evidence/*.png`.
-3. **Layer 3 — The 4-Star Culinary Craft Audit (During `/plate`):**
-   - ⭐ **Star 1 (Micro-Interactions & Visual Stability):** Instant hover/active/disabled/loading states; zero jarring layout shift (CLS).
-   - ⭐ **Star 2 (Copy, Empty & Error Empathy):** Empty states guide the diner to the next action; error messages explain how to recover in warm, human language.
-   - ⭐ **Star 3 (Keyboard & Ergonomic Flow):** Logical `Tab` order, `Enter` to submit, `Escape` to close modals, visible focus rings.
-   - ⭐ **Star 4 (Idiomatic Code Craft):** Zero bloated God-components (`<= 300` lines); clean separation of state, domain logic, and presentation.
+1. **Layer 1 — 0-Token Mechanical Architecture Guardrails (`architecture.test.*`):**
+   - Generated during `/scaffold` and executed in `< 50ms` on every test run. Mechanically blocks cross-feature imports, missing `server-only`/`ABSPATH` guards, files `> 300` lines, `@ts-ignore`/`any` escape hatches, and unfinished `TODO:`/`FIXME:` placeholders.
+2. **Layer 2 — Runtime & Visual Browser Evidence ("Test-Before-Notify"):**
+   - Never use the human as a first-pass QA tester. Drive the real browser (via Playwright or `flash` Browser QA subagent), verify zero console/network errors, and save proof screenshots to `docs/specs/<NN-feature-slug>/evidence/*.png`.
+3. **Layer 3 — The 4-Point UX & Code Craft Audit (During `/polish`):**
+   - ✨ **Point 1 (Micro-Interactions & Visual Stability):** Instant hover/active/disabled/loading states; zero jarring layout shift (CLS).
+   - ✨ **Point 2 (Copy, Empty & Error Empathy):** Empty states guide the user to the next action; error messages explain how to recover in clear human language.
+   - ✨ **Point 3 (Keyboard & Ergonomic Flow):** Logical `Tab` order, `Enter` to submit, `Escape` to close modals, visible focus rings.
+   - ✨ **Point 4 (Idiomatic Code Craft):** Zero bloated God-components (`<= 300` lines); clean separation of state, domain logic, and presentation.
 
 ---
 
-## 5. Kitchen Safety: Budget Guard, 3-Strike Rule & Automatic Self-Healing
+## 5. Budget Guard, 3-Strike Rule & Automatic Self-Healing
 
-### Budget Guard (Pause & Ask the Chef)
-Pause and ask for confirmation (`"⚠️ KITCHEN GUARD TRIGGERED: [reason]. Awaiting Chef approval..."`) before:
-1. Touching **more than 4 files** in a single course unless defined as a coupled course in `courses.md`.
-2. Deleting files, dropping database tables/columns, or modifying shared contracts (`shared/types/`) without running `/taste` (Blast-Radius Check).
+### Budget Guard (Pause & Ask)
+Pause and ask for confirmation (`"⚠️ CRAFT GUARD TRIGGERED: [reason]. Awaiting approval..."`) before touching more than 4 files in a single pass (unless defined in `spec.md`) or modifying shared contracts (`shared/types/`) without checking blast radius.
 
-### The 3-Strike Rule (Stop Burning the Dish)
-If the same error persists after **3 fix attempts**:
-1. **STOP** immediately — never attempt a 4th blind retry.
-2. **REPORT** the exact error, the 3 approaches tried, and why each failed.
-3. **CALL THE CHEF** for guidance.
+### The 3-Strike Rule
+If the same error persists after **3 fix attempts**: **STOP** immediately, **REPORT** the exact error and 3 approaches tried, and **ASK** the user for guidance.
 
-### 5.1 Automatic Kitchen Self-Healing (After Any Bug Fix or Chef Correction)
-Whenever you fix a bug or receive a taste/code correction from the user, automatically execute before ending your turn:
-1. **Executable Regression Test & Mechanical Linter Rule:** Add a unit test reproducing the bug, and if it was a structural/slop pattern, encode it into `architecture.test.ts` / `ArchitectureTest.php` / `test_architecture.py`.
-2. **Taste System / Project Guardrail:** Add a 1-line rule to `AGENTS.md` or `docs/foundation/taste-system.md` (Anti-Slop Manifesto) so future courses never repeat it.
-3. **Kitchen Issue Log:** Append a 1-line entry to `docs/planning/issues.md`.
+### 5.1 Automatic Self-Healing (After Any Bug Fix or User Correction)
+Whenever you fix a bug or receive a UX/code correction from the user, automatically execute before ending your turn:
+1. **Executable Regression Test & Mechanical Linter Rule:** Add a unit test reproducing the bug, and if it was a structural/slop pattern, encode it into `architecture.test.*`.
+2. **Design System / Project Guardrail:** Add a 1-line rule to `AGENTS.md` or `docs/foundation/design-system.md` (Anti-Slop Manifesto) so future passes never repeat it.
+3. **Issue Log:** Append a 1-line entry to `docs/planning/issues.md`.

@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tasting Spoon: [Dish Title]</title>
+  <title>Interactive Prototype: [Feature Title]</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-stone-950 text-stone-100 min-h-screen font-sans antialiased p-4">
-  <!-- Top 4-State Tasting Bar -->
+  <!-- Top 4-State Switcher Bar -->
   <header class="max-w-3xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-2 bg-stone-900/90 border border-stone-800 rounded-xl px-4 py-2.5">
     <div class="flex items-center gap-2">
-      <span class="text-lg">🥄</span>
+      <span class="text-lg">🧪</span>
       <div>
-        <h1 class="text-xs font-semibold uppercase tracking-wider text-amber-400">Tasting Spoon Prototype</h1>
-        <p class="text-sm font-medium text-stone-200">[Dish Title] (<code class="text-xs text-stone-400">[NN-dish-slug]</code>)</p>
+        <h1 class="text-xs font-semibold uppercase tracking-wider text-amber-400">Interactive 4-State UI Prototype</h1>
+        <p class="text-sm font-medium text-stone-200">[Feature Title] (<code class="text-xs text-stone-400">[NN-feature-slug]</code>)</p>
       </div>
     </div>
-    <div class="flex items-center gap-1.5" role="tablist" aria-label="Dish States">
+    <div class="flex items-center gap-1.5" role="tablist" aria-label="Feature States">
       <button onclick="setState('happy')" id="tab-happy" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/40">✨ Happy</button>
       <button onclick="setState('empty')" id="tab-empty" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-800 text-stone-400 hover:text-stone-200">🌱 Empty</button>
       <button onclick="setState('loading')" id="tab-loading" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-800 text-stone-400 hover:text-stone-200">⏳ Skeleton</button>
@@ -34,8 +34,8 @@
 
     <!-- 2. Empathetic Empty State -->
     <section id="state-empty" class="hidden py-10 text-center space-y-3">
-      <p class="text-base font-medium text-stone-200">Your station is ready for its first creation</p>
-      <p class="text-xs text-stone-400 max-w-md mx-auto">Start by adding your first item below—everything stays saved automatically.</p>
+      <p class="text-base font-medium text-stone-200">Ready for your first item</p>
+      <p class="text-xs text-stone-400 max-w-md mx-auto">Start by creating your first entry below—everything stays saved automatically.</p>
       <button onclick="setState('happy')" class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500 text-stone-950 hover:bg-amber-400 transition">Create First Item</button>
     </section>
 

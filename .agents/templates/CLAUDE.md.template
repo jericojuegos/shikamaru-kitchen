@@ -2,9 +2,9 @@
 
 Read [`AGENTS.md`](./AGENTS.md), [`docs/INDEX.md`](./docs/INDEX.md), and [`.agents/rules/kitchen-protocol.md`](./.agents/rules/kitchen-protocol.md) before executing any task.
 
-## Culinary Lifecycle Commands
-- **`/menu`** (`.agents/skills/menu/SKILL.md`) — Design product menu, Signature Dishes vs. House Staples, and Taste System
-- **`/prep`** (`.agents/skills/prep/SKILL.md`) — Automated *Mise en Place* & 0-Token Mechanical Architecture Linter setup
-- **`/taste <NN-dish-slug>`** (`.agents/skills/taste/SKILL.md`) — Generate interactive 4-state Tasting Spoon (`preview.html`) & lock 3-Course recipe
-- **`/cook <NN-dish-slug>`** (`.agents/skills/cook/SKILL.md`) — Cook Course 1 (Domain), Course 2 (Interactive UI), and Course 3 (Micro-Craft Seasoning)
-- **`/plate <NN-dish-slug>`** (`.agents/skills/plate/SKILL.md`) — Run Food Safety + 4-Star Culinary Craft Audit + Browser Evidence & Serve
+## Software Craft Lifecycle Commands
+- **`/design`** (`.agents/skills/design/SKILL.md`) — Define product vision, Signature Craft vs. Plumbing features, Design System (Anti-Slop Manifesto), and auto-tailored `stack-rules.md` (`<= 80` lines)
+- **`/scaffold`** (`.agents/skills/scaffold/SKILL.md`) — Automated *Mise en Place* & 0-Token Mechanical Architecture Linter setup
+- **`/prototype <NN-feature-slug>`** (`.agents/skills/prototype/SKILL.md`) — Generate interactive 4-state UI Prototype (`preview.html`) & unified `spec.md`
+- **`/craft <NN-feature-slug>`** (`.agents/skills/craft/SKILL.md`) — Build Pass 1 (Domain), Pass 2 (Interactive UI), and Pass 3 (Micro-Interactions & Ergonomics)
+- **`/polish <NN-feature-slug>`** (`.agents/skills/polish/SKILL.md`) — Run Mechanical Verification + 4-Point UX & Code Craft Audit + Browser Evidence & Ship
