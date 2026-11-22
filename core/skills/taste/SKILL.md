@@ -3,13 +3,13 @@ name: taste
 description: >-
   Generate an interactive "Tasting Spoon" UI prototype (docs/dishes/<NN-dish-slug>/design-reference/preview.html
   + inline <agent-embed>) showing Happy, Empty, Loading, and Error states BEFORE locking
-  the dish recipe (recipe.md, design.md, courses.md, plating.md), or run rapid post-taste
+  the unified dish recipe (docs/dishes/<NN-dish-slug>/recipe.md), or run rapid post-taste
   delta adjustments. Use before cooking any dish or when the user invokes /taste.
 ---
 
-# 🥄 Skill: The Tasting Spoon & Recipe Designer (`/taste`)
+# 🥄 Skill: The Tasting Spoon & Unified Recipe Designer (`/taste`)
 
-**Purpose:** Cillian Myles' core law of software craft is that **you cannot know if a software design tastes right until you feel and interact with it**. Instead of writing a massive Waterfall specification and 1,500 lines of code blindly, `/taste` builds an interactive **Tasting Spoon (`preview.html` + `<agent-embed>`)** first, lets the Head Chef adjust the flavor, and locks the 3-Course recipe (`recipe.md`, `design.md`, `courses.md`, `plating.md`).
+**Purpose:** Cillian Myles' core law of software craft is that **you cannot know if a software design tastes right until you feel and interact with it**. Instead of writing 4 fragmented spec files and 1,500 lines of code blindly, `/taste` builds an interactive **Tasting Spoon (`preview.html` + `<agent-embed>`)** first, lets the Head Chef adjust the flavor, and locks **1 unified, zero-drift `docs/dishes/<NN-dish-slug>/recipe.md` file** (`~80` lines).
 
 ---
 
@@ -17,10 +17,10 @@ description: >-
 
 Check the user's request and `docs/planning/service-board.md`:
 
-- **Mode A (First Taste of a Dish):** Create or expand `docs/dishes/<NN-dish-slug>/` with its interactive `design-reference/preview.html` Tasting Spoon and complete recipe bundle.
+- **Mode A (First Taste of a Dish):** Create or expand `docs/dishes/<NN-dish-slug>/` with its interactive `design-reference/preview.html` Tasting Spoon and unified `recipe.md`.
 - **Mode B (Seasoning Adjustment / Re-Taste Delta):** The Chef tasted either `preview.html` or the live cooked feature and wants to **adjust the UX flow, add an interaction, or simplify a screen**:
-  1. Update the active truth in `recipe.md`, `design.md`, and `design-reference/preview.html` in-place (append a 1-line row to `## 📝 Seasoning History` at the bottom of `recipe.md`).
-  2. Append a new delta section `### Re-Seasoning Wave N (<summary>)` in `courses.md` (`- [ ] S1.1 ...`) without erasing completed `[x]` courses.
+  1. Update the active truth in `recipe.md` (Sections 1–2) and `design-reference/preview.html` in-place.
+  2. Append a new delta section `### Re-Seasoning Wave N (<summary>)` in `recipe.md` (Section 3: `- [ ] S1.1 ...`) without erasing completed `[x]` courses.
   3. Mark the dish `[>]` on `docs/planning/service-board.md` ready for `/cook`.
 
 ---
@@ -50,21 +50,13 @@ For any dish with UI, interactive controls, or user-facing output:
 
 ---
 
-## Step 4 — Lock the Dish Recipe Bundle (`docs/dishes/<NN-dish-slug>/`)
+## Step 4 — Lock the Single Unified Dish Recipe (`docs/dishes/<NN-dish-slug>/recipe.md`)
 
-Using the templates in [`./resources/`](./resources/), create:
-
-1. **`recipe.md`** ([`./resources/recipe.md.template`](./resources/recipe.md.template)):
-   - Dish Category (`👨‍🍳 SIGNATURE DISH` or `🔪 HOUSE STAPLE`), Assumptions (`A1`), Glossary, User Stories, and numbered **EARS Acceptance Criteria** (`Req 1.1`, `Req 1.2`).
-2. **`design.md`** ([`./resources/design.md.template`](./resources/design.md.template)):
-   - Mermaid `flowchart TD` data flow, exact `[NEW]` / `[MODIFY]` file table within the station's isolation zone, Data Models, Error Handling Matrix, and Correctness Properties (`Property 1`, `Property 2`).
-3. **`courses.md`** ([`./resources/courses.md.template`](./resources/courses.md.template)):
-   - Organize implementation into **3 Structured Courses**:
-     - **Course 1 — Domain Engine, Data & Unit Tests (`[BE]`):** Schema, service/handler, unit tests (`Property 1` & `Property 2`), and checkpoint commit.
-     - **Course 2 — Core Interactive Experience (`[FE]`):** Primary components & state wiring, plus a **Mid-Cook Chef Taste Checkpoint** for Signature Dishes.
-     - **Course 3 — Micro-Interactions, Keyboard Flow & Edge-Case Seasoning (`[CRAFT]`):** Hover/focus/loading transitions, `Enter`/`Escape` keyboard bindings, empathetic empty/error states, and E2E test.
-4. **`plating.md`** ([`./resources/plating.md.template`](./resources/plating.md.template)):
-   - Food Safety checklist + **4-Star Culinary Craft Audit** + Manual Tasting Walkthrough.
+Using [`./resources/recipe.md.template`](./resources/recipe.md.template), create **one** cohesive `docs/dishes/<NN-dish-slug>/recipe.md` (`~80–110` lines) containing all 4 sections:
+1. **Section 1 — Dish Concept & EARS Recipe Criteria:** Dish Category (`👨‍🍳 SIGNATURE DISH` or `🔪 HOUSE STAPLE`), Assumptions (`A1`), numbered EARS criteria (`Req 1.1..N`), and unit-test invariants (`Property 1`, `Property 2`).
+2. **Section 2 — Station Architecture & File Placement:** Mermaid `flowchart TD` data flow and exact `[NEW]` / `[MODIFY]` file table within the station's isolation zone.
+3. **Section 3 — The 3-Course Cooking Plan (`/cook`):** Course 1 (Domain & Unit Tests) → Course 2 (Core Interactive UX) → Course 3 (Micro-Interactions & Edge-Case Seasoning).
+4. **Section 4 — Michelin Plating Evidence & 4-Star Craft Audit (`/plate`):** Evidence proof table (`test:line` + `./evidence/*.png`) and the 4-Star Craft checklist.
 
 ---
 

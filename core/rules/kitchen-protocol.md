@@ -23,10 +23,8 @@ Every project managed by `shikamaru-kitchen` separates **Culinary Foundation**, 
    - `issues.md` — Kitchen retrospective & self-healing incident log.
 3. **Dish Folders (`docs/dishes/<NN-dish-slug>/`):**
    - `design-reference/preview.html` — **The Tasting Spoon:** Playable HTML/Tailwind prototype (`<agent-embed>`) showing Happy, Empty, Loading, and Error states *before* production code is cooked.
-   - `recipe.md` — Assumptions (`A1`), Glossary, User Stories, and numbered EARS Acceptance Criteria (`Req 1.1`, `Req 1.2`).
-   - `design.md` — Mermaid data-flow diagram, exact `[NEW]` / `[MODIFY]` files, Data Models, and Error Handling Matrix.
-   - `courses.md` — 3-Course implementation plan (**Course 1: Domain & Unit Tests**, **Course 2: Core Interactive UX**, **Course 3: Micro-Interactions & Edge-Case Seasoning**).
-   - `plating.md` — Food Safety verification + **4-Star Culinary Craft Audit** + `evidence/*.png` browser proof.
+   - `recipe.md` — **Single Unified Dish Recipe (`~80` lines):** Combines numbered EARS Criteria (`Req 1.1..N`), Correctness Properties (`Property 1`, `Property 2`), Mermaid data-flow diagram, exact `[NEW]` / `[MODIFY]` files, the **3-Course Cooking Plan** (Course 1: Domain & Unit Tests → Course 2: Core Interactive UX → Course 3: Micro-Interactions & Edge-Case Seasoning), and the **4-Star Culinary Craft Audit** in **1 zero-drift file**.
+   - `evidence/*.png` — Plated browser proof screenshots captured during `/plate`.
 4. **Brigade Engine (`.agents/`):**
    - `.agents/rules/` — Always-on guardrails (`kitchen-protocol.md` + `stack-rules.md`)
    - `.agents/skills/` — 5 Culinary Lifecycle Skills:

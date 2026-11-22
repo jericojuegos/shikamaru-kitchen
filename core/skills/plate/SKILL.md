@@ -32,7 +32,7 @@ If any compiler error, failing test, or mechanical architecture violation occurs
 2. ** Hard Gate — Mandatory `docs/dishes/<NN-dish-slug>/evidence/*.png` for UI / Interactive Dishes:**
    - Drive the live application in a real browser (via Playwright `page.screenshot()` or the `flash` `browser` subagent).
    - Test all 4 states where applicable (Happy Path, Empty State, Loading/Submission, Validation/Error State), verify zero `console.error` or network `4xx/5xx` failures, and save proof screenshots to `docs/dishes/<NN-dish-slug>/evidence/*.png`.
-   - Populate every row of the **`Evidence / Proof`** column in `docs/dishes/<NN-dish-slug>/plating.md` with exact unit test citations (`feature.test.ts:L24 PASS`) and browser screenshot paths (`./evidence/01-happy-path.png`).
+   - Populate every row of the **`Evidence / Proof`** column in `docs/dishes/<NN-dish-slug>/recipe.md` (Section 4) with exact unit test citations (`feature.test.ts:L24 PASS`) and browser screenshot paths (`./evidence/01-happy-path.png`).
 
 ---
 

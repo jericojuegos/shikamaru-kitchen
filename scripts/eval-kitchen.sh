@@ -48,8 +48,8 @@ assert_eval "python-fastapi has test_architecture.py.template" "[ -f '$REPO_ROOT
 assert_eval "wp-hexagonal has HexagonalArchitectureTest.php.template" "[ -f '$REPO_ROOT/stacks/wp-hexagonal/skills/cook/examples/HexagonalArchitectureTest.php.template' ]"
 
 echo ""
-echo "[Suite 3] Tasting Spoon 4-State Prototype & Recipe Templates"
-for tpl in recipe.md.template design.md.template courses.md.template plating.md.template preview.html.template; do
+echo "[Suite 3] Tasting Spoon 4-State Prototype & Unified Recipe Template"
+for tpl in recipe.md.template preview.html.template; do
   assert_eval "taste resource $tpl exists" "[ -f '$REPO_ROOT/core/skills/taste/resources/$tpl' ]"
 done
 

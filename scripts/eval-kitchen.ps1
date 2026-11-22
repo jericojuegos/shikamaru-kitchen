@@ -110,14 +110,17 @@ Assert-Eval "Suite 2" "wp-hexagonal has 0-token Mechanical Architecture Linter (
 )
 
 # ==============================================================================
-# SUITE 3: Tasting Spoon 4-State Prototype & Recipe Templates
+# SUITE 3: Tasting Spoon 4-State Prototype & Unified Recipe Template
 # ==============================================================================
-Write-Host "`n[Suite 3] Tasting Spoon 4-State Prototype & Recipe Templates" -ForegroundColor Yellow
+Write-Host "`n[Suite 3] Tasting Spoon 4-State Prototype & Unified Recipe Template" -ForegroundColor Yellow
 
-foreach ($Tpl in @("recipe.md.template", "design.md.template", "courses.md.template", "plating.md.template", "preview.html.template")) {
+foreach ($Tpl in @("recipe.md.template", "preview.html.template")) {
     $TplPath = Join-Path $RepoRoot "core\skills\taste\resources\$Tpl"
     Assert-Eval "Suite 3" "taste resource $Tpl exists" (Test-Path $TplPath)
 }
+
+$RecipeLines = (Get-Content (Join-Path $RepoRoot "core\skills\taste\resources\recipe.md.template")).Count
+Assert-Eval "Suite 3" "unified recipe.md.template is ultra-lean (<= 100 lines: $RecipeLines)" ($RecipeLines -le 100)
 
 $PreviewContent = Get-Content (Join-Path $RepoRoot "core\skills\taste\resources\preview.html.template") -Raw
 Assert-Eval "Suite 3" "preview.html.template includes all 4 interactive Tasting Spoon states (happy, empty, loading, error)" (

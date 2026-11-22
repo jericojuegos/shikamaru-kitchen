@@ -1,41 +1,72 @@
 # 📜 Dish Recipe: [Dish Title] (`[NN-dish-slug]`)
 
 > **Category:** `[👨‍🍳 SIGNATURE DISH | 🔪 HOUSE STAPLE]` · **Station (Touches):** `[list target directories]`  
-> **Depends On:** `[00-prep / None]` · **Status:** `[ ]` On Menu  
-> **Dish Links:** [`design-reference/preview.html`](./design-reference/preview.html) · [`design.md`](./design.md) · [`courses.md`](./courses.md) · [`plating.md`](./plating.md)
+> **Depends On:** `[00-prep / None]` · **Branch:** `feat/[NN-dish-slug]` · **Status:** `[ ]` On Menu  
+> **Tasting Spoon:** [`design-reference/preview.html`](./design-reference/preview.html)
 
 ---
 
-## 1. Dish Concept & Open Assumptions
+## 1. Dish Concept & EARS Recipe Criteria
 
 - **Diner Job-to-be-Done:** `[What user problem this dish makes effortless]`
-- **Assumptions:**
-  - `A1:` `[Assumption — Confirmed / Needs Chef confirmation]`
-
----
-
-## 2. User Stories & EARS Recipe Criteria
-
-### Story 1: [Primary Diner Flow]
-**As a** `[diner/user role]`, **I want** `[action]`, **so that** `[outcome]`.
-
-- **`Req 1.1` (Happy Path):** WHEN `[trigger]`, THE System SHALL `[deterministic outcome]`.
-- **`Req 1.2` (Persistence & Feedback):** WHEN `[mutation succeeds]`, THE System SHALL `[persist state and display immediate optimistic/toast feedback]`.
-- **`Req 1.3` (Empathetic Validation):** IF `[invalid or incomplete input is submitted]`, THEN THE System SHALL `[prevent submission, preserve user input, and display an inline recovery hint]`.
-
-### Story 2: [Edge Cases & Security Boundary]
+- **Assumptions:** `A1:` `[Confirmed assumption]` · **Non-Goals:** `[Explicitly excluded scope]`
+- **`Req 1.1` (Happy State):** WHEN `[trigger]`, THE System SHALL `[deterministic outcome]`.
+- **`Req 1.2` (Persistence & Optimistic Feedback):** WHEN `[mutation succeeds]`, THE System SHALL `[persist state and display immediate feedback]`.
+- **`Req 1.3` (Empathetic Error Recovery):** IF `[invalid input is submitted]`, THEN THE System SHALL `[prevent submission, preserve user input, and display a warm recovery hint]`.
 - **`Req 2.1` (Empty State Empathy):** WHILE `[zero records exist]`, THE System SHALL `[render an onboarding empty state with a primary action button]`.
-- **`Req 2.2` (Auth Guard):** IF `[unauthenticated/unauthorized request arrives]`, THEN THE System SHALL `[reject with HTTP 401/403 before any state mutation]`.
+- **Correctness Properties (Tested in Course 1):**
+  - **`Property 1`:** Valid payloads satisfy `Req 1.1–1.2`.
+  - **`Property 2`:** Invalid/unauthorized payloads satisfy `Req 1.3` with zero partial writes.
 
 ---
 
-## 3. Non-Goals (Out of Scope for This Dish)
-- `[Explicitly excluded scope so agents do not over-engineer]`
+## 2. Station Architecture & File Placement
 
----
+```mermaid
+flowchart TD
+    UI["Interactive UI Component\n(4 States: Happy, Empty, Skeleton, Error)"] --> Handler["Server Action / Route Handler\n(Auth + Schema Validation)"]
+    Handler --> Service["Pure Domain Service / Repository"]
+    Service --> DB[("Database (RLS / Prepared SQL)")]
+```
 
-## 📝 Seasoning History (Post-Taste Delta Adjustments)
-
-| Rev | Date | Seasoning Change (Added / Adjusted / Simplified) | Chef Reason |
+| Action | Exact File Path (Inside Station Isolation Zone) | Layer | Validates |
 | :--- | :--- | :--- | :--- |
-| `Rev 1` | `YYYY-MM-DD` | Initial recipe & Tasting Spoon (`preview.html`) created. | Initial menu design |
+| `[NEW]` | `[e.g., src/features/<domain>/schemas.ts]` | `[BE]` | `Req 1.1, 1.3` |
+| `[NEW]` | `[e.g., src/features/<domain>/__tests__/<dish>.test.ts]` | `[BE]` | `Property 1, 2` |
+| `[NEW]` | `[e.g., src/features/<domain>/components/<DishView>.tsx]` | `[FE]` | `Req 1.1, 2.1` |
+
+---
+
+## 3. The 3-Course Cooking Plan (`/cook`)
+
+### Course 1 — Domain Engine, Data & Unit Tests (`[BE]`)
+- [ ] **1.1** `[BE]` Create domain schemas, types, and validation in `[exact/file/path]` (_Req 1.1, 1.3_)
+- [ ] **1.2** `[BE]` Implement server handler / repository in `[exact/file/path]` (_Req 1.2_)
+- [ ] **1.3** `[BE]` Write & run unit/invariant tests (`Property 1` & `Property 2`) in `[exact/test/path]`
+- [ ] **1.4** `[CHECKPOINT]` **Course 1 Food Safety Gate:** Run test suite + **0-Token Mechanical Architecture Linter** (`pnpm tsc --noEmit && pnpm test --run` / `uv run pytest` / `vendor/bin/phpunit`) → Course 1 git commit
+
+### Course 2 — Core Interactive Experience (`[FE]`)
+- [ ] **2.1** `[FE]` Build modular UI component(s) (`<= 250` lines) in `[exact/file/path]` matching `design-reference/preview.html` and `docs/foundation/taste-system.md` (_Req 1.1, 1.2_)
+- [ ] **2.2** `[FE]` Wire interactive state, data mutations, and route entrypoint in `[exact/file/path]`
+- [ ] **2.3** `[CHECKPOINT]` **Course 2 Tasting Checkpoint:** Run build/typecheck (`pnpm tsc --noEmit && pnpm build`) → Course 2 git commit
+
+### Course 3 — Micro-Interactions, Keyboard Flow & Edge-Case Seasoning (`[CRAFT]`)
+- [ ] **3.1** `[CRAFT]` Add zero-CLS loading skeletons, double-submit button guards, and empathetic empty/error states matching the 4-state `preview.html` (_Req 1.3, 2.1_)
+- [ ] **3.2** `[CRAFT]` Wire keyboard ergonomics (`Enter` submit, `Escape` close, initial focus, visible focus rings) and write Playwright E2E spec in `e2e/[dish-slug].spec.ts`
+- [ ] **3.3** `[CHECKPOINT]` **Final Course Checkpoint:** Run full verification → hand off to **`/plate`**!
+
+---
+
+## 4. Michelin Plating Evidence & 4-Star Craft Audit (`/plate`)
+
+| Check ID | Recipe Ref | Scenario | Evidence / Proof (`test:line` or `./evidence/*.png`) | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **PLATE-1.1** | `Req 1.1, 1.2` | Happy-path interaction & persistence | `[e.g., dish.test.ts:L18 PASS + ./evidence/01-happy-state.png]` | `[ ]` |
+| **PLATE-1.3** | `Req 1.3` | Empathetic error recovery (input preserved) | `[e.g., dish.test.ts:L44 PASS + ./evidence/02-error-recovery.png]` | `[ ]` |
+| **PLATE-2.1** | `Req 2.1` | Onboarding empty state & primary CTA | `[e.g., ./evidence/03-empty-state.png]` | `[ ]` |
+
+- [ ] ⭐ **Star 1 (Micro-Interactions & Zero CLS):** Instant hover/active/loading states; zero layout shift
+- [ ] ⭐ **Star 2 (Copy, Empty & Error Empathy):** Warm human guidance across all states
+- [ ] ⭐ **Star 3 (Keyboard & Ergonomic Flow):** `Enter` submit, `Escape` close, crisp `focus-visible` rings
+- [ ] ⭐ **Star 4 (Idiomatic Code Craft):** Components `<= 300` lines, `0` `architecture.test.*` violations
+- [ ] 👨‍🍳 **Executive Chef Sign-Off:** Approved to serve (`[x]` on `docs/planning/service-board.md`)

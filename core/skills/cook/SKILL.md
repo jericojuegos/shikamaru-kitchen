@@ -17,7 +17,7 @@ description: >-
 
 1. Read `docs/planning/service-board.md`, `AGENTS.md`, `docs/foundation/taste-system.md`, and `.agents/rules/stack-rules.md`.
 2. **If `00-prep` is not yet `[x]`:** Run **`/prep`** (`../prep/SKILL.md`) first.
-3. **If `docs/dishes/<NN-dish-slug>/design.md` or `design-reference/preview.html` does not exist yet:** Run **`/taste <NN-dish-slug>`** (`../taste/SKILL.md`) first so the Chef can sample the Tasting Spoon before cooking starts.
+3. **If `docs/dishes/<NN-dish-slug>/recipe.md` or `design-reference/preview.html` does not exist yet:** Run **`/taste <NN-dish-slug>`** (`../taste/SKILL.md`) first so the Chef can sample the Tasting Spoon before cooking starts.
 4. **Automatic Feature Branch Guard:**
    - Check `git branch --show-current`. If on `main`, `master`, or `develop`, automatically create and switch to `feat/<NN-dish-slug>` before touching any code.
    - Mark the dish `[>]` on `docs/planning/service-board.md`.
@@ -26,11 +26,11 @@ description: >-
 
 ## Step 2 — Cook Course 1: Domain Engine, Data & Unit Tests (`[BE]`)
 
-1. Mark Course 1 tasks (`1.1`..`1.4`) active (`[>]`) in `docs/dishes/<NN-dish-slug>/courses.md`.
-2. Adapt golden templates from `.agents/skills/cook/examples/` (`route-handler.ts.template`, `feature.test.ts.template`, `unit-test.php.template`, etc.).
+1. Mark Course 1 tasks (`1.1`..`1.4`) active (`[>]`) in `docs/dishes/<NN-dish-slug>/recipe.md` (Section 3).
+2. Adapt golden templates from `.agents/skills/cook/examples/` (`route-handler.ts.template`, `feature.test.ts.template`, `hexagonal-unit-test.php.template`, etc.).
 3. Implement schemas, domain validation, and server handlers strictly inside the dish's assigned `Station (Touches)` paths.
 4. Write and run mandatory unit/invariant tests covering `Property 1` (happy path) and `Property 2` (invalid/unauthorized rejection), **plus the 0-Token Mechanical Architecture Linter** (`pnpm tsc --noEmit && pnpm test --run` / `uv run pytest` / `vendor/bin/phpunit`).
-5. Mark Course 1 `[x]` in `courses.md` and create an atomic checkpoint commit:
+5. Mark Course 1 `[x]` in `recipe.md` and create an atomic checkpoint commit:
    ```bash
    git add <course-1-touched-files>
    git commit -m "feat(<dish-slug>): cook course 1 domain engine and unit tests"
@@ -40,7 +40,7 @@ description: >-
 
 ## Step 3 — Cook Course 2: Core Interactive Experience (`[FE]`)
 
-1. Mark Course 2 tasks (`2.1`..`2.3`) active (`[>]`) in `docs/dishes/<NN-dish-slug>/courses.md`.
+1. Mark Course 2 tasks (`2.1`..`2.3`) active (`[>]`) in `docs/dishes/<NN-dish-slug>/recipe.md` (Section 3).
 2. Read `docs/dishes/<NN-dish-slug>/design-reference/preview.html` (and any `.png` references) plus `docs/foundation/taste-system.md`.
 3. Build the modular UI components (`<= 250` lines per file) and wire real data flow.
 4. Verify build & types (`pnpm tsc --noEmit && pnpm build` / `php -l`) and create the Course 2 checkpoint commit:
