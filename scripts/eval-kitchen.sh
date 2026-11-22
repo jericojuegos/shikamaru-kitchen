@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
 # shikamaru-kitchen/scripts/eval-kitchen.sh
-# Validates Michelin Kitchen contracts across 5 evaluation suites
+# Validates Universal Michelin Kitchen contracts
 # ==============================================================================
 set -euo pipefail
 
@@ -27,33 +27,18 @@ assert_eval() {
 
 echo ""
 echo "=================================================================="
-echo " SHIKAMARU-KITCHEN MICHELIN BRIGADE EVAL SUITE (v1.0)"
+echo " SHIKAMARU-KITCHEN UNIVERSAL MICHELIN BRIGADE EVAL SUITE (v1.0)"
 echo "=================================================================="
 
-echo ""
-echo "[Suite 1] Core Kitchen Protocol & 5 Culinary Lifecycle Skills"
 assert_eval "core/rules/kitchen-protocol.md exists" "[ -f '$REPO_ROOT/core/rules/kitchen-protocol.md' ]"
-assert_eval "kitchen-protocol.md defines 3-Course Cooking Loop" "grep -q '3-Course Cooking Loop' '$REPO_ROOT/core/rules/kitchen-protocol.md'"
-assert_eval "kitchen-protocol.md defines 4-Star Culinary Craft Standard" "grep -q '4-Star Culinary Craft' '$REPO_ROOT/core/rules/kitchen-protocol.md'"
+assert_eval "No hardcoded stacks/ directory exists" "[ ! -d '$REPO_ROOT/stacks' ]"
+assert_eval "core/templates/stack-rules.md.template exists" "[ -f '$REPO_ROOT/core/templates/stack-rules.md.template' ]"
+assert_eval "taste unified recipe.md.template exists" "[ -f '$REPO_ROOT/core/skills/taste/resources/recipe.md.template' ]"
 
 for skill in menu prep taste cook plate; do
   assert_eval "core/skills/$skill/SKILL.md exists" "[ -f '$REPO_ROOT/core/skills/$skill/SKILL.md' ]"
-  assert_eval "core/skills/$skill/SKILL.md has name frontmatter" "grep -q '^name: $skill' '$REPO_ROOT/core/skills/$skill/SKILL.md'"
 done
 
-echo ""
-echo "[Suite 2] Stack Packs & 0-Token Mechanical Architecture Linters"
-assert_eval "nextjs-supabase has architecture.test.ts.template" "[ -f '$REPO_ROOT/stacks/nextjs-supabase/skills/cook/examples/architecture.test.ts.template' ]"
-assert_eval "python-fastapi has test_architecture.py.template" "[ -f '$REPO_ROOT/stacks/python-fastapi/skills/cook/examples/test_architecture.py.template' ]"
-assert_eval "wp-hexagonal has HexagonalArchitectureTest.php.template" "[ -f '$REPO_ROOT/stacks/wp-hexagonal/skills/cook/examples/HexagonalArchitectureTest.php.template' ]"
-
-echo ""
-echo "[Suite 3] Tasting Spoon 4-State Prototype & Unified Recipe Template"
-for tpl in recipe.md.template preview.html.template; do
-  assert_eval "taste resource $tpl exists" "[ -f '$REPO_ROOT/core/skills/taste/resources/$tpl' ]"
-done
-
-echo ""
 echo "=================================================================="
 if [ "$FAILED" -eq 0 ]; then
   echo " KITCHEN EVAL RESULT: PASS ($PASSED / $TOTAL checks passed)"

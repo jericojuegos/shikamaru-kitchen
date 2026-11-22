@@ -14,12 +14,14 @@ description: >-
 
 ---
 
-## Step 1 — Read Kitchen Inventory & Ask Round 1 (The Concept & Diners)
+## Step 1 — Auto-Detect or Select Tech Stack & Ask Round 1 (Concept & Diners)
 
-1. Read `INVENTORY.md` (if present) to see active stack packs (`nextjs-supabase`, `python-fastapi`, `wp-hexagonal`).
+1. **Auto-Discover or Choose the Kitchen Stack (Works on Any Language/Framework):**
+   - If running in an existing repo, inspect manifests (`package.json`, `pyproject.toml`, `composer.json`, `go.mod`, `Cargo.toml`, etc.) to auto-detect the stack.
+   - If greenfield, recommend the best modern stack for the product's problem and let the Chef pick or customize.
 2. Summarize the user's product idea in 2 sentences and ask **Round 1 (Concept & Stack)**:
    - **Q1. Target Diners & Core Problem:** Who is the primary user and what is the #1 painful job this software makes effortless?
-   - **Q2. Kitchen Stack:** Present the available stacks from `INVENTORY.md` as lettered options (`A) nextjs-supabase`, `B) python-fastapi`, `C) wp-hexagonal`, `Z) Custom`).
+   - **Q2. Kitchen Stack & Architecture:** Present 3 tailored stack options (`A`, `B`, `C`, `Z) Custom`).
 
 Wait for the Chef's reply, then print a `🔒 Locked: Round 1` summary.
 
@@ -52,19 +54,20 @@ Wait for the Chef's reply, then print a `🔒 Locked: Round 3 (Taste System)` su
 
 ---
 
-## Step 4 — Round 4: Generate the Kitchen Brain Files
+## Step 4 — Round 4: Generate the Kitchen Brain & Auto-Tailored `.agents/rules/stack-rules.md` (`<= 80` Lines)
 
 Once Rounds 1–3 are locked, generate the project's Kitchen Brain:
 
-1. **`AGENTS.md` & `CLAUDE.md`:** Project overview, chosen stack pack, active service state, and Anti-Slop rules.
-2. **`docs/foundation/menu-vision.md`:** Product thesis, personas, and Signature Dish vs. House Staple breakdown.
-3. **`docs/foundation/architecture.md`:** Mermaid system diagram, station folder boundaries, and data models.
-4. **`docs/foundation/taste-system.md`:** Exact CSS/Tailwind color tokens, typography scale, micro-interaction rules, copy voice, and the **Anti-Slop Manifesto**.
-5. **`docs/foundation/decisions.md`:** Initial ADRs.
-6. **`docs/planning/service-board.md`:**
+1. **`.agents/rules/stack-rules.md` (Strictly `<= 80` Lines):** Auto-tailor the stack rule file to the chosen tech stack (defining station directory boundaries, forbidden cross-feature imports, security rules, `<= 300-line` modularity cap, and pre-commit Food-Safety commands).
+2. **`AGENTS.md` & `CLAUDE.md`:** Project overview, chosen stack, active service state, and Anti-Slop rules.
+3. **`docs/foundation/menu-vision.md`:** Product thesis, personas, and Signature Dish vs. House Staple breakdown.
+4. **`docs/foundation/architecture.md`:** Mermaid system diagram, station folder boundaries, and data models.
+5. **`docs/foundation/taste-system.md`:** Exact CSS/Tailwind color tokens, typography scale, micro-interaction rules, copy voice, and the **Anti-Slop Manifesto**.
+6. **`docs/foundation/decisions.md`:** Initial ADRs.
+7. **`docs/planning/service-board.md`:**
    - The master **Service Board & Dish Dependency Matrix** with columns: `Dish ID`, `Title`, `Category (👨‍🍳 SIGNATURE | 🔪 STAPLE)`, `Wave`, `Depends On`, `Station (Touches)`, and `Status ([ ])`.
-7. **Starter Dish Folders (`docs/dishes/00-prep/` and `docs/dishes/01-<first-dish>/`):**
-   - Populate `docs/dishes/00-prep/courses.md` for `/prep`.
+8. **Starter Dish Folders (`docs/dishes/00-prep/` and `docs/dishes/01-<first-dish>/`):**
+   - Populate `docs/dishes/00-prep/recipe.md` for `/prep`.
    - Populate starter `docs/dishes/01-<first-dish>/recipe.md` ready for `/taste`.
 
 End by telling the Chef:

@@ -1,18 +1,16 @@
-<#
+﻿<#
 .SYNOPSIS
-  Syncs the shikamaru-kitchen Michelin Brigade Engine (core + stack pack) into a target project.
-  Supports `nextjs-supabase`, `python-fastapi`, and `wp-hexagonal`.
+  Syncs the universal, stack-agnostic shikamaru-kitchen Michelin Brigade Engine into a target project.
+  No hardcoded stack pack argument needed — /menu and /prep auto-detect/design the stack, tailor stack-rules.md (<= 80 lines),
+  and dynamically generate the 0-Token Mechanical Architecture Linter for any language or framework!
 
 .EXAMPLE
-  .\scripts\sync-kitchen.ps1 -ProjectPath "..\my-crafted-app" -Stack "nextjs-supabase"
+  .\scripts\sync-kitchen.ps1 -ProjectPath "..\my-crafted-app"
 #>
 
 param(
     [Parameter(Mandatory = $true)]
     [string]$ProjectPath,
-
-    [Parameter(Mandatory = $false)]
-    [string]$Stack = "nextjs-supabase",
 
     [switch]$LocalExclude
 )
@@ -29,31 +27,12 @@ $TargetRoot  = (Resolve-Path $ProjectPath).Path
 $ProjectName = Split-Path -Leaf $TargetRoot
 $Today       = Get-Date -Format "yyyy-MM-dd"
 
-$StackList    = @($Stack -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
-$PrimaryStack = $StackList[0]
-$PrimaryDir   = Join-Path $RepoRoot "stacks\$PrimaryStack"
-
-foreach ($S in $StackList) {
-    $SDir = Join-Path $RepoRoot "stacks\$S"
-    if (-not (Test-Path $SDir)) {
-        Write-Error "Stack '$S' not found in stacks/."
-        exit 1
-    }
-}
-
-$VersionTag = ($StackList -join "+") + "-kitchen-v1.0"
 Write-Host ""
-Write-Host "[MICHELIN KITCHEN] Brigade Sync ($VersionTag)" -ForegroundColor Cyan
+Write-Host "[MICHELIN KITCHEN] Universal Brigade Sync (v1.0)" -ForegroundColor Cyan
 Write-Host "   Target Project : $TargetRoot"
-Write-Host "   Stack Pack(s)  : $($StackList -join ', ')"
 
 $AgentsDir = Join-Path $TargetRoot ".agents"
 $DocsDir   = Join-Path $TargetRoot "docs"
-
-$CookExamplesDir = Join-Path $AgentsDir "skills\cook\examples"
-if (Test-Path $CookExamplesDir) {
-    Remove-Item $CookExamplesDir -Recurse -Force -ErrorAction SilentlyContinue
-}
 
 New-Item -ItemType Directory -Force -Path `
     (Join-Path $AgentsDir "rules"), `
@@ -62,34 +41,21 @@ New-Item -ItemType Directory -Force -Path `
     (Join-Path $DocsDir "planning"), `
     (Join-Path $DocsDir "dishes") | Out-Null
 
-# 1. Copy Core Rules & Culinary Skills -> .agents/{rules,skills}
+# 1. Copy Core Rules & 5 Culinary Skills -> .agents/{rules,skills}
 Copy-Item -Path (Join-Path $CoreDir "rules\*") -Destination (Join-Path $AgentsDir "rules\") -Recurse -Force
 Copy-Item -Path (Join-Path $CoreDir "skills\*") -Destination (Join-Path $AgentsDir "skills\") -Recurse -Force
 
-# 2. Copy Stack Rules & Golden Recipe Examples -> .agents/
-for ($idx = 0; $idx -lt $StackList.Count; $idx++) {
-    $S = $StackList[$idx]
-    $SDir = Join-Path $RepoRoot "stacks\$S"
-    if ($idx -eq 0) {
-        Copy-Item -Path (Join-Path $SDir "rules\*") -Destination (Join-Path $AgentsDir "rules\") -Recurse -Force
-    } else {
-        $TargetStackRule = Join-Path $AgentsDir "rules\stack-rules.md"
-        $AddRule = Join-Path $SDir "rules\stack-rules.md"
-        if ((Test-Path $TargetStackRule) -and (Test-Path $AddRule)) {
-            $RawAdd = [System.IO.File]::ReadAllText($AddRule, [System.Text.Encoding]::UTF8)
-            $StrippedAdd = $RawAdd -replace '(?s)^---\r?\n.*?\r?\n---\r?\n*', ''
-            [System.IO.File]::AppendAllText($TargetStackRule, "`r`n`r`n---`r`n`r`n" + $StrippedAdd, [System.Text.Encoding]::UTF8)
-        }
-    }
-    if (Test-Path (Join-Path $SDir "skills\*")) {
-        Copy-Item -Path (Join-Path $SDir "skills\*") -Destination (Join-Path $AgentsDir "skills\") -Recurse -Force
-    }
+# 2. Initialize starter .agents/rules/stack-rules.md (if missing — /menu tailors it to <= 80 lines for any stack)
+$StackRulesMd = Join-Path $AgentsDir "rules\stack-rules.md"
+if (-not (Test-Path $StackRulesMd)) {
+    Copy-Item (Join-Path $CoreDir "templates\stack-rules.md.template") $StackRulesMd -Force
+    Write-Host "[OK] Created starter .agents/rules/stack-rules.md (<= 80 lines)" -ForegroundColor Green
 }
 
 # 3. Initialize Root AGENTS.md, CLAUDE.md, docs/INDEX.md, and docs/planning/issues.md
 $RootAgentsMd = Join-Path $TargetRoot "AGENTS.md"
 if (-not (Test-Path $RootAgentsMd)) {
-    $Tpl = [System.IO.File]::ReadAllText((Join-Path $PrimaryDir "AGENTS.md.template"), [System.Text.Encoding]::UTF8)
+    $Tpl = [System.IO.File]::ReadAllText((Join-Path $CoreDir "templates\AGENTS.md.template"), [System.Text.Encoding]::UTF8)
     $Tpl = $Tpl -replace '\[PROJECT NAME\]', $ProjectName -replace '\[Project Name\]', $ProjectName -replace 'YYYY-MM-DD', $Today
     [System.IO.File]::WriteAllText($RootAgentsMd, $Tpl, [System.Text.Encoding]::UTF8)
     Write-Host "[OK] Created root AGENTS.md" -ForegroundColor Green
@@ -132,4 +98,4 @@ if ($LocalExclude) {
 }
 
 Write-Host ""
-Write-Host "[DONE] Kitchen Sync Complete! Run /menu -> /prep -> /taste -> /cook -> /plate" -ForegroundColor Cyan
+Write-Host "[DONE] Universal Kitchen Sync Complete! Run /menu -> /prep -> /taste -> /cook -> /plate" -ForegroundColor Cyan

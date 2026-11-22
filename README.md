@@ -43,31 +43,28 @@ flowchart LR
 
 | Path | Purpose |
 | :--- | :--- |
-| [`INVENTORY.md`](INVENTORY.md) | Catalog of active stack packs, culinary lifecycle skills, and golden recipe templates |
 | [`core/rules/kitchen-protocol.md`](core/rules/kitchen-protocol.md) | Always-on Brigade Guardrails: *Mise en Place*, Tasting Spoon First, Anti-Slop Craft Rules, 3-Strike Rule |
-| [`core/skills/menu/`](core/skills/menu/SKILL.md) | **`/menu`** — Concept, Signature Dish vs. Staple triage, and Taste System generator |
-| [`core/skills/prep/`](core/skills/prep/SKILL.md) | **`/prep`** — Automated *Mise en Place*, base scaffolding, and Mechanical Architecture Linter setup |
-| [`core/skills/taste/`](core/skills/taste/SKILL.md) | **`/taste`** — Interactive Tasting Spoon prototyper (`preview.html`) & EARS Recipe specification |
-| [`core/skills/cook/`](core/skills/cook/SKILL.md) | **`/cook`** — 3-Course guided implementation engine with golden stack templates |
+| [`core/skills/menu/`](core/skills/menu/SKILL.md) | **`/menu`** — Concept, Signature Dish vs. Staple triage, Taste System & auto-tailored `stack-rules.md` (`<= 80` lines) |
+| [`core/skills/prep/`](core/skills/prep/SKILL.md) | **`/prep`** — Automated *Mise en Place*, base scaffolding, and Dynamic 0-Token Mechanical Architecture Linter Generator |
+| [`core/skills/taste/`](core/skills/taste/SKILL.md) | **`/taste`** — Interactive 4-State Tasting Spoon prototyper (`preview.html`) & Unified EARS `recipe.md` |
+| [`core/skills/cook/`](core/skills/cook/SKILL.md) | **`/cook`** — 3-Course guided implementation engine |
 | [`core/skills/plate/`](core/skills/plate/SKILL.md) | **`/plate`** — Food Safety verification + 4-Star Culinary Craft Audit + Browser Evidence & Serve |
-| [`stacks/nextjs-supabase/`](stacks/nextjs-supabase/) | Next.js 15+ · React 19 · TypeScript · Supabase · Vercel AI SDK stack pack |
-| [`stacks/python-fastapi/`](stacks/python-fastapi/) | Python 3.12+ · `uv` · FastAPI · Pydantic v2 · Pytest stack pack |
-| [`stacks/wp-hexagonal/`](stacks/wp-hexagonal/) | WordPress Hexagonal Modular Monolith (PSR-4, Ports & Adapters, Pure Domain, React/TS Admin) stack pack |
-| [`scripts/sync-kitchen.ps1`](scripts/sync-kitchen.ps1) | Syncs the `shikamaru-kitchen` `.agents/` engine into any target project (also available in Bash: `scripts/sync-kitchen.sh`) |
-| [`scripts/eval-kitchen.ps1`](scripts/eval-kitchen.ps1) | Automated 5-Suite Kitchen Quality & Integrity Eval (`scripts/eval-kitchen.sh`) |
+| [`core/templates/`](core/templates/) | Universal Stack-Agnostic Starter Templates (`AGENTS.md.template`, `stack-rules.md.template`, `CLAUDE.md.template`) |
+| [`scripts/sync-kitchen.ps1`](scripts/sync-kitchen.ps1) | Syncs the universal `shikamaru-kitchen` `.agents/` engine into any target project (`scripts/sync-kitchen.sh` for Bash) |
+| [`scripts/eval-kitchen.ps1`](scripts/eval-kitchen.ps1) | Automated 4-Suite Universal Kitchen Quality & Integrity Eval (`scripts/eval-kitchen.sh`) |
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Sync the Kitchen Engine into a Target Project
+### 1. Sync the Universal Kitchen Engine into Any Target Project (Any Tech Stack)
 ```powershell
 # PowerShell (Windows)
-.\scripts\sync-kitchen.ps1 -ProjectPath "..\my-crafted-app" -Stack "nextjs-supabase"
+.\scripts\sync-kitchen.ps1 -ProjectPath "..\my-crafted-app"
 ```
 ```bash
 # Bash (macOS / Linux)
-bash scripts/sync-kitchen.sh ../my-crafted-app nextjs-supabase
+bash scripts/sync-kitchen.sh ../my-crafted-app
 ```
 
 ### 2. Run the Culinary Workflow in Your AI IDE (Antigravity, Claude Code, Cursor, Codex, Windsurf)

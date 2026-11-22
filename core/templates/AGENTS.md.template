@@ -1,0 +1,40 @@
+# 👨‍🍳 [PROJECT NAME] — Michelin Kitchen Brain (`AGENTS.md`)
+
+**Project:** [Project Name] — [One line description]
+**Tech Stack:** [Auto-Detected or Chosen by `/menu` — e.g., Next.js 15+ / Python FastAPI / WordPress Hexagonal / Go / Rust]
+**Architecture Pattern:** [Modular Station / Feature Isolation]
+**Kitchen Engine:** `shikamaru-kitchen` (`v1.0` — YYYY-MM-DD)
+
+---
+
+## 🚦 Kitchen Service State
+
+**Stage:** `initialized`
+
+| Stage | Meaning | Next Culinary Command |
+| :--- | :--- | :--- |
+| `initialized` | Kitchen engine synced, Menu & Taste System not designed yet | Run **`/menu`** to design Signature Dishes vs. House Staples, lock `taste-system.md`, and auto-tailor `.agents/rules/stack-rules.md` (`<= 80` lines) |
+| `menu-locked` | Menu & Taste System ready, *mise en place* not run yet | Run **`/prep`** (`docs/dishes/00-prep/recipe.md`) |
+| `service` | 0-Token Mechanical Linter active & dish crafting in progress | **`/taste`** (4-State Tasting Spoon) → **`/cook`** (3 Courses) → **`/plate`** (4-Star Audit) |
+
+---
+
+## ⚡ Deterministic Food-Safety Commands
+
+Run after every course before marking `[x]`:
+- **Typecheck / Lint, Unit Tests & 0-Token Mechanical Architecture Linter:** *(Populated by `/menu` & `/prep` for your exact stack — e.g., `pnpm tsc --noEmit && pnpm test --run`, `uv run ruff check . && uv run pytest`, `vendor/bin/phpunit`, `go test ./...`)*
+
+---
+
+## 🗺️ Kitchen Context Map (`docs/INDEX.md`) & Culinary Skills (`.agents/skills/`)
+
+| Question / Action | File or Skill |
+| :--- | :--- |
+| What is on the Service Board (`👨‍🍳 SIGNATURE` vs. `🔪 STAPLE`)? | [`docs/planning/service-board.md`](docs/planning/service-board.md) |
+| Design the product menu, Taste System & auto-tailor `stack-rules.md` | **`/menu`** ([`.agents/skills/menu/SKILL.md`](.agents/skills/menu/SKILL.md)) |
+| Run Phase 0 *Mise en Place* & dynamically generate Mechanical Architecture Linter | **`/prep`** ([`.agents/skills/prep/SKILL.md`](.agents/skills/prep/SKILL.md)) |
+| Generate interactive 4-state Tasting Spoon (`preview.html`) & lock unified `recipe.md` | **`/taste`** ([`.agents/skills/taste/SKILL.md`](.agents/skills/taste/SKILL.md)) |
+| Cook a dish across 3 Courses (Domain → Interactive UI → Seasoning) | **`/cook`** ([`.agents/skills/cook/SKILL.md`](.agents/skills/cook/SKILL.md)) |
+| Run Food Safety + 4-Star Culinary Craft Audit + Browser Proof & Serve | **`/plate`** ([`.agents/skills/plate/SKILL.md`](.agents/skills/plate/SKILL.md)) |
+| What are the color tokens, motion rules & Anti-Slop Manifesto? | [`docs/foundation/taste-system.md`](docs/foundation/taste-system.md) |
+| What are the brigade & station rules? | [`.agents/rules/kitchen-protocol.md`](.agents/rules/kitchen-protocol.md) & [`.agents/rules/stack-rules.md`](.agents/rules/stack-rules.md) |

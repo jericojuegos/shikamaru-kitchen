@@ -1,0 +1,36 @@
+---
+trigger: always_on
+description: Project-Specific Stack & Layer Boundary Rules (Auto-tailored by /blueprint to <= 80 lines for any tech stack)
+---
+
+# 🏗️ Stack & Architecture Rules (`stack-rules.md`)
+
+> **Rule (`<= 80` Lines Cap):** This file is auto-tailored by **`/blueprint`** to match the repository's exact tech stack (e.g., Next.js/TypeScript, Python/FastAPI, WordPress/PHP, Go, Rust, Kotlin, Rails) and is mechanically enforced at 0 token cost by the project's **Mechanical Architecture Linter** (`architecture.test.*`).
+
+---
+
+## 1. Feature / Module Isolation Boundaries
+
+| Layer / Directory | What Lives Here | What NEVER Lives Here |
+| :--- | :--- | :--- |
+| **Feature / Domain Modules** (`src/features/<domain>/`, `app/modules/<domain>/`, `src/Modules/<Feature>/`) | Isolated domain components, services, schemas/DTOs, and co-located unit tests | Direct imports from peer feature/domain internals (`<domain-a>` importing `<domain-b>`) |
+| **Thin Delivery / Entrypoints** (`src/app/`, `router.py`, `Presentation/`) | Route registration, auth/permission gate, input validation, delegating to services | Raw SQL/DB mutations or complex domain calculations |
+| **Shared / Core Plumbing** (`src/shared/`, `src/lib/`, `app/core/`) | Stateless UI primitives, DB/auth clients, shared types/contracts | Feature-specific business logic |
+
+---
+
+## 2. Mandatory Coding & Security Standards
+
+1. **Strict Types & Input Validation at Every Boundary:** Validate all external payloads (HTTP, webhook, form, CLI) with strict schemas (Zod, Pydantic v2, typed DTOs) before calling domain services. Zero `any` or untyped payloads.
+2. **Auth & Secret Isolation:** Verify authentication and authorization (`getUser()`, capability/nonce check, auth dependency) on every state-mutating endpoint. Server secrets/keys must never leak to client bundles.
+3. **Anti-Slop Modularity Cap (`<= 300` Lines):** Keep every source file under **300 lines** (UI components under **250 lines**). Decompose large files into focused sub-modules.
+4. **Zero Compiler/Linter Escape Hatches & Zero `TODO` Slop:** Never commit `@ts-ignore`, `@ts-expect-error`, `eslint-disable`, `# type: ignore`, `# noqa`, `phpcs:ignore`, `@phpstan-ignore`, or unfinished `TODO:` / `FIXME:` / `HACK:` placeholder comments.
+
+---
+
+## 3. Pre-Commit Hard-Failure Checklist
+
+- [ ] Native typecheck / syntax check and linter pass with `0` errors
+- [ ] All unit/invariant tests (`Property 1` happy path + `Property 2` boundary rejection) pass
+- [ ] **0-Token Mechanical Architecture Linter** (`architecture.test.*`) passes in `< 50ms` with `0` violations
+- [ ] Zero cross-feature internal imports, zero files `> 300` lines, zero escape hatches, and zero `TODO:` placeholders

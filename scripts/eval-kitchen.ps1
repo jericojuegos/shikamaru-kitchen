@@ -1,12 +1,11 @@
 <#
 .SYNOPSIS
-  Shikamaru-Kitchen Michelin Brigade Eval Suite (eval-kitchen.ps1)
-  Validates Master Kitchen contracts across 5 automated evaluation suites:
+  Shikamaru-Kitchen Universal Michelin Brigade Eval Suite (eval-kitchen.ps1)
+  Validates Universal Michelin Kitchen contracts across 4 automated evaluation suites:
     Suite 1: Core Kitchen Protocol & 5 Culinary Lifecycle Skills (/menu, /prep, /taste, /cook, /plate)
-    Suite 2: Stack Pack Structural, <= 80-Line Rule Cap & 0-Token Mechanical Architecture Linters
-    Suite 3: Tasting Spoon 4-State Prototype & Recipe Templates
-    Suite 4: INVENTORY.md Single Source of Truth Integrity
-    Suite 5: End-to-End sync-kitchen Smoke Eval (isolated temp project assembly + cleanup)
+    Suite 2: Universal Stack-Agnostic Templates (<= 80-Line stack-rules.md.template & <= 100-Line recipe.md.template)
+    Suite 3: Tasting Spoon 4-State Prototype & Dynamic Mechanical Linter Contract
+    Suite 4: End-to-End sync-kitchen Smoke Eval (isolated temp project assembly + cleanup)
 #>
 
 $ErrorActionPreference = "Stop"
@@ -38,7 +37,7 @@ function Assert-Eval {
 
 Write-Host ""
 Write-Host "==================================================================" -ForegroundColor Cyan
-Write-Host " SHIKAMARU-KITCHEN MICHELIN BRIGADE EVAL SUITE (v1.0)" -ForegroundColor Cyan
+Write-Host " SHIKAMARU-KITCHEN UNIVERSAL MICHELIN BRIGADE EVAL SUITE (v1.0)" -ForegroundColor Cyan
 Write-Host "==================================================================" -ForegroundColor Cyan
 
 # ==============================================================================
@@ -72,55 +71,34 @@ foreach ($Skill in @("menu", "prep", "taste", "cook", "plate")) {
     }
 }
 
-$PlateContent = Get-Content (Join-Path $RepoRoot "core\skills\plate\SKILL.md") -Raw
-Assert-Eval "Suite 1" "core/skills/plate/SKILL.md enforces Mandatory evidence/*.png Hard Gate & 4-Star Craft Audit" (
-    ($PlateContent -match "Hard Gate.*Mandatory.*evidence/\*\.png") -and ($PlateContent -match "4-Star Culinary Craft Audit")
+# ==============================================================================
+# SUITE 2: Universal Stack-Agnostic Templates (<= 80-Line & <= 100-Line Caps)
+# ==============================================================================
+Write-Host "`n[Suite 2] Universal Stack-Agnostic Templates" -ForegroundColor Yellow
+
+Assert-Eval "Suite 2" "No hardcoded stacks/ directory exists (100% Universal Stack-Agnostic)" (
+    -not (Test-Path (Join-Path $RepoRoot "stacks"))
 )
 
-# ==============================================================================
-# SUITE 2: Stack Pack Structural, <= 80-Line Rule Cap & Mechanical Linters
-# ==============================================================================
-Write-Host "`n[Suite 2] Stack Pack Structural, <= 80-Line Rule Cap & Mechanical Linters" -ForegroundColor Yellow
-
-$StackDirs = Get-ChildItem (Join-Path $RepoRoot "stacks") -Directory
-Assert-Eval "Suite 2" "At least 3 public stack packs exist in stacks/" ($StackDirs.Count -ge 3)
-
-foreach ($StackDir in $StackDirs) {
-    $SName = $StackDir.Name
-    $AgentsTpl = Join-Path $StackDir.FullName "AGENTS.md.template"
-    $StackRules = Join-Path $StackDir.FullName "rules\stack-rules.md"
-
-    Assert-Eval "Suite 2" "stacks/$SName/AGENTS.md.template exists" (Test-Path $AgentsTpl)
-    Assert-Eval "Suite 2" "stacks/$SName/rules/stack-rules.md exists" (Test-Path $StackRules)
-
-    if (Test-Path $StackRules) {
-        $LineCount = (Get-Content $StackRules).Count
-        Assert-Eval "Suite 2" "stacks/$SName/rules/stack-rules.md is ultra-lean (<= 80 lines: $LineCount)" ($LineCount -le 80)
-    }
+$StackRulesTpl = Join-Path $RepoRoot "core\templates\stack-rules.md.template"
+Assert-Eval "Suite 2" "core/templates/stack-rules.md.template exists" (Test-Path $StackRulesTpl)
+if (Test-Path $StackRulesTpl) {
+    $RuleLines = (Get-Content $StackRulesTpl).Count
+    Assert-Eval "Suite 2" "stack-rules.md.template is ultra-lean (<= 80 lines: $RuleLines)" ($RuleLines -le 80)
 }
-
-Assert-Eval "Suite 2" "nextjs-supabase has 0-token Mechanical Architecture Linter (architecture.test.ts.template)" (
-    Test-Path (Join-Path $RepoRoot "stacks\nextjs-supabase\skills\cook\examples\architecture.test.ts.template")
-)
-Assert-Eval "Suite 2" "python-fastapi has 0-token Mechanical Architecture Linter (test_architecture.py.template)" (
-    Test-Path (Join-Path $RepoRoot "stacks\python-fastapi\skills\cook\examples\test_architecture.py.template")
-)
-Assert-Eval "Suite 2" "wp-hexagonal has 0-token Mechanical Architecture Linter (HexagonalArchitectureTest.php.template)" (
-    Test-Path (Join-Path $RepoRoot "stacks\wp-hexagonal\skills\cook\examples\HexagonalArchitectureTest.php.template")
-)
-
-# ==============================================================================
-# SUITE 3: Tasting Spoon 4-State Prototype & Unified Recipe Template
-# ==============================================================================
-Write-Host "`n[Suite 3] Tasting Spoon 4-State Prototype & Unified Recipe Template" -ForegroundColor Yellow
 
 foreach ($Tpl in @("recipe.md.template", "preview.html.template")) {
     $TplPath = Join-Path $RepoRoot "core\skills\taste\resources\$Tpl"
-    Assert-Eval "Suite 3" "taste resource $Tpl exists" (Test-Path $TplPath)
+    Assert-Eval "Suite 2" "taste resource $Tpl exists" (Test-Path $TplPath)
 }
 
 $RecipeLines = (Get-Content (Join-Path $RepoRoot "core\skills\taste\resources\recipe.md.template")).Count
-Assert-Eval "Suite 3" "unified recipe.md.template is ultra-lean (<= 100 lines: $RecipeLines)" ($RecipeLines -le 100)
+Assert-Eval "Suite 2" "unified recipe.md.template is ultra-lean (<= 100 lines: $RecipeLines)" ($RecipeLines -le 100)
+
+# ==============================================================================
+# SUITE 3: Tasting Spoon 4-State Prototype & Dynamic Mechanical Linter Contract
+# ==============================================================================
+Write-Host "`n[Suite 3] Tasting Spoon 4-State Prototype & Dynamic Mechanical Linter Contract" -ForegroundColor Yellow
 
 $PreviewContent = Get-Content (Join-Path $RepoRoot "core\skills\taste\resources\preview.html.template") -Raw
 Assert-Eval "Suite 3" "preview.html.template includes all 4 interactive Tasting Spoon states (happy, empty, loading, error)" (
@@ -130,53 +108,47 @@ Assert-Eval "Suite 3" "preview.html.template includes all 4 interactive Tasting 
     ($PreviewContent -match "state-error")
 )
 
-# ==============================================================================
-# SUITE 4: INVENTORY.md Single Source of Truth Integrity
-# ==============================================================================
-Write-Host "`n[Suite 4] INVENTORY.md Single Source of Truth Integrity" -ForegroundColor Yellow
+$MenuContent = Get-Content (Join-Path $RepoRoot "core\skills\menu\SKILL.md") -Raw
+Assert-Eval "Suite 3" "core/skills/menu/SKILL.md auto-discovers stack and tailors stack-rules.md (<= 80 lines)" (
+    $MenuContent -match "stack-rules\.md"
+)
 
-$InvPath = Join-Path $RepoRoot "INVENTORY.md"
-Assert-Eval "Suite 4" "INVENTORY.md exists" (Test-Path $InvPath)
-if (Test-Path $InvPath) {
-    $InvContent = Get-Content $InvPath -Raw
-    foreach ($StackDir in $StackDirs) {
-        $SName = $StackDir.Name
-        Assert-Eval "Suite 4" "INVENTORY.md catalogs stack '$SName'" ($InvContent -match [regex]::Escape("stacks/$SName/"))
-    }
-    Assert-Eval "Suite 4" "Zero private/company leaks in public INVENTORY.md" (
-        -not ($InvContent -match "tangible")
-    )
-}
+$PrepContent = Get-Content (Join-Path $RepoRoot "core\skills\prep\SKILL.md") -Raw
+Assert-Eval "Suite 3" "core/skills/prep/SKILL.md dynamically generates 0-Token Mechanical Architecture Linter" (
+    $PrepContent -match "Dynamically Generate.*0-Token Mechanical Architecture Linter"
+)
+
+$PlateContent = Get-Content (Join-Path $RepoRoot "core\skills\plate\SKILL.md") -Raw
+Assert-Eval "Suite 3" "core/skills/plate/SKILL.md enforces Mandatory evidence/*.png Hard Gate & 4-Star Craft Audit" (
+    ($PlateContent -match "Hard Gate.*Mandatory.*evidence/\*\.png") -and ($PlateContent -match "4-Star Culinary Craft Audit")
+)
 
 # ==============================================================================
-# SUITE 5: End-to-End sync-kitchen Smoke Eval
+# SUITE 4: End-to-End sync-kitchen Smoke Eval
 # ==============================================================================
-Write-Host "`n[Suite 5] End-to-End sync-kitchen Smoke Eval" -ForegroundColor Yellow
+Write-Host "`n[Suite 4] End-to-End sync-kitchen Smoke Eval" -ForegroundColor Yellow
 
 $TempProject = Join-Path ([System.IO.Path]::GetTempPath()) ("shikamaru-kitchen-eval-" + [System.Guid]::NewGuid().ToString("N").Substring(0, 8))
 try {
     $SyncScript = Join-Path $RepoRoot "scripts\sync-kitchen.ps1"
-    & $SyncScript -ProjectPath $TempProject -Stack "nextjs-supabase" -LocalExclude | Out-Null
+    & $SyncScript -ProjectPath $TempProject -LocalExclude | Out-Null
 
-    Assert-Eval "Suite 5" "sync-kitchen creates root AGENTS.md & CLAUDE.md" (
+    Assert-Eval "Suite 4" "sync-kitchen creates root AGENTS.md & CLAUDE.md" (
         (Test-Path (Join-Path $TempProject "AGENTS.md")) -and (Test-Path (Join-Path $TempProject "CLAUDE.md"))
     )
-    Assert-Eval "Suite 5" "sync-kitchen creates docs/INDEX.md & docs/dishes/" (
+    Assert-Eval "Suite 4" "sync-kitchen creates docs/INDEX.md & docs/dishes/" (
         (Test-Path (Join-Path $TempProject "docs\INDEX.md")) -and (Test-Path (Join-Path $TempProject "docs\dishes"))
     )
-    Assert-Eval "Suite 5" "sync-kitchen syncs .agents/rules/kitchen-protocol.md & stack-rules.md" (
+    Assert-Eval "Suite 4" "sync-kitchen syncs .agents/rules/kitchen-protocol.md & starter stack-rules.md" (
         (Test-Path (Join-Path $TempProject ".agents\rules\kitchen-protocol.md")) -and
         (Test-Path (Join-Path $TempProject ".agents\rules\stack-rules.md"))
     )
-    Assert-Eval "Suite 5" "sync-kitchen syncs all 5 culinary skills (/menu, /prep, /taste, /cook, /plate)" (
+    Assert-Eval "Suite 4" "sync-kitchen syncs all 5 culinary skills (/menu, /prep, /taste, /cook, /plate)" (
         (Test-Path (Join-Path $TempProject ".agents\skills\menu\SKILL.md")) -and
         (Test-Path (Join-Path $TempProject ".agents\skills\prep\SKILL.md")) -and
         (Test-Path (Join-Path $TempProject ".agents\skills\taste\SKILL.md")) -and
         (Test-Path (Join-Path $TempProject ".agents\skills\cook\SKILL.md")) -and
         (Test-Path (Join-Path $TempProject ".agents\skills\plate\SKILL.md"))
-    )
-    Assert-Eval "Suite 5" "sync-kitchen injects 0-token Mechanical Architecture Linter into .agents/skills/cook/examples/" (
-        Test-Path (Join-Path $TempProject ".agents\skills\cook\examples\architecture.test.ts.template")
     )
 } finally {
     if (Test-Path $TempProject) {
