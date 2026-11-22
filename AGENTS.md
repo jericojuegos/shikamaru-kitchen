@@ -11,9 +11,9 @@
 | Directory / File | Purpose |
 |------------------|---------|
 | [`README.md`](README.md) | Overview of the Universal Michelin-Star Software Kitchen philosophy and 5-stage lifecycle |
-| [`core/rules/kitchen-protocol.md`](core/rules/kitchen-protocol.md) | Always-on Brigade Guardrails: *Mise en Place*, Tasting Spoon First, 3-Course Cooking Loop, 4-Star Craft Audit, 3-Strike Rule |
-| [`core/skills/`](core/skills/) | 5 Universal Culinary Lifecycle Skills (`menu/`, `prep/`, `taste/`, `cook/`, `plate/`) |
-| [`core/templates/`](core/templates/) | Universal Stack-Agnostic Templates (`AGENTS.md.template`, `stack-rules.md.template`, `CLAUDE.md.template`, `INDEX.md.template`, `issues.md.template`) |
+| [`.agents/rules/kitchen-protocol.md`](.agents/rules/kitchen-protocol.md) | Always-on Brigade Guardrails: *Mise en Place*, Tasting Spoon First, 3-Course Cooking Loop, 4-Star Craft Audit, 3-Strike Rule |
+| [`.agents/skills/`](.agents/skills/) | 5 Universal Culinary Lifecycle Skills (`menu/`, `prep/`, `taste/`, `cook/`, `plate/`) |
+| [`.agents/templates/`](.agents/templates/) | Universal Stack-Agnostic Templates (`AGENTS.md.template`, `stack-rules.md.template`, `CLAUDE.md.template`, `INDEX.md.template`, `issues.md.template`) |
 | [`scripts/`](scripts/) | Sync & Kitchen Eval scripts (`sync-kitchen.ps1`, `sync-kitchen.sh`, `eval-kitchen.ps1`, `eval-kitchen.sh`) |
 
 ---
@@ -21,7 +21,7 @@
 ## 🚀 Common Tasks in This Repo
 
 1. **Design a New Product Menu (`/menu`):**
-   Run `/menu` (reads `.agents/skills/menu/SKILL.md` or `core/skills/menu/SKILL.md`) to auto-discover/select any tech stack, define Signature Dishes vs. House Staples, lock the Taste System, and tailor `.agents/rules/stack-rules.md` (`<= 80` lines).
+   Run `/menu` (reads `.agents/skills/menu/SKILL.md`) to auto-discover/select any tech stack, define Signature Dishes vs. House Staples, lock the Taste System, and tailor `.agents/rules/stack-rules.md` (`<= 80` lines).
 2. **Sync the Universal Kitchen Engine into Any Target Project:**
    - PowerShell: `.\scripts\sync-kitchen.ps1 -ProjectPath "..\my-project"`
    - Bash: `bash scripts/sync-kitchen.sh ../my-project`

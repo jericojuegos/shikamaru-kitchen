@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Shikamaru-Kitchen Universal Michelin Brigade Eval Suite (eval-kitchen.ps1)
   Validates Universal Michelin Kitchen contracts across 4 automated evaluation suites:
@@ -45,8 +45,8 @@ Write-Host "==================================================================" 
 # ==============================================================================
 Write-Host "`n[Suite 1] Core Kitchen Protocol & 5 Culinary Lifecycle Skills" -ForegroundColor Yellow
 
-$ProtocolPath = Join-Path $RepoRoot "core\rules\kitchen-protocol.md"
-Assert-Eval "Suite 1" "core/rules/kitchen-protocol.md exists" (Test-Path $ProtocolPath)
+$ProtocolPath = Join-Path $RepoRoot ".agents\rules\kitchen-protocol.md"
+Assert-Eval "Suite 1" ".agents/rules/kitchen-protocol.md exists" (Test-Path $ProtocolPath)
 if (Test-Path $ProtocolPath) {
     $Proto = Get-Content $ProtocolPath -Raw
     Assert-Eval "Suite 1" "kitchen-protocol.md has YAML frontmatter" ($Proto -match "(?s)^---\r?\n.*?\r?\n---")
@@ -61,11 +61,11 @@ if (Test-Path $ProtocolPath) {
 }
 
 foreach ($Skill in @("menu", "prep", "taste", "cook", "plate")) {
-    $SkillPath = Join-Path $RepoRoot "core\skills\$Skill\SKILL.md"
-    Assert-Eval "Suite 1" "core/skills/$Skill/SKILL.md exists" (Test-Path $SkillPath)
+    $SkillPath = Join-Path $RepoRoot ".agents\skills\$Skill\SKILL.md"
+    Assert-Eval "Suite 1" ".agents/skills/$Skill/SKILL.md exists" (Test-Path $SkillPath)
     if (Test-Path $SkillPath) {
         $Sc = Get-Content $SkillPath -Raw
-        Assert-Eval "Suite 1" "core/skills/$Skill/SKILL.md has valid name & description frontmatter" (
+        Assert-Eval "Suite 1" ".agents/skills/$Skill/SKILL.md has valid name & description frontmatter" (
             ($Sc -match "(?m)^name:\s*$Skill\s*$") -and ($Sc -match "(?m)^description:")
         )
     }
@@ -80,19 +80,19 @@ Assert-Eval "Suite 2" "No hardcoded stacks/ directory exists (100% Universal Sta
     -not (Test-Path (Join-Path $RepoRoot "stacks"))
 )
 
-$StackRulesTpl = Join-Path $RepoRoot "core\templates\stack-rules.md.template"
-Assert-Eval "Suite 2" "core/templates/stack-rules.md.template exists" (Test-Path $StackRulesTpl)
+$StackRulesTpl = Join-Path $RepoRoot ".agents\templates\stack-rules.md.template"
+Assert-Eval "Suite 2" ".agents/templates/stack-rules.md.template exists" (Test-Path $StackRulesTpl)
 if (Test-Path $StackRulesTpl) {
     $RuleLines = (Get-Content $StackRulesTpl).Count
     Assert-Eval "Suite 2" "stack-rules.md.template is ultra-lean (<= 80 lines: $RuleLines)" ($RuleLines -le 80)
 }
 
 foreach ($Tpl in @("recipe.md.template", "preview.html.template")) {
-    $TplPath = Join-Path $RepoRoot "core\skills\taste\resources\$Tpl"
+    $TplPath = Join-Path $RepoRoot ".agents\skills\taste\resources\$Tpl"
     Assert-Eval "Suite 2" "taste resource $Tpl exists" (Test-Path $TplPath)
 }
 
-$RecipeLines = (Get-Content (Join-Path $RepoRoot "core\skills\taste\resources\recipe.md.template")).Count
+$RecipeLines = (Get-Content (Join-Path $RepoRoot ".agents\skills\taste\resources\recipe.md.template")).Count
 Assert-Eval "Suite 2" "unified recipe.md.template is ultra-lean (<= 100 lines: $RecipeLines)" ($RecipeLines -le 100)
 
 # ==============================================================================
@@ -100,7 +100,7 @@ Assert-Eval "Suite 2" "unified recipe.md.template is ultra-lean (<= 100 lines: $
 # ==============================================================================
 Write-Host "`n[Suite 3] Tasting Spoon 4-State Prototype & Dynamic Mechanical Linter Contract" -ForegroundColor Yellow
 
-$PreviewContent = Get-Content (Join-Path $RepoRoot "core\skills\taste\resources\preview.html.template") -Raw
+$PreviewContent = Get-Content (Join-Path $RepoRoot ".agents\skills\taste\resources\preview.html.template") -Raw
 Assert-Eval "Suite 3" "preview.html.template includes all 4 interactive Tasting Spoon states (happy, empty, loading, error)" (
     ($PreviewContent -match "state-happy") -and
     ($PreviewContent -match "state-empty") -and
@@ -108,18 +108,18 @@ Assert-Eval "Suite 3" "preview.html.template includes all 4 interactive Tasting 
     ($PreviewContent -match "state-error")
 )
 
-$MenuContent = Get-Content (Join-Path $RepoRoot "core\skills\menu\SKILL.md") -Raw
-Assert-Eval "Suite 3" "core/skills/menu/SKILL.md auto-discovers stack and tailors stack-rules.md (<= 80 lines)" (
+$MenuContent = Get-Content (Join-Path $RepoRoot ".agents\skills\menu\SKILL.md") -Raw
+Assert-Eval "Suite 3" ".agents/skills/menu/SKILL.md auto-discovers stack and tailors stack-rules.md (<= 80 lines)" (
     $MenuContent -match "stack-rules\.md"
 )
 
-$PrepContent = Get-Content (Join-Path $RepoRoot "core\skills\prep\SKILL.md") -Raw
-Assert-Eval "Suite 3" "core/skills/prep/SKILL.md dynamically generates 0-Token Mechanical Architecture Linter" (
+$PrepContent = Get-Content (Join-Path $RepoRoot ".agents\skills\prep\SKILL.md") -Raw
+Assert-Eval "Suite 3" ".agents/skills/prep/SKILL.md dynamically generates 0-Token Mechanical Architecture Linter" (
     $PrepContent -match "Dynamically Generate.*0-Token Mechanical Architecture Linter"
 )
 
-$PlateContent = Get-Content (Join-Path $RepoRoot "core\skills\plate\SKILL.md") -Raw
-Assert-Eval "Suite 3" "core/skills/plate/SKILL.md enforces Mandatory evidence/*.png Hard Gate & 4-Star Craft Audit" (
+$PlateContent = Get-Content (Join-Path $RepoRoot ".agents\skills\plate\SKILL.md") -Raw
+Assert-Eval "Suite 3" ".agents/skills/plate/SKILL.md enforces Mandatory evidence/*.png Hard Gate & 4-Star Craft Audit" (
     ($PlateContent -match "Hard Gate.*Mandatory.*evidence/\*\.png") -and ($PlateContent -match "4-Star Culinary Craft Audit")
 )
 

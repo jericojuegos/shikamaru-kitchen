@@ -43,13 +43,13 @@ flowchart LR
 
 | Path | Purpose |
 | :--- | :--- |
-| [`core/rules/kitchen-protocol.md`](core/rules/kitchen-protocol.md) | Always-on Brigade Guardrails: *Mise en Place*, Tasting Spoon First, Anti-Slop Craft Rules, 3-Strike Rule |
-| [`core/skills/menu/`](core/skills/menu/SKILL.md) | **`/menu`** — Concept, Signature Dish vs. Staple triage, Taste System & auto-tailored `stack-rules.md` (`<= 80` lines) |
-| [`core/skills/prep/`](core/skills/prep/SKILL.md) | **`/prep`** — Automated *Mise en Place*, base scaffolding, and Dynamic 0-Token Mechanical Architecture Linter Generator |
-| [`core/skills/taste/`](core/skills/taste/SKILL.md) | **`/taste`** — Interactive 4-State Tasting Spoon prototyper (`preview.html`) & Unified EARS `recipe.md` |
-| [`core/skills/cook/`](core/skills/cook/SKILL.md) | **`/cook`** — 3-Course guided implementation engine |
-| [`core/skills/plate/`](core/skills/plate/SKILL.md) | **`/plate`** — Food Safety verification + 4-Star Culinary Craft Audit + Browser Evidence & Serve |
-| [`core/templates/`](core/templates/) | Universal Stack-Agnostic Starter Templates (`AGENTS.md.template`, `stack-rules.md.template`, `CLAUDE.md.template`) |
+| [`.agents/rules/kitchen-protocol.md`](.agents/rules/kitchen-protocol.md) | Always-on Brigade Guardrails: *Mise en Place*, Tasting Spoon First, Anti-Slop Craft Rules, 3-Strike Rule |
+| [`.agents/skills/menu/`](.agents/skills/menu/SKILL.md) | **`/menu`** — Concept, Signature Dish vs. Staple triage, Taste System & auto-tailored `stack-rules.md` (`<= 80` lines) |
+| [`.agents/skills/prep/`](.agents/skills/prep/SKILL.md) | **`/prep`** — Automated *Mise en Place*, base scaffolding, and Dynamic 0-Token Mechanical Architecture Linter Generator |
+| [`.agents/skills/taste/`](.agents/skills/taste/SKILL.md) | **`/taste`** — Interactive 4-State Tasting Spoon prototyper (`preview.html`) & Unified EARS `recipe.md` |
+| [`.agents/skills/cook/`](.agents/skills/cook/SKILL.md) | **`/cook`** — 3-Course guided implementation engine |
+| [`.agents/skills/plate/`](.agents/skills/plate/SKILL.md) | **`/plate`** — Food Safety verification + 4-Star Culinary Craft Audit + Browser Evidence & Serve |
+| [`.agents/templates/`](.agents/templates/) | Universal Stack-Agnostic Starter Templates (`AGENTS.md.template`, `stack-rules.md.template`, `CLAUDE.md.template`) |
 | [`scripts/sync-kitchen.ps1`](scripts/sync-kitchen.ps1) | Syncs the universal `shikamaru-kitchen` `.agents/` engine into any target project (`scripts/sync-kitchen.sh` for Bash) |
 | [`scripts/eval-kitchen.ps1`](scripts/eval-kitchen.ps1) | Automated 4-Suite Universal Kitchen Quality & Integrity Eval (`scripts/eval-kitchen.sh`) |
 

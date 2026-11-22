@@ -15,7 +15,7 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-CORE_DIR="$REPO_ROOT/core"
+CORE_DIR="$REPO_ROOT/.agents"
 
 mkdir -p "$PROJECT_PATH"
 TARGET_ROOT="$(cd "$PROJECT_PATH" && pwd)"

@@ -18,7 +18,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $RepoRoot = Split-Path -Parent $PSScriptRoot
-$CoreDir  = Join-Path $RepoRoot "core"
+$CoreDir  = Join-Path $RepoRoot ".agents"
 
 if (-not (Test-Path $ProjectPath)) {
     New-Item -ItemType Directory -Force -Path $ProjectPath | Out-Null
