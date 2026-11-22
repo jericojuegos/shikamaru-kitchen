@@ -1,0 +1,41 @@
+# 📜 Dish Recipe: [Dish Title] (`[NN-dish-slug]`)
+
+> **Category:** `[👨‍🍳 SIGNATURE DISH | 🔪 HOUSE STAPLE]` · **Station (Touches):** `[list target directories]`  
+> **Depends On:** `[00-prep / None]` · **Status:** `[ ]` On Menu  
+> **Dish Links:** [`design-reference/preview.html`](./design-reference/preview.html) · [`design.md`](./design.md) · [`courses.md`](./courses.md) · [`plating.md`](./plating.md)
+
+---
+
+## 1. Dish Concept & Open Assumptions
+
+- **Diner Job-to-be-Done:** `[What user problem this dish makes effortless]`
+- **Assumptions:**
+  - `A1:` `[Assumption — Confirmed / Needs Chef confirmation]`
+
+---
+
+## 2. User Stories & EARS Recipe Criteria
+
+### Story 1: [Primary Diner Flow]
+**As a** `[diner/user role]`, **I want** `[action]`, **so that** `[outcome]`.
+
+- **`Req 1.1` (Happy Path):** WHEN `[trigger]`, THE System SHALL `[deterministic outcome]`.
+- **`Req 1.2` (Persistence & Feedback):** WHEN `[mutation succeeds]`, THE System SHALL `[persist state and display immediate optimistic/toast feedback]`.
+- **`Req 1.3` (Empathetic Validation):** IF `[invalid or incomplete input is submitted]`, THEN THE System SHALL `[prevent submission, preserve user input, and display an inline recovery hint]`.
+
+### Story 2: [Edge Cases & Security Boundary]
+- **`Req 2.1` (Empty State Empathy):** WHILE `[zero records exist]`, THE System SHALL `[render an onboarding empty state with a primary action button]`.
+- **`Req 2.2` (Auth Guard):** IF `[unauthenticated/unauthorized request arrives]`, THEN THE System SHALL `[reject with HTTP 401/403 before any state mutation]`.
+
+---
+
+## 3. Non-Goals (Out of Scope for This Dish)
+- `[Explicitly excluded scope so agents do not over-engineer]`
+
+---
+
+## 📝 Seasoning History (Post-Taste Delta Adjustments)
+
+| Rev | Date | Seasoning Change (Added / Adjusted / Simplified) | Chef Reason |
+| :--- | :--- | :--- | :--- |
+| `Rev 1` | `YYYY-MM-DD` | Initial recipe & Tasting Spoon (`preview.html`) created. | Initial menu design |

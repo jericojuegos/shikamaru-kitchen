@@ -1,0 +1,7 @@
+# 📓 Kitchen Self-Healing & Retrospective Log (`docs/planning/issues.md`)
+
+> Automatically updated whenever a bug, mechanical architecture violation, or Chef taste correction occurs (`kitchen-protocol.md` Section 5.1).
+
+| Date | Dish / Course | What Went Wrong (Root Cause) | Mechanical Linter / Taste System Guardrail Added |
+| :--- | :--- | :--- | :--- |
+| `YYYY-MM-DD` | `Init` | Kitchen initialized. | Mechanical Architecture Linter active. |

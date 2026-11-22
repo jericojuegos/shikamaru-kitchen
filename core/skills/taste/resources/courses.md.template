@@ -1,0 +1,40 @@
+# 🍳 3-Course Cooking Plan: [Dish Title] (`[NN-dish-slug]`)
+
+> **Category:** `[👨‍🍳 SIGNATURE DISH | 🔪 HOUSE STAPLE]` · **Branch:** `feat/[NN-dish-slug]` · **Status:** `[ ]` Prepped  
+> **Depends On:** `[00-prep]` · **Station (Touches):** `[list target directories]`  
+> **Dish Links:** [`recipe.md`](./recipe.md) · [`design.md`](./design.md) · [`plating.md`](./plating.md) · [`design-reference/preview.html`](./design-reference/preview.html)
+
+---
+
+## 🍽️ The 3-Course Cooking Loop (`/cook`)
+
+### Course 1 — Domain Engine, Data & Unit Tests (`[BE]`)
+- [ ] **1.1** `[BE]` Create domain schemas, types, and validation rules in `[exact/file/path]`
+  - _Validates: Req 1.1, 1.3_
+- [ ] **1.2** `[BE]` Implement server handler / repository in `[exact/file/path]` (enforcing auth + validation)
+  - _Validates: Req 1.2, 2.2_
+- [ ] **1.3** `[BE]` Write & run unit/invariant tests (`Property 1` & `Property 2`) in `[exact/test/path]`
+  - _Validates: Property 1, Property 2_
+- [ ] **1.4** `[CHECKPOINT]` **Course 1 Food Safety Gate:** Run test suite + **0-Token Mechanical Architecture Linter** (`pnpm tsc --noEmit && pnpm test --run` / `uv run pytest` / `vendor/bin/phpunit`) → create Course 1 git commit.
+
+### Course 2 — Core Interactive Experience (`[FE]`)
+- [ ] **2.1** `[FE]` Build modular UI component(s) (`<= 250` lines) in `[exact/file/path]` matching `design-reference/preview.html` and `docs/foundation/taste-system.md`
+  - _Validates: Req 1.1, 1.2_
+- [ ] **2.2** `[FE]` Wire interactive state, data mutations, and route entrypoint in `[exact/file/path]`
+  - _Validates: Req 1.1, 1.2_
+- [ ] **2.3** `[CHECKPOINT]` **Course 2 Tasting Checkpoint:** Run build/typecheck (`pnpm tsc --noEmit && pnpm build`) → create Course 2 git commit.
+
+### Course 3 — Micro-Interactions, Keyboard Flow & Edge-Case Seasoning (`[CRAFT]`)
+- [ ] **3.1** `[CRAFT]` Add zero-CLS loading skeletons, double-submit button guards, and empathetic empty/error states matching the 4-state `preview.html`
+  - _Validates: Req 1.3, 2.1_
+- [ ] **3.2** `[CRAFT]` Wire keyboard ergonomics (`Enter` submit, `Escape` close, initial focus, visible focus rings) and write Golden-Path Playwright E2E spec in `e2e/[dish-slug].spec.ts`
+  - _Validates: 4-Star Culinary Craft Standard_
+- [ ] **3.3** `[CHECKPOINT]` **Final Course Checkpoint:** Run full verification → hand off to **`/plate`** (`plating.md`)!
+
+---
+
+## 📝 Kitchen Activity Log
+
+| Date | Course | Action & Files Touched |
+| :--- | :--- | :--- |
+| `YYYY-MM-DD` | `/taste` | Tasting Spoon (`preview.html`) and 3-Course recipe created. |

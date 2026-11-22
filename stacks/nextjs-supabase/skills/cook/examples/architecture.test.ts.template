@@ -1,0 +1,163 @@
+/**
+ * ==============================================================================
+ * Mechanical Architecture & Boundary Linter ("The Codebase Does the Reviewing")
+ * Location: src/shared/__tests__/architecture.test.ts (or tests/architecture.test.ts)
+ *
+ * Inspired by Lauren Tan's (`@poteto` / `pstack`) mechanical constraint philosophy:
+ * Instead of relying on LLM tokens or manual code reviews to catch architecture
+ * violations, this 0-token Vitest suite runs automatically on every `pnpm test --run`
+ * and fails the build in < 50ms if any agent violates `stack-rules.md`:
+ *
+ *   1. Cross-Feature Isolation: `src/features/[a]/` MUST NOT import from `src/features/[b]/`
+ *   2. Shared UI Purity: `src/shared/ui/` MUST NOT import from `src/features/` or `@supabase/`
+ *   3. Server Secret Guard: Files referencing `SUPABASE_SERVICE_ROLE_KEY` MUST contain `import 'server-only'`
+ *   4. Anti-Slop File Size Cap: Source files in `src/features/` and `src/app/` MUST stay <= 300 lines
+ *   5. No Type/Linter Escape Hatches: Bans `@ts-ignore`, `@ts-expect-error`, `eslint-disable`, and `: any`
+ *   6. No Unfinished Slop Placeholders: Bans `TODO:`, `FIXME:`, or `HACK:` comments in shipped feature code
+ * ==============================================================================
+ */
+import { describe, it, expect } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const SRC_DIR = path.resolve(process.cwd(), 'src');
+const MAX_COMPONENT_LINES = 300;
+
+function walkFiles(dir: string, exts = ['.ts', '.tsx']): string[] {
+  if (!fs.existsSync(dir)) return [];
+  const results: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === 'node_modules' || entry.name === '.next' || entry.name === '__tests__') continue;
+      results.push(...walkFiles(fullPath, exts));
+    } else if (exts.some((ext) => entry.name.endsWith(ext))) {
+      results.push(fullPath);
+    }
+  }
+  return results;
+}
+
+describe('Mechanical Architecture & Stack Boundary Guardrails', () => {
+  it('Rule 1 (Feature Isolation): src/features/[domain-a] never imports from peer src/features/[domain-b]', () => {
+    const featuresDir = path.join(SRC_DIR, 'features');
+    if (!fs.existsSync(featuresDir)) return;
+
+    const violations: string[] = [];
+    const domains = fs
+      .readdirSync(featuresDir, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name);
+
+    for (const domain of domains) {
+      const domainFiles = walkFiles(path.join(featuresDir, domain));
+      for (const file of domainFiles) {
+        const content = fs.readFileSync(file, 'utf8');
+        const relFile = path.relative(process.cwd(), file).replace(/\\/g, '/');
+
+        // Check `@/features/<other>` or `../<other>` imports
+        const importMatches = content.matchAll(/from\s+['"](?:@\/features\/|(?:\.\.\/)+features\/)([a-zA-Z0-9_-]+)/g);
+        for (const match of importMatches) {
+          const importedDomain = match[1];
+          if (importedDomain && importedDomain !== domain) {
+            violations.push(`${relFile} imports peer feature "${importedDomain}" (move shared contracts to src/shared/)`);
+          }
+        }
+      }
+    }
+
+    expect(violations, `Cross-feature import violations:\n${violations.join('\n')}`).toEqual([]);
+  });
+
+  it('Rule 2 (Shared UI Purity): src/shared/ui never imports from src/features or Supabase clients', () => {
+    const sharedUiFiles = walkFiles(path.join(SRC_DIR, 'shared', 'ui'));
+    const violations: string[] = [];
+
+    for (const file of sharedUiFiles) {
+      const content = fs.readFileSync(file, 'utf8');
+      const relFile = path.relative(process.cwd(), file).replace(/\\/g, '/');
+
+      if (/from\s+['"](?:@\/features\/|.*\/features\/)/.test(content)) {
+        violations.push(`${relFile} imports from src/features/`);
+      }
+      if (/from\s+['"]@supabase\//.test(content)) {
+        violations.push(`${relFile} imports @supabase directly inside stateless shared/ui`);
+      }
+    }
+
+    expect(violations, `Shared UI purity violations:\n${violations.join('\n')}`).toEqual([]);
+  });
+
+  it('Rule 3 (Server Secret Guard): every file referencing SUPABASE_SERVICE_ROLE_KEY includes import "server-only"', () => {
+    const allSrcFiles = walkFiles(SRC_DIR);
+    const violations: string[] = [];
+
+    for (const file of allSrcFiles) {
+      const content = fs.readFileSync(file, 'utf8');
+      const relFile = path.relative(process.cwd(), file).replace(/\\/g, '/');
+
+      if (content.includes('SUPABASE_SERVICE_ROLE_KEY')) {
+        const hasServerOnly = /import\s+['"]server-only['"]/.test(content);
+        const isClientComponent = /['"]use client['"]/.test(content);
+        if (!hasServerOnly || isClientComponent) {
+          violations.push(`${relFile} references SUPABASE_SERVICE_ROLE_KEY without import 'server-only' (or is a 'use client' file)`);
+        }
+      }
+    }
+
+    expect(violations, `Server secret boundary violations:\n${violations.join('\n')}`).toEqual([]);
+  });
+
+  it(`Rule 4 (Anti-Slop Modularity Cap): application source files stay under ${MAX_COMPONENT_LINES} lines`, () => {
+    const targetFiles = [
+      ...walkFiles(path.join(SRC_DIR, 'features')),
+      ...walkFiles(path.join(SRC_DIR, 'app')),
+    ].filter((f) => !f.endsWith('.d.ts') && !f.endsWith('types.ts'));
+
+    const violations: string[] = [];
+    for (const file of targetFiles) {
+      const lineCount = fs.readFileSync(file, 'utf8').split(/\r?\n/).length;
+      if (lineCount > MAX_COMPONENT_LINES) {
+        const relFile = path.relative(process.cwd(), file).replace(/\\/g, '/');
+        violations.push(`${relFile} is ${lineCount} lines (cap: ${MAX_COMPONENT_LINES} lines — decompose into smaller modules/components)`);
+      }
+    }
+
+    expect(violations, `File size modularity violations:\n${violations.join('\n')}`).toEqual([]);
+  });
+
+  it('Rule 5 (No Escape Hatches): forbids @ts-ignore, @ts-expect-error, eslint-disable, and explicit ": any"', () => {
+    const allSrcFiles = walkFiles(SRC_DIR).filter((f) => !f.endsWith('.d.ts'));
+    const violations: string[] = [];
+
+    for (const file of allSrcFiles) {
+      const content = fs.readFileSync(file, 'utf8');
+      const relFile = path.relative(process.cwd(), file).replace(/\\/g, '/');
+
+      if (/@ts-ignore|@ts-expect-error|eslint-disable/.test(content)) {
+        violations.push(`${relFile} contains a compiler/linter escape hatch (@ts-ignore / @ts-expect-error / eslint-disable)`);
+      }
+      if (/:\s*any\b|as\s+any\b|<any>/.test(content)) {
+        violations.push(`${relFile} uses explicit "any" type (use "unknown" + Zod safeParse instead)`);
+      }
+    }
+
+    expect(violations, `Type/linter escape-hatch violations:\n${violations.join('\n')}`).toEqual([]);
+  });
+
+  it('Rule 6 (No Unfinished Slop Placeholders): forbids TODO / FIXME / HACK comments in shipped feature code', () => {
+    const allSrcFiles = walkFiles(SRC_DIR);
+    const violations: string[] = [];
+
+    for (const file of allSrcFiles) {
+      const content = fs.readFileSync(file, 'utf8');
+      const relFile = path.relative(process.cwd(), file).replace(/\\/g, '/');
+
+      if (/\/\/\s*(?:TODO|FIXME|HACK)\b|\/\*\s*(?:TODO|FIXME|HACK)\b/i.test(content)) {
+        violations.push(`${relFile} contains unfinished TODO/FIXME/HACK placeholder comment`);
+      }
+    }
+
+    expect(violations, `Unfinished placeholder violations:\n${violations.join('\n')}`).toEqual([]);
+  });
+});

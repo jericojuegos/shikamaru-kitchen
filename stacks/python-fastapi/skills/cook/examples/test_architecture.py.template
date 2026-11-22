@@ -1,0 +1,90 @@
+"""
+==============================================================================
+Mechanical Architecture & Boundary Linter ("The Codebase Does the Reviewing")
+Location: tests/test_architecture.py
+
+Inspired by Lauren Tan's (`@poteto` / `pstack`) mechanical constraint philosophy:
+Runs automatically in < 50ms during `uv run pytest` and enforces `stack-rules.md`:
+  1. Domain Isolation: `app/modules/<domain_a>/` MUST NOT import from `app/modules/<domain_b>/`
+  2. Router Purity: `app/modules/<domain>/router.py` MUST NOT execute raw SQL or `session.execute`
+  3. Anti-Slop Modularity Cap: Python files in `app/` stay under 300 lines
+  4. No Linter Escape Hatches or Unfinished Slop Placeholders (`# type: ignore`, `# noqa`, `TODO:`, `FIXME:`)
+==============================================================================
+"""
+from pathlib import Path
+import re
+
+APP_DIR = Path(__file__).resolve().parent.parent / "app"
+MAX_FILE_LINES = 300
+
+
+def test_modules_do_not_import_peer_modules() -> None:
+    modules_dir = APP_DIR / "modules"
+    if not modules_dir.exists():
+        return
+
+    violations: list[str] = []
+    import_pattern = re.compile(r"^\s*(?:from|import)\s+app\.modules\.([a-zA-Z0-9_]+)", re.MULTILINE)
+
+    for domain_dir in [d for d in modules_dir.iterdir() if d.is_dir()]:
+        own_domain = domain_dir.name
+        for py_file in domain_dir.rglob("*.py"):
+            content = py_file.read_text(encoding="utf-8")
+            for match in import_pattern.finditer(content):
+                imported_domain = match.group(1)
+                if imported_domain != own_domain:
+                    rel = py_file.relative_to(APP_DIR.parent).as_posix()
+                    violations.append(
+                        f"{rel} imports peer module '{imported_domain}' (move shared contracts to app/shared/)"
+                    )
+
+    assert not violations, "Cross-module import violations:\n" + "\n".join(violations)
+
+
+def test_routers_remain_thin_without_direct_sql_execution() -> None:
+    modules_dir = APP_DIR / "modules"
+    if not modules_dir.exists():
+        return
+
+    violations: list[str] = []
+    for router_file in modules_dir.rglob("router.py"):
+        content = router_file.read_text(encoding="utf-8")
+        if ".execute(" in content or "SELECT " in content.upper():
+            rel = router_file.relative_to(APP_DIR.parent).as_posix()
+            violations.append(f"{rel} contains direct DB/SQL execution (delegate to service.py)")
+
+    assert not violations, "Thin router violations:\n" + "\n".join(violations)
+
+
+def test_app_files_respect_anti_slop_line_count_cap() -> None:
+    if not APP_DIR.exists():
+        return
+
+    violations: list[str] = []
+    for py_file in APP_DIR.rglob("*.py"):
+        line_count = len(py_file.read_text(encoding="utf-8").splitlines())
+        if line_count > MAX_FILE_LINES:
+            rel = py_file.relative_to(APP_DIR.parent).as_posix()
+            violations.append(f"{rel} is {line_count} lines (cap: {MAX_FILE_LINES} lines)")
+
+    assert not violations, "File size modularity violations:\n" + "\n".join(violations)
+
+
+def test_app_files_contain_zero_escape_hatches_or_unfinished_todo_placeholders() -> None:
+    if not APP_DIR.exists():
+        return
+
+    violations: list[str] = []
+    escape_pattern = re.compile(r"#\s*(?:type:\s*ignore|noqa)\b")
+    todo_pattern = re.compile(r"#\s*(?:TODO|FIXME|HACK)\b", re.IGNORECASE)
+
+    for py_file in APP_DIR.rglob("*.py"):
+        content = py_file.read_text(encoding="utf-8")
+        rel = py_file.relative_to(APP_DIR.parent).as_posix()
+        if escape_pattern.search(content):
+            violations.append(f"{rel} contains type/linter escape hatch (# type: ignore / # noqa)")
+        if todo_pattern.search(content):
+            violations.append(f"{rel} contains unfinished TODO/FIXME/HACK placeholder comment")
+
+    assert not violations, "Escape-hatch or placeholder violations:\n" + "\n".join(violations)
+

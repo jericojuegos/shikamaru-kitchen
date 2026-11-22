@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasting Spoon: [Dish Title]</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-950 text-stone-100 min-h-screen font-sans antialiased p-4">
+  <!-- Top 4-State Tasting Bar -->
+  <header class="max-w-3xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-2 bg-stone-900/90 border border-stone-800 rounded-xl px-4 py-2.5">
+    <div class="flex items-center gap-2">
+      <span class="text-lg">🥄</span>
+      <div>
+        <h1 class="text-xs font-semibold uppercase tracking-wider text-amber-400">Tasting Spoon Prototype</h1>
+        <p class="text-sm font-medium text-stone-200">[Dish Title] (<code class="text-xs text-stone-400">[NN-dish-slug]</code>)</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-1.5" role="tablist" aria-label="Dish States">
+      <button onclick="setState('happy')" id="tab-happy" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/40">✨ Happy</button>
+      <button onclick="setState('empty')" id="tab-empty" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-800 text-stone-400 hover:text-stone-200">🌱 Empty</button>
+      <button onclick="setState('loading')" id="tab-loading" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-800 text-stone-400 hover:text-stone-200">⏳ Skeleton</button>
+      <button onclick="setState('error')" id="tab-error" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-800 text-stone-400 hover:text-stone-200">🛟 Error</button>
+    </div>
+  </header>
+
+  <!-- Main Interactive Stage -->
+  <main class="max-w-3xl mx-auto bg-stone-900 border border-stone-800 rounded-2xl p-6 shadow-xl">
+    <!-- 1. Happy State -->
+    <section id="state-happy" class="space-y-4">
+      <h2 class="text-base font-semibold text-stone-100">[Primary Interactive View]</h2>
+      <p class="text-sm text-stone-400">Replace with realistic domain content and interactive controls.</p>
+    </section>
+
+    <!-- 2. Empathetic Empty State -->
+    <section id="state-empty" class="hidden py-10 text-center space-y-3">
+      <p class="text-base font-medium text-stone-200">Your station is ready for its first creation</p>
+      <p class="text-xs text-stone-400 max-w-md mx-auto">Start by adding your first item below—everything stays saved automatically.</p>
+      <button onclick="setState('happy')" class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500 text-stone-950 hover:bg-amber-400 transition">Create First Item</button>
+    </section>
+
+    <!-- 3. Zero-CLS Loading Skeleton State -->
+    <section id="state-loading" class="hidden space-y-3 animate-pulse">
+      <div class="h-5 w-48 bg-stone-800 rounded"></div>
+      <div class="h-20 w-full bg-stone-800/70 rounded-xl"></div>
+    </section>
+
+    <!-- 4. Human Error Recovery State -->
+    <section id="state-error" class="hidden p-4 rounded-xl bg-rose-950/50 border border-rose-800/60 text-rose-200 space-y-2">
+      <p class="text-sm font-semibold">We couldn't save that change just yet</p>
+      <p class="text-xs text-rose-300/90">Your input is still safely preserved below. Check the highlighted field and press Enter to retry.</p>
+    </section>
+  </main>
+
+  <script>
+    function setState(active) {
+      ['happy', 'empty', 'loading', 'error'].forEach(s => {
+        document.getElementById('state-' + s).classList.toggle('hidden', s !== active);
+        const btn = document.getElementById('tab-' + s);
+        btn.className = s === active
+          ? 'px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/40'
+          : 'px-2.5 py-1 rounded-lg text-xs font-medium bg-stone-800 text-stone-400 hover:text-stone-200';
+      });
+    }
+  </script>
+</body>
+</html>

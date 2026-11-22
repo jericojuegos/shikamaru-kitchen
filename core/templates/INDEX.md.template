@@ -1,0 +1,8 @@
+# 🗺️ Kitchen Context Map (`docs/INDEX.md`)
+
+| Section | Files | Purpose |
+| :--- | :--- | :--- |
+| **1. Culinary Foundation** | `docs/foundation/{menu-vision,architecture,taste-system,decisions}.md` | Permanent product thesis, station boundaries, design tokens & Anti-Slop Manifesto |
+| **2. Service Board** | `docs/planning/{service-board,issues}.md` | Master dish roadmap (`👨‍🍳 SIGNATURE DISH` vs. `🔪 HOUSE STAPLE`) & self-healing log |
+| **3. Dish Recipes** | `docs/dishes/<NN-dish-slug>/{recipe,design,courses,plating}.md` + `design-reference/preview.html` | Per-dish Tasting Spoon prototype, EARS recipe, 3-Course plan & 4-Star plating evidence |
+| **4. Brigade Engine** | `.agents/rules/{kitchen-protocol,stack-rules}.md` + `.agents/skills/{menu,prep,taste,cook,plate}/` | Always-on culinary guardrails and 5-stage lifecycle skills |

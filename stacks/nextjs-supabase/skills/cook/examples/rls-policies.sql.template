@@ -1,0 +1,74 @@
+-- RLS Policy Templates for Next.js + Supabase projects
+-- Copy the relevant policies when creating new tables
+
+-- ============================================================
+-- STANDARD USER-SCOPED TABLE
+-- User can only access their own rows
+-- ============================================================
+ALTER TABLE public.[table_name] ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "[table_name]_select_own" ON public.[table_name]
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "[table_name]_insert_own" ON public.[table_name]
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "[table_name]_update_own" ON public.[table_name]
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "[table_name]_delete_own" ON public.[table_name]
+  FOR DELETE USING (auth.uid() = user_id);
+
+
+-- ============================================================
+-- SERVER-ONLY TABLE (e.g. oauth tokens, secrets)
+-- No client access — service role only
+-- ============================================================
+ALTER TABLE public.[table_name] ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "[table_name]_no_client_access" ON public.[table_name]
+  AS RESTRICTIVE
+  FOR ALL
+  USING (false);
+-- Service role bypasses RLS — this blocks anon + authenticated clients only
+
+
+-- ============================================================
+-- STORAGE BUCKET: USER-SCOPED (private)
+-- ============================================================
+-- Create bucket as private (not public) in Supabase dashboard first
+
+CREATE POLICY "[bucket_name]_select_own" ON storage.objects
+  FOR SELECT USING (
+    bucket_id = '[bucket_name]' AND
+    auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+CREATE POLICY "[bucket_name]_insert_own" ON storage.objects
+  FOR INSERT WITH CHECK (
+    bucket_id = '[bucket_name]' AND
+    auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+CREATE POLICY "[bucket_name]_delete_own" ON storage.objects
+  FOR DELETE USING (
+    bucket_id = '[bucket_name]' AND
+    auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+
+-- ============================================================
+-- NEW USER TRIGGER — e.g. create free credits on signup
+-- ============================================================
+CREATE OR REPLACE FUNCTION handle_new_user()
+RETURNS trigger AS $$
+BEGIN
+  -- Add project-specific initialization here
+  -- Example: INSERT INTO public.credits (user_id, balance) VALUES (new.id, 10);
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE handle_new_user();

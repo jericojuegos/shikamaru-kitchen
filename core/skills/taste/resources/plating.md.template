@@ -1,0 +1,42 @@
+# 🍽️ Michelin Plating & 4-Star Craft Audit: [Dish Title] (`[NN-dish-slug]`)
+
+> **Category:** `[👨‍🍳 SIGNATURE DISH | 🔪 HOUSE STAPLE]` · **Overall Status:** `[ ]` At the Pass · **Date:** `YYYY-MM-DD`  
+> **Dish Links:** [`recipe.md`](./recipe.md) · [`design.md`](./design.md) · [`courses.md`](./courses.md) · [`design-reference/preview.html`](./design-reference/preview.html)
+
+---
+
+## Level 1 — Food Safety & Mechanical Architecture Linter (0-Token Deterministic)
+
+- [ ] **Type & Build Check:** `pnpm tsc --noEmit && pnpm build` (or `uv run ruff check .` / `php -l`) passes with zero errors.
+- [ ] **Unit & Invariant Tests:** `pnpm test --run` (or `uv run pytest` / `vendor/bin/phpunit`) passes `Property 1` and `Property 2`.
+- [ ] **0-Token Mechanical Architecture Linter:** `architecture.test.ts` / `test_architecture.py` / `ArchitectureTest.php` passes (`0` cross-feature imports, `0` files `> 300` lines, `0` `@ts-ignore`/`any` escape hatches, `0` unfinished `TODO:` placeholders).
+
+---
+
+## Level 2 — EARS Recipe Verification & Browser Evidence (`evidence/*.png`)
+
+> **Hard Gate:** Every row MUST cite a real unit test (`file:line`) or saved browser screenshot (`./evidence/*.png`).
+
+| Check ID | Recipe Ref | Scenario (WHEN / IF) | Expected Outcome | Evidence / Proof (`test:line` or `./evidence/*.png`) | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **PLATE-1.1** | `Req 1.1` | Happy-path interaction | Expected primary outcome | `[e.g., dish.test.ts:L18 PASS + ./evidence/01-happy-state.png]` | `[ ]` |
+| **PLATE-1.3** | `Req 1.3` | Invalid input submitted | Empathetic error shown, input kept | `[e.g., dish.test.ts:L44 PASS + ./evidence/02-error-recovery.png]` | `[ ]` |
+| **PLATE-2.1** | `Req 2.1` | Empty state rendered | Onboarding guidance + primary CTA | `[e.g., ./evidence/03-empty-state.png]` | `[ ]` |
+
+---
+
+## Level 3 — The 4-Star Culinary Craft Audit (Michelin Standard)
+
+- [ ] ⭐ **Star 1 — Micro-Interactions & Zero CLS:** Instant hover/active/disabled/loading feedback; skeleton dimensions match loaded content with zero jarring layout shift.
+- [ ] ⭐ **Star 2 — Copy, Empty & Error Empathy:** Warm, actionable human copy across all states; zero raw `"No data"` or technical stack traces.
+- [ ] ⭐ **Star 3 — Keyboard & Ergonomic Flow:** `Enter` submits, `Escape` closes modals/drawers, logical `Tab` order with crisp `focus-visible` rings.
+- [ ] ⭐ **Star 4 — Idiomatic Code Craft (Zero AI Slop):** All components `<= 300` lines, strict adherence to `docs/foundation/taste-system.md` tokens, zero hardcoded hex colors.
+- [ ] 👨‍🍳 **Executive Chef Sign-Off:** Approved to serve (`[x]` on `docs/planning/service-board.md`).
+
+---
+
+## 🧭 Chef Live Tasting Walkthrough
+
+1. **Start Local Kitchen:** `[e.g., pnpm dev -> http://localhost:3000/...]`
+2. **Taste Happy Path:** `[Step-by-step clicks and expected feel]`
+3. **Taste Empty & Error Seasoning:** `[How to trigger and verify empathetic empty/error recovery]`
