@@ -79,7 +79,8 @@ Output the **Craft & Polish Report**:
        git push -u origin feat/<NN-feature-slug>
        gh pr create --title "feat(<NN-feature-slug>): <Feature Title>" --body "<Craft & Polish Report + Evidence Citations>"
        ```
-       *(Supports `glab mr create` on GitLab or outputs the direct remote PR URL if CLI is unauthenticated.)*
+       *(Supports `glab mr create` on GitLab or outputs the direct remote PR URL if CLI is unauthenticated; automatically triggers GitHub Mobile / Web PR notifications.)*
+     - **Optional Instant Webhook (`NOTIFY_WEBHOOK_URL`):** If `NOTIFY_WEBHOOK_URL` (Discord / Slack / Telegram) is set in `.env` or the environment, send a non-blocking notification card with the PR URL and `4/4 Craft Audit PASS` summary.
      - Share the clickable GitHub/GitLab PR URL (plus the local URL if the user also wants to interact with it locally before clicking Merge on the PR).
 2. **OPTIONAL — Local-First Interactive Review & Local Merge (`--local` or When No `origin` Remote Exists):**
    - For **`✨ SIGNATURE CRAFT`** features in local-first mode (or when no `origin` remote is configured yet):

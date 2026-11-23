@@ -84,7 +84,7 @@ Never dump a 1,500-line feature in a single unverified turn. Every feature in `d
 Pause and ask for confirmation (`"⚠️ CRAFT GUARD TRIGGERED: [reason]. Awaiting approval..."`) before touching more than 4 files in a single pass (unless defined in `spec.md`) or modifying shared contracts (`shared/types/`) without checking blast radius.
 
 ### The 3-Strike Rule
-If the same error persists after **3 fix attempts**: **STOP** immediately, **REPORT** the exact error and 3 approaches tried, and **ASK** the user for guidance.
+If the same error persists after **3 fix attempts**: **STOP** immediately, send an instant alert if `NOTIFY_WEBHOOK_URL` (Discord / Slack / Telegram) is configured, **REPORT** the exact error and 3 approaches tried, and **ASK** the user for guidance.
 
 ### 5.1 Automatic Self-Healing (After Any Bug Fix or User Correction)
 Whenever you fix a bug or receive a UX/code correction from the user, automatically execute before ending your turn:
