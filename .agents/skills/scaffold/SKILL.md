@@ -21,10 +21,12 @@ description: >-
 
 ---
 
-## Step 2 — Scaffold Base Application & Design Tokens
+## Step 2 — Scaffold Base Application, Design Tokens & Zero-Config Demo/Seed Mode
 
 1. Scaffold the base application and test runner (`vitest`, `pytest`, `phpunit`, `go test`, `cargo test`, etc.) according to `docs/foundation/architecture.md` and `.agents/rules/stack-rules.md`.
 2. Apply the exact color, typography, and spacing tokens from `docs/foundation/design-system.md` into the global theme/CSS config.
+3. **Zero-Config In-App Demo & Seed Mode (`?demo=1` / Seed Fixture):**
+   - Provide a deterministic seed/demo fixture (and graceful mock fallback when optional third-party API keys are absent) so reviewers, employers, and automated Browser QA (`/polish`) can explore the live app with realistic sample data in 1 click without hitting an empty database or hard API-key crash.
 
 ---
 
