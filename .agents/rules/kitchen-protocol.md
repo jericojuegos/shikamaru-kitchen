@@ -83,8 +83,14 @@ Never dump a 1,500-line feature in a single unverified turn. Every feature in `d
 ### Budget Guard (Pause & Ask)
 Pause and ask for confirmation (`"⚠️ CRAFT GUARD TRIGGERED: [reason]. Awaiting approval..."`) before touching more than 4 files in a single pass (unless defined in `spec.md`) or modifying shared contracts (`shared/types/`) without checking blast radius.
 
-### The 3-Strike Rule
-If the same error persists after **3 fix attempts**: **STOP** immediately, send an instant alert if `NOTIFY_WEBHOOK_URL` (Discord / Slack / Telegram) is configured, **REPORT** the exact error and 3 approaches tried, and **ASK** the user for guidance.
+### The 3-Strike Rule & 2-Way Mobile Reply Bridge (`remote-notify.mjs`)
+If the same error persists after **3 fix attempts**:
+1. **STOP** immediately — never attempt a 4th blind retry.
+2. **2-WAY REMOTE ALERT & REPLY:** If `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`, an active GitHub PR (`gh` CLI), or `NOTIFY_WEBHOOK_URL` is configured, run:
+   ```bash
+   node .agents/scripts/remote-notify.mjs --message "⚠️ 3-Strike Blocker on <feature>: <error>. Reply 'proceed' or custom fix instructions." --wait-reply
+   ```
+   If the user replies from Telegram or a GitHub PR comment on their phone (`REMOTE_REPLY: <instruction>`), automatically resume with their instruction; otherwise report the 3 approaches tried and wait in chat.
 
 ### 5.1 Automatic Self-Healing (After Any Bug Fix or User Correction)
 Whenever you fix a bug or receive a UX/code correction from the user, automatically execute before ending your turn:

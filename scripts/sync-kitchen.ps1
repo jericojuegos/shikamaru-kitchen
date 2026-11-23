@@ -41,9 +41,13 @@ New-Item -ItemType Directory -Force -Path `
     (Join-Path $DocsDir "planning"), `
     (Join-Path $DocsDir "specs") | Out-Null
 
-# 1. Copy Core Rules & 5 Craft Skills -> .agents/{rules,skills}
+# 1. Copy Core Rules, 5 Craft Skills & Remote Notify Bridge -> .agents/{rules,skills,scripts}
 Copy-Item -Path (Join-Path $CoreDir "rules\*") -Destination (Join-Path $AgentsDir "rules\") -Recurse -Force
 Copy-Item -Path (Join-Path $CoreDir "skills\*") -Destination (Join-Path $AgentsDir "skills\") -Recurse -Force
+if (Test-Path (Join-Path $CoreDir "scripts\*")) {
+    New-Item -ItemType Directory -Force -Path (Join-Path $AgentsDir "scripts") | Out-Null
+    Copy-Item -Path (Join-Path $CoreDir "scripts\*") -Destination (Join-Path $AgentsDir "scripts\") -Recurse -Force
+}
 
 # 2. Initialize starter .agents/rules/stack-rules.md (if missing — /design tailors it to <= 80 lines for any stack)
 $StackRulesMd = Join-Path $AgentsDir "rules\stack-rules.md"

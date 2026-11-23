@@ -24,12 +24,14 @@ TODAY="$(date +%Y-%m-%d)"
 
 mkdir -p "$TARGET_ROOT/.agents/rules" \
          "$TARGET_ROOT/.agents/skills" \
+         "$TARGET_ROOT/.agents/scripts" \
          "$TARGET_ROOT/docs/foundation/design-reference" \
          "$TARGET_ROOT/docs/planning" \
          "$TARGET_ROOT/docs/specs"
 
 cp "$CORE_DIR/rules/"* "$TARGET_ROOT/.agents/rules/"
 cp -r "$CORE_DIR/skills/"* "$TARGET_ROOT/.agents/skills/"
+[ -d "$CORE_DIR/scripts" ] && cp "$CORE_DIR/scripts/"* "$TARGET_ROOT/.agents/scripts/"
 
 [ ! -f "$TARGET_ROOT/.agents/rules/stack-rules.md" ] && cp "$CORE_DIR/templates/stack-rules.md.template" "$TARGET_ROOT/.agents/rules/stack-rules.md"
 [ ! -f "$TARGET_ROOT/AGENTS.md" ] && sed -e "s/\[PROJECT NAME\]/$PROJECT_NAME/g" -e "s/\[Project Name\]/$PROJECT_NAME/g" -e "s/YYYY-MM-DD/$TODAY/g" "$CORE_DIR/templates/AGENTS.md.template" > "$TARGET_ROOT/AGENTS.md"

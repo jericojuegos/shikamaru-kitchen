@@ -125,6 +125,9 @@ Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md enforces Mandatory evidenc
 Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md defaults to Remote PR creation (gh pr create) with optional --local review" (
     ($PolishContent -match "gh pr create") -and ($PolishContent -match "--local")
 )
+Assert-Eval "Suite 3" ".agents/scripts/remote-notify.mjs 2-way mobile reply bridge exists" (
+    Test-Path (Join-Path $RepoRoot ".agents\scripts\remote-notify.mjs")
+)
 
 # ==============================================================================
 # SUITE 4: End-to-End sync-kitchen Smoke Eval
