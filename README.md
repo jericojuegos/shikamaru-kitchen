@@ -74,7 +74,12 @@ bash scripts/sync-kitchen.sh ../my-crafted-app
 4. **`/craft 01-signature-feature`** — Build Pass 1 (Domain), Pass 2 (Interactive UI), and Pass 3 (Micro-Interactions & Ergonomics).
 5. **`/polish 01-signature-feature`** — Run the 4-Point UX & Code Craft Audit, inspect browser proof (`evidence/*.png`), and ship!
 
-### 3. Verify Engine Integrity (`eval-kitchen`)
+### 3. Launch the 0-Token 2.5D Isometric AI Office Dashboard (`http://localhost:4400`)
+```bash
+node .agents/scripts/office-dashboard.mjs
+```
+
+### 4. Verify Engine Integrity (`eval-kitchen`)
 ```powershell
 .\scripts\eval-kitchen.ps1
 ```

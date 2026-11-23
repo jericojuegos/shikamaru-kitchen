@@ -128,6 +128,9 @@ Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md defaults to Remote PR crea
 Assert-Eval "Suite 3" ".agents/scripts/remote-notify.mjs 2-way mobile reply bridge exists" (
     Test-Path (Join-Path $RepoRoot ".agents\scripts\remote-notify.mjs")
 )
+Assert-Eval "Suite 3" ".agents/scripts/office-dashboard.mjs 0-token Isometric AI Office server exists" (
+    Test-Path (Join-Path $RepoRoot ".agents\scripts\office-dashboard.mjs")
+)
 
 # ==============================================================================
 # SUITE 4: End-to-End sync-kitchen Smoke Eval
