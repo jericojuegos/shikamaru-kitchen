@@ -67,7 +67,7 @@ flowchart LR
 bash scripts/sync-kitchen.sh ../my-crafted-app
 ```
 
-### 2. Run the 5-Stage Software Craft Workflow in Your AI IDE
+### 2. Run the 5-Stage Software Craft Workflow in Your AI Coding Agent (Antigravity, Claude Code, Codex, Cursor, OpenCode)
 1. **`/design`** — Define your product vision, Signature Craft features, Design System, and `stack-rules.md`.
 2. **`/scaffold`** — Automate *mise en place* and generate your 0-token Mechanical Architecture Linter.
 3. **`/prototype 01-signature-feature`** — Test-drive the interactive 4-state UI prototype first and lock `spec.md`.
