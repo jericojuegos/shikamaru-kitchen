@@ -69,9 +69,20 @@ Output the **Craft & Polish Report**:
   - ✨ **Idiomatic Code Craft (`<= 300` lines, zero escape hatches):** PASS
 ```
 
-### Ship Routing:
-- **If `⚙️ PLUMBING` (or `--auto-ship` requested):**
-  Immediately mark `[x]` in `docs/planning/roadmap.md`, create the final clean feature commit (`feat(<feature-slug>): complete and verify <summary>`), and report completion.
-- **If `✨ SIGNATURE CRAFT` (Interactive Session):**
-  Keep the feature at `[>]` in `docs/planning/roadmap.md` with all code safely committed on `feat/<NN-feature-slug>` and prompt the user:
-  > *"✨ **READY FOR SIGN-OFF (`<NN-feature-slug>`):** Passed all 4 UX & Code Craft checks! Test it live at `<local-url>` or inspect `docs/specs/<NN-feature-slug>/evidence/*.png`. Reply **'ship'** to mark `[x]` in `roadmap.md` and finalize the commit/PR, or describe any UX/polish adjustment to run a 30-second `/prototype` delta pass!"*
+### Ship & Review Routing (Remote PR Default + Optional Local Review):
+
+1. **DEFAULT — Remote Pull Request Flow (When `origin` Remote Exists & `--local` Not Passed):**
+   - For **`⚙️ PLUMBING`** features (or once the user approves a **`✨ SIGNATURE CRAFT`** feature, or anytime the user wants to review directly inside GitHub/GitLab PR UI):
+     - Mark `[x]` in `docs/planning/roadmap.md` and create the final feature commit (`feat(<NN-feature-slug>): complete and verify <summary>`).
+     - Push the branch and automatically open the Pull / Merge Request with the **EARS Evidence Table** and **4-Point UX & Code Craft Audit** in the PR description:
+       ```bash
+       git push -u origin feat/<NN-feature-slug>
+       gh pr create --title "feat(<NN-feature-slug>): <Feature Title>" --body "<Craft & Polish Report + Evidence Citations>"
+       ```
+       *(Supports `glab mr create` on GitLab or outputs the direct remote PR URL if CLI is unauthenticated.)*
+     - Share the clickable GitHub/GitLab PR URL (plus the local URL if the user also wants to interact with it locally before clicking Merge on the PR).
+2. **OPTIONAL — Local-First Interactive Review & Local Merge (`--local` or When No `origin` Remote Exists):**
+   - For **`✨ SIGNATURE CRAFT`** features in local-first mode (or when no `origin` remote is configured yet):
+     - Keep all verified work committed on `feat/<NN-feature-slug>`.
+     - Present the live local URL (`http://localhost:...`) and `docs/specs/<NN-feature-slug>/evidence/*.png` screenshots:
+       > *"✨ **READY FOR REVIEW (`<NN-feature-slug>`):** Passed all 4 UX & Code Craft checks! Review the PR on GitHub/GitLab (or test live at `<local-url>`). Reply **'open pr'** to push & create a GitHub PR, **'merge locally'** to merge `feat/<NN-feature-slug>` into local `main`, or describe any UX tweak to run a 30-second `/prototype` delta pass!"*

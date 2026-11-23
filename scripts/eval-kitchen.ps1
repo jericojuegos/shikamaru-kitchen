@@ -122,6 +122,9 @@ $PolishContent = Get-Content (Join-Path $RepoRoot ".agents\skills\polish\SKILL.m
 Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md enforces Mandatory evidence/*.png Hard Gate & 4-Point Craft Audit" (
     ($PolishContent -match "Hard Gate.*Mandatory.*evidence/\*\.png") -and ($PolishContent -match "4-Point UX & Code Craft Audit")
 )
+Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md defaults to Remote PR creation (gh pr create) with optional --local review" (
+    ($PolishContent -match "gh pr create") -and ($PolishContent -match "--local")
+)
 
 # ==============================================================================
 # SUITE 4: End-to-End sync-kitchen Smoke Eval
