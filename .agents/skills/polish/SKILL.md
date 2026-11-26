@@ -31,10 +31,11 @@ If any compiler error, failing test, or mechanical architecture violation occurs
 ## Step 2 — Level 2 & 3: EARS Proof Table & Autonomous First-Pass Browser QA ("Test-Before-Notify")
 
 1. **Core Rule:** Never use the human engineer as your first-pass functional QA tester.
-2. **🚫 Hard Gate — Mandatory `docs/specs/<NN-feature-slug>/evidence/*.png` for UI / Interactive Features:**
-   - Drive the live application in a real browser (via Playwright `page.screenshot()` or the `flash` `browser` subagent).
-   - Test all 4 states where applicable (Happy Path, Empty State, Loading/Submission, Validation/Error State), verify zero `console.error` or network `4xx/5xx` failures, and save proof screenshots to `docs/specs/<NN-feature-slug>/evidence/*.png`.
-   - Populate every row of the **`Evidence / Proof`** column in `docs/specs/<NN-feature-slug>/spec.md` (Section 4) with exact unit test citations (`feature.test.ts:L24 PASS`) and browser screenshot paths (`./evidence/01-happy-path.png`).
+2. **🚫 Hard Gate — Mandatory Multi-Viewport `docs/specs/<NN-feature-slug>/evidence/*.png` & Overlap QA:**
+   - Drive the live application in a real browser (via Playwright `page.screenshot()` or the `flash` `browser` subagent) across **3 responsive viewports**: **Phone (`390×844`)**, **Tablet (`768×1024`)**, and **Desktop (`1440×900`)**.
+   - **0-Token DOM Bounding-Box Collision Check:** In Playwright/browser eval, verify zero horizontal overflow (`document.documentElement.scrollWidth <= window.innerWidth`) and check `getBoundingClientRect()` intersections on sticky headers, floating docks, badges, buttons, and cards so overlapping or clipped elements fail deterministically at zero LLM token cost.
+   - **Map-Reduce `flash` Visual Critics (For `✨ SIGNATURE CRAFT` Features):** Test all 4 states where applicable (Happy Path, Empty State, Loading/Submission, Validation/Error State), verify zero `console.error` or network `4xx/5xx` failures, and save proof screenshots to `docs/specs/<NN-feature-slug>/evidence/` (`01-desktop.png`, `02-tablet.png`, `03-mobile.png`, etc.). When subagent tools are available, fan out lightweight `flash` visual/motion critics in parallel across the Phone/Tablet/Desktop captures (stills + interaction clip when recorded), then **merge and deduplicate** their findings in the main Frontier thread to auto-fix any layout overlap or clipping and re-capture clean proof before notifying the user.
+   - Populate every row of the **`Evidence / Proof`** column in `docs/specs/<NN-feature-slug>/spec.md` (Section 4) with exact unit test citations (`feature.test.ts:L24 PASS`) and browser screenshot paths (`./evidence/01-desktop.png`, `./evidence/03-mobile.png`).
 
 ---
 
