@@ -60,7 +60,7 @@ if (Test-Path $ProtocolPath) {
     )
 }
 
-foreach ($Skill in @("design", "scaffold", "prototype", "craft", "polish")) {
+foreach ($Skill in @("shika", "design", "scaffold", "prototype", "craft", "polish")) {
     $SkillPath = Join-Path $RepoRoot ".agents\skills\$Skill\SKILL.md"
     Assert-Eval "Suite 1" ".agents/skills/$Skill/SKILL.md exists" (Test-Path $SkillPath)
     if (Test-Path $SkillPath) {
