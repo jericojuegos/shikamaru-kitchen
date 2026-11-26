@@ -25,11 +25,11 @@ description: >-
 
 ---
 
-## Step 2 — Execute Pass 1: Domain Engine, Data & Unit Tests (`[BE]`)
+## Step 2 — Execute Pass 1: Domain Engine, Data & Red-First Unit Tests (`[BE]`)
 
 1. Mark Pass 1 tasks (`1.1`..`1.4`) active (`[>]`) in `docs/specs/<NN-feature-slug>/spec.md` (Section 3).
-2. Implement schemas, domain validation, and server handlers strictly inside the feature's assigned `Touches (Isolation Zone)` paths.
-3. Write and run mandatory unit/invariant tests covering `Property 1` (happy path) and `Property 2` (invalid/unauthorized rejection), **plus the 0-Token Mechanical Architecture Linter** (`pnpm tsc --noEmit && pnpm test --run` / `uv run pytest` / `vendor/bin/phpunit`).
+2. **Red-First (`Red → Green`) Invariant Tests:** Write mandatory unit/invariant tests covering `Property 1` (happy path) and `Property 2` (invalid/unauthorized rejection) *before* implementation, and run the test runner once to confirm the new tests fail (`Red`) rather than passing vacuously.
+3. Implement schemas, domain validation, and server handlers strictly inside the feature's assigned `Touches (Isolation Zone)` paths until all unit tests and the **0-Token Mechanical Architecture Linter** pass (`Green`) (`pnpm tsc --noEmit && pnpm test --run` / `uv run pytest` / `vendor/bin/phpunit`). Never edit `architecture.test.*`, linter configs, or weaken pre-existing tests.
 4. Mark Pass 1 `[x]` in `spec.md` and create an atomic checkpoint commit:
    ```bash
    git add <pass-1-touched-files>

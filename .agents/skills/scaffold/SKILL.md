@@ -38,6 +38,8 @@ So AI agents never drift or ignore `.agents/rules/stack-rules.md`, dynamically w
 3. Source files exceeding the **`300`-line Anti-Slop modularity cap**
 4. Compiler/linter escape hatches (`@ts-ignore`, `@ts-expect-error`, `eslint-disable`, `: any`, `# type: ignore`, `# noqa`, `phpcs:ignore`, `@phpstan-ignore`)
 5. Unfinished `TODO:` / `FIXME:` / `HACK:` placeholder comments in shipped code
+6. **Test Integrity (Zero Test Tampering):** Forbid `.skip`, `.only`, `xit`, `@pytest.mark.skip` (without an explicit issue ref), and empty/assertion-less test blocks
+7. **Anti-Slopsquatting & Lockfile Guard:** Fail if dependency manifests (`package.json`, `pyproject.toml`, `composer.json`) add unapproved packages not declared in `docs/foundation/` / `spec.md`, or drift out of sync with their lockfile
 
 ---
 

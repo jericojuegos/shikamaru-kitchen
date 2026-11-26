@@ -51,9 +51,8 @@ Not every feature deserves the same ceremony. Triage every feature in `docs/plan
 
 Never dump a 1,500-line feature in a single unverified turn. Every feature in `docs/specs/<NN-feature-slug>/spec.md` is built across **3 Incremental Passes**:
 
-1. **Pass 1 — Domain Engine, Data & Unit Tests (`[BE]`):**
-   - Build pure domain logic, schemas, and server handlers within the feature's `Touches` isolation zone.
-   - Write and pass mandatory unit/invariant tests (`Property 1` happy path + `Property 2` invalid/unauthorized rejection) and the **0-Token Mechanical Architecture Linter**.
+1. **Pass 1 — Domain Engine, Data & Red-First Unit Tests (`[BE]`):**
+   - Write mandatory unit/invariant tests (`Property 1` happy path + `Property 2` invalid/unauthorized rejection) **Red-First (`Red → Green`)**: run the new test once to confirm it fails (`Red`), then build pure domain logic, schemas, and server handlers within the feature's `Touches` isolation zone until it passes (`Green`) alongside the **0-Token Mechanical Architecture Linter**.
    - Create an atomic Git checkpoint commit (`feat(<feature-slug>): pass 1 domain engine and unit tests`).
 2. **Pass 2 — Core Interactive Experience (`[FE]`):**
    - Implement modular UI components (`<= 250` lines) matching `design-reference/preview.html` and `docs/foundation/design-system.md`.
@@ -66,8 +65,8 @@ Never dump a 1,500-line feature in a single unverified turn. Every feature in `d
 
 ## 4. The Inverse Trust Pyramid & 4-Point Craft Standard
 
-1. **Layer 1 — 0-Token Mechanical Architecture Guardrails (`architecture.test.*`):**
-   - Generated during `/scaffold` and executed in `< 50ms` on every test run. Mechanically blocks cross-feature imports, missing `server-only`/`ABSPATH` guards, files `> 300` lines, `@ts-ignore`/`any` escape hatches, and unfinished `TODO:`/`FIXME:` placeholders.
+1. **Layer 1 — 0-Token Mechanical Architecture Guardrails (`architecture.test.*` + Gate Immutability):**
+   - Generated during `/scaffold` and executed in `< 50ms` on every test run. Mechanically blocks cross-feature imports, missing `server-only`/`ABSPATH` guards, files `> 300` lines, `@ts-ignore`/`any` escape hatches, unfinished `TODO:`/`FIXME:` placeholders, test-tamper skips (`.skip`/`.only`/empty tests), and unapproved dependency/lockfile drift (**Anti-Slopsquatting**). Gate files (`architecture.test.*`, linter configs) and pre-existing tests are immutable during feature passes.
 2. **Layer 2 — Runtime & Visual Browser Evidence ("Test-Before-Notify"):**
    - Never use the human as a first-pass QA tester. Drive the real browser (via Playwright or `flash` Browser QA subagent), verify zero console/network errors, and save proof screenshots to `docs/specs/<NN-feature-slug>/evidence/*.png`.
 3. **Layer 3 — The 4-Point UX & Code Craft Audit (During `/polish`):**

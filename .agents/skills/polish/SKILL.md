@@ -22,7 +22,9 @@ Run the project's deterministic test and architecture suite:
 - **Python / FastAPI:** `uv run ruff check . && uv run pytest` (automatically executes `test_architecture.py`).
 - **PHP / WordPress:** `php -l` across all PHP files + `vendor/bin/phpunit` (automatically executes `ArchitectureTest.php`).
 
-If any compiler error, failing test, or mechanical architecture violation occurs (e.g., file `> 300` lines, cross-feature import, `@ts-ignore`, or leftover `TODO:`), **fix it immediately** before proceeding.
+If any compiler error, failing test, or mechanical architecture violation occurs (e.g., file `> 300` lines, cross-feature import, `@ts-ignore`, `.skip` test tamper, or leftover `TODO:`), **fix it immediately** before proceeding.
+
+- **Gate & Test-Tamper Immutability Check (`git diff`):** Inspect `git diff --name-only` and `git diff` against `main`. Automatically **FAIL** Level 1 if `architecture.test.*`, linter/CI configs, or pre-existing unit tests were weakened/deleted without explicit user approval, or if unapproved packages were added to `package.json` / `pyproject.toml` / `composer.json`.
 
 ---
 
