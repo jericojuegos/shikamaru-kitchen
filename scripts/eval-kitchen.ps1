@@ -87,7 +87,7 @@ if (Test-Path $StackRulesTpl) {
     Assert-Eval "Suite 2" "stack-rules.md.template is ultra-lean (<= 80 lines: $RuleLines)" ($RuleLines -le 80)
 }
 
-foreach ($Tpl in @("spec.md.template", "preview.html.template")) {
+foreach ($Tpl in @("spec.md.template", "preview.html.template", "preview-wp-admin.html.template")) {
     $TplPath = Join-Path $RepoRoot ".agents\skills\prototype\resources\$Tpl"
     Assert-Eval "Suite 2" "prototype resource $Tpl exists" (Test-Path $TplPath)
 }
@@ -107,6 +107,16 @@ Assert-Eval "Suite 3" "preview.html.template includes all 4 interactive UI state
     ($PreviewContent -match "state-loading") -and
     ($PreviewContent -match "state-error")
 )
+$WpPreviewContent = Get-Content (Join-Path $RepoRoot ".agents\skills\prototype\resources\preview-wp-admin.html.template") -Raw
+Assert-Eval "Suite 3" "preview-wp-admin.html.template locks #wpadminbar, 2 plugin slots, and all 4 interactive UI states" (
+    ($WpPreviewContent -match "wpadminbar") -and
+    ($WpPreviewContent -match "plugin-sidebar-slot") -and
+    ($WpPreviewContent -match "plugin-content-slot") -and
+    ($WpPreviewContent -match "state-happy") -and
+    ($WpPreviewContent -match "state-empty") -and
+    ($WpPreviewContent -match "state-loading") -and
+    ($WpPreviewContent -match "state-error")
+)
 
 $DesignContent = Get-Content (Join-Path $RepoRoot ".agents\skills\design\SKILL.md") -Raw
 Assert-Eval "Suite 3" ".agents/skills/design/SKILL.md auto-discovers stack and tailors stack-rules.md (<= 80 lines)" (
@@ -117,10 +127,23 @@ $ScaffoldContent = Get-Content (Join-Path $RepoRoot ".agents\skills\scaffold\SKI
 Assert-Eval "Suite 3" ".agents/skills/scaffold/SKILL.md dynamically generates 0-Token Mechanical Architecture Linter" (
     $ScaffoldContent -match "Dynamically Generate.*0-Token Mechanical Architecture Linter"
 )
+Assert-Eval "Suite 3" "scaffold enforces Rules 6-7 (Test Integrity & Anti-Slopsquatting)" (
+    ($ScaffoldContent -match "Test Integrity") -and ($ScaffoldContent -match "Anti-Slopsquatting")
+)
+
+$CraftContent = Get-Content (Join-Path $RepoRoot ".agents\skills\craft\SKILL.md") -Raw
+Assert-Eval "Suite 3" "craft Pass 1 enforces Red-First invariant tests" (
+    $CraftContent -match "Red-First"
+)
 
 $PolishContent = Get-Content (Join-Path $RepoRoot ".agents\skills\polish\SKILL.md") -Raw
 Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md enforces Mandatory evidence/*.png Hard Gate & 4-Point Craft Audit" (
     ($PolishContent -match "Hard Gate.*Mandatory.*evidence/\*\.png") -and ($PolishContent -match "4-Point UX & Code Craft Audit")
+)
+Assert-Eval "Suite 3" "polish enforces Gate Immutability & 3-viewport DOM overlap critic QA" (
+    ($PolishContent -match "Gate & Test-Tamper Immutability") -and
+    ($PolishContent -match "390.*844") -and
+    ($PolishContent -match "getBoundingClientRect")
 )
 Assert-Eval "Suite 3" ".agents/skills/polish/SKILL.md defaults to Remote PR creation (gh pr create) with optional --local review" (
     ($PolishContent -match "gh pr create") -and ($PolishContent -match "--local")
@@ -159,6 +182,35 @@ try {
         (Test-Path (Join-Path $TempProject ".agents\skills\craft\SKILL.md")) -and
         (Test-Path (Join-Path $TempProject ".agents\skills\polish\SKILL.md"))
     )
+
+    # ==============================================================================
+    # SUITE 5: Layer 4 Behavioral Gate Trap Evals
+    # ==============================================================================
+    Write-Host "`n[Suite 5] Layer 4 Behavioral Gate Trap Evals" -ForegroundColor Yellow
+
+    $FeatureDir = Join-Path $TempProject "src\features\editor"
+    $FeatureTests = Join-Path $FeatureDir "__tests__"
+    New-Item -ItemType Directory -Force -Path $FeatureTests | Out-Null
+
+    $Giant = (1..310 | ForEach-Object { "export const v$_ = $_;" }) -join "`n"
+    Set-Content (Join-Path $FeatureDir "Editor.tsx") $Giant
+    Assert-Eval "Suite 5" "Behavioral Trap 1: > 300-line God-component is detected" ((Get-Content (Join-Path $FeatureDir "Editor.tsx")).Count -gt 300)
+
+    Set-Content (Join-Path $FeatureTests "editor.test.ts") "test.skip('cheated', () => {});"
+    Assert-Eval "Suite 5" "Behavioral Trap 2: .skip test-tamper shortcut is detected" ((Get-Content (Join-Path $FeatureTests "editor.test.ts") -Raw) -match "\b(?:it|test|describe)\.(?:skip|only)\s*\(")
+
+    Set-Content (Join-Path $TempProject "package.json") '{"name":"kitchen-smoke","dependencies":{"slop-pkg":"1.0.0"}}'
+    Assert-Eval "Suite 5" "Behavioral Trap 3: missing lockfile for dependencies is detected" (-not (Test-Path (Join-Path $TempProject "pnpm-lock.yaml")))
+
+    Set-Content (Join-Path $FeatureDir "Editor.tsx") "export const Editor = () => null;"
+    Set-Content (Join-Path $FeatureTests "editor.test.ts") "test('renders', () => { expect(1).toBe(1); });"
+    Set-Content (Join-Path $TempProject "pnpm-lock.yaml") "lockfileVersion: '9.0'"
+    $CleanOk = (
+        ((Get-Content (Join-Path $FeatureDir "Editor.tsx")).Count -le 300) -and
+        -not ((Get-Content (Join-Path $FeatureTests "editor.test.ts") -Raw) -match "\b(?:it|test|describe)\.(?:skip|only)\s*\(") -and
+        (Test-Path (Join-Path $TempProject "pnpm-lock.yaml"))
+    )
+    Assert-Eval "Suite 5" "Control: clean baseline passes all behavioral craft gates" $CleanOk
 } finally {
     if (Test-Path $TempProject) {
         Remove-Item $TempProject -Recurse -Force -ErrorAction SilentlyContinue
