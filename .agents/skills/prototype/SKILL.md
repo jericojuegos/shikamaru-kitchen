@@ -35,7 +35,9 @@ Check the user's request and `docs/planning/roadmap.md`:
 ## Step 3 — Generate the Interactive 4-State UI Prototype (`design-reference/preview.html` + `<agent-embed>`)
 
 For any feature with UI, interactive controls, or user-facing output:
-1. Generate `docs/specs/<NN-feature-slug>/design-reference/preview.html` from [`./resources/preview.html.template`](./resources/preview.html.template) using the exact tokens from `docs/foundation/design-system.md`.
+1. Generate `docs/specs/<NN-feature-slug>/design-reference/preview.html` using the exact tokens from `docs/foundation/design-system.md`:
+   - **Standard Web / App Screens:** Start from [`./resources/preview.html.template`](./resources/preview.html.template).
+   - **WordPress `wp-admin` Plugin Screens:** Start from [`./resources/preview-wp-admin.html.template`](./resources/preview-wp-admin.html.template) — keep `#wpadminbar` and `#adminmenuwrap` strictly locked, modify only `#plugin-sidebar-slot` and `#plugin-content-slot`, and match the repo's WP UI layer (Classic `.wrap` + `.wp-list-table`, 2026 WP Design System `--wpds-*` + `@wordpress/dataviews`, or `@tangible/ui` `.tui-interface` + `--tui-*`).
 2. **Mandatory 4-State Switcher in `preview.html`:**
    Every prototype MUST include a top switcher bar allowing the user to click between **4 live states**:
    - **`✨ Happy State`** (Realistic domain data — zero `"Lorem ipsum"` or `"Item 1"`)

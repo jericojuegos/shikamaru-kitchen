@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WP Admin 4-State Prototype — [Feature Title]</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      /* 2026 WordPress Design System (--wpds-*) + Classic WP + Tangible (--tui-*) Tokens */
+      --wp-admin-bar-bg: #1d2327;
+      --wp-sidebar-bg: #1d2327;
+      --wp-submenu-bg: #2c3338;
+      --wpds-color-bg-canvas: #f0f0f1;
+      --wpds-color-bg-surface: #ffffff;
+      --wpds-color-fg-primary: #1d2327;
+      --wpds-color-fg-muted: #50575e;
+      --wpds-color-accent: #2271b1;
+      --wpds-color-accent-hover: #135e96;
+      --wpds-color-border: #c3c4c7;
+      --wpds-color-border-subtle: #dcdcde;
+      --wpds-radius-sm: 3px;
+      --wpds-radius-md: 6px;
+      --tui-color-accent: #2271b1;
+      --tui-surface-bg: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      background: var(--wpds-color-bg-canvas);
+      color: #3c434a;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    /* Prototype Control Strip (Outside WP Chrome) */
+    .proto-switcher {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .proto-tab {
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+    .proto-tab-active {
+      background: #2271b1;
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+    /* LOCKED WP-ADMIN CHROME */
+    #wpadminbar {
+      height: 32px;
+      background: var(--wp-admin-bar-bg);
+      color: #f0f0f1;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      user-select: none;
+    }
+    .wp-shell { display: flex; min-height: calc(100vh - 69px); }
+    #adminmenuwrap {
+      width: 160px;
+      flex-shrink: 0;
+      background: var(--wp-sidebar-bg);
+      color: #f0f0f1;
+      padding-top: 6px;
+      user-select: none;
+    }
+    .wp-menu-item { padding: 7px 12px; color: #c3c4c7; font-size: 13px; }
+    .wp-menu-sep { border-top: 1px solid #2c3338; margin: 6px 0; }
+    .wp-menu-active { background: var(--wpds-color-accent); color: #ffffff; font-weight: 600; padding: 7px 12px; }
+    .wp-submenu { background: var(--wp-submenu-bg); padding: 5px 0; font-size: 12px; }
+    .wp-submenu-item { padding: 5px 12px; color: #c3c4c7; cursor: pointer; }
+    .wp-submenu-current { color: #ffffff; font-weight: 600; }
+    /* INNER PLUGIN WORKSPACE (.wrap / DataViews / .tui-interface) */
+    .wrap { flex: 1; padding: 20px 24px; max-width: 1200px; }
+    .wp-heading-inline { font-size: 23px; font-weight: 400; color: var(--wpds-color-fg-primary); margin: 0 8px 0 0; display: inline-block; vertical-align: middle; }
+    .page-title-action, .button-secondary {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #f6f7f7; border: 1px solid var(--wpds-color-accent); color: var(--wpds-color-accent);
+      padding: 4px 10px; font-size: 13px; border-radius: var(--wpds-radius-sm); cursor: pointer; text-decoration: none;
+    }
+    .button-primary {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--wpds-color-accent); border: 1px solid var(--wpds-color-accent); color: #ffffff;
+      padding: 4px 12px; font-size: 13px; border-radius: var(--wpds-radius-sm); cursor: pointer;
+    }
+    .button-primary:hover { background: var(--wpds-color-accent-hover); }
+    .nav-tab-wrapper { border-bottom: 1px solid var(--wpds-color-border); margin: 14px 0 16px; display: flex; gap: 6px; padding-top: 4px; }
+    .nav-tab {
+      border: 1px solid var(--wpds-color-border); border-bottom: none;
+      background: #dcdcde; color: #50575e; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .nav-tab-active { background: var(--wpds-color-bg-canvas); color: var(--wpds-color-fg-primary); margin-bottom: -1px; border-bottom: 1px solid var(--wpds-color-bg-canvas); }
+    .wp-card, .wpds-surface {
+      background: var(--wpds-color-bg-surface);
+      border: 1px solid var(--wpds-color-border);
+      border-radius: var(--wpds-radius-md);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+      padding: 16px 20px;
+    }
+    .wp-list-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--wpds-color-border); }
+    .wp-list-table th { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--wpds-color-border); color: var(--wpds-color-fg-primary); font-weight: 600; }
+    .wp-list-table td { padding: 9px 10px; border-bottom: 1px solid #f0f0f1; }
+    .wp-list-table tr:nth-child(even) td { background: #f6f7f7; }
+    .notice-error { background: #fff; border: 1px solid var(--wpds-color-border); border-left: 4px solid #d63638; padding: 10px 14px; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <!-- PROTOTYPE 4-STATE SWITCHER (Keep above #wpadminbar; never ship in PHP/React) -->
+  <div class="proto-switcher" role="tablist" aria-label="Prototype UI States">
+    <div>
+      <strong>WP Admin Prototype:</strong> [Feature Title] (<code style="color:#93c5fd">[NN-feature-slug]</code>)
+      <span style="color:#94a3b8; margin-left:6px;">Mode: [Classic .wrap | @wordpress/dataviews (--wpds-*) | @tangible/ui (.tui-interface)]</span>
+    </div>
+    <div style="display:flex; gap:6px;">
+      <button onclick="setState('happy')" id="tab-happy" class="proto-tab proto-tab-active">Happy</button>
+      <button onclick="setState('empty')" id="tab-empty" class="proto-tab">Empty</button>
+      <button onclick="setState('loading')" id="tab-loading" class="proto-tab">Skeleton</button>
+      <button onclick="setState('error')" id="tab-error" class="proto-tab">Error</button>
+    </div>
+  </div>
+
+  <!-- LOCKED: TOP WP ADMIN BAR (DO NOT MODIFY OR RESTYLE) -->
+  <header id="wpadminbar">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <strong>W</strong>
+      <span>WP Local Site</span>
+      <span>&#8635; 1</span>
+      <span>Ctrl+K</span>
+      <span>+ New</span>
+    </div>
+    <div>Howdy, admin</div>
+  </header>
+
+  <div class="wp-shell">
+    <!-- LOCKED: LEFT WP SIDEBAR (ONLY EDIT #plugin-sidebar-slot BELOW) -->
+    <aside id="adminmenuwrap">
+      <div class="wp-menu-item">Dashboard</div>
+      <div class="wp-menu-item">Posts</div>
+      <div class="wp-menu-item">Media</div>
+      <div class="wp-menu-item">Pages</div>
+      <div class="wp-menu-sep"></div>
+      <div class="wp-menu-item">Appearance</div>
+      <div class="wp-menu-item">Plugins</div>
+      <div class="wp-menu-item">Users</div>
+      <div class="wp-menu-item">Tools</div>
+      <div class="wp-menu-item">Settings</div>
+      <div class="wp-menu-sep"></div>
+
+      <!-- SLOT 1: PLUGIN NAVIGATION (AI MODIFIES ONLY THIS MENU BLOCK) -->
+      <div id="plugin-sidebar-slot">
+        <div class="wp-menu-active">[Plugin Name]</div>
+        <div class="wp-submenu">
+          <div class="wp-submenu-item wp-submenu-current">[Active Submenu]</div>
+          <div class="wp-submenu-item">[Settings]</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- SLOT 2: MAIN PLUGIN WORKSPACE (AI INJECTS 4 STATES INSIDE .wrap) -->
+    <main class="wrap tui-interface" id="plugin-content-slot">
+      <div>
+        <h1 class="wp-heading-inline">[Plugin Screen Heading]</h1>
+        <button class="page-title-action" onclick="setState('happy')">[Primary Action]</button>
+      </div>
+
+      <nav class="nav-tab-wrapper" aria-label="Secondary menu">
+        <span class="nav-tab nav-tab-active">[Primary View]</span>
+        <span class="nav-tab">[Settings / Logs]</span>
+      </nav>
+
+      <!-- 1. Happy State (Realistic WP / DataViews / Tangible Data) -->
+      <section id="state-happy">
+        <div class="wp-card" style="margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+          <input type="search" placeholder="Filter items..." style="padding:4px 8px; border:1px solid #8c8f94; border-radius:3px; width:240px;" />
+          <div style="display:flex; gap:8px;">
+            <button class="button-secondary">Export</button>
+            <button class="button-primary">Save Changes</button>
+          </div>
+        </div>
+        <table class="wp-list-table">
+          <thead>
+            <tr>
+              <th>[Column 1]</th>
+              <th>[Status]</th>
+              <th>[Updated]</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>[Realistic Domain Record 1]</strong></td>
+              <td>Active</td>
+              <td>2 mins ago</td>
+              <td><a href="#" style="color:#2271b1;">Configure</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 2. Empathetic Empty State -->
+      <section id="state-empty" class="hidden">
+        <div class="wp-card" style="text-align:center; padding:36px 20px;">
+          <h2 style="margin:0 0 6px; font-size:16px; color:#1d2327;">No [items] configured yet</h2>
+          <p style="margin:0 auto 14px; max-width:420px; color:#50575e;">Create your first [item] to start syncing records automatically—nothing is modified until you activate it.</p>
+          <button class="button-primary" onclick="setState('happy')">Create First [Item]</button>
+        </div>
+      </section>
+
+      <!-- 3. Zero-CLS Loading Skeleton State -->
+      <section id="state-loading" class="hidden">
+        <div class="wp-card">
+          <div style="height:14px; width:35%; background:#e2e8f0; border-radius:3px; margin-bottom:12px;"></div>
+          <div style="height:34px; width:100%; background:#f1f5f9; border-radius:3px; margin-bottom:8px;"></div>
+          <div style="height:34px; width:100%; background:#f1f5f9; border-radius:3px;"></div>
+        </div>
+      </section>
+
+      <!-- 4. Native WP Error Recovery Notice State -->
+      <section id="state-error" class="hidden">
+        <div class="notice-error" role="alert">
+          <p style="margin:0 0 4px; font-weight:600; color:#1d2327;">Could not save settings (REST nonce or permission check failed)</p>
+          <p style="margin:0; color:#50575e;">Your unsaved field values are preserved below. Refresh your session or click Retry Save.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function setState(active) {
+      ['happy', 'empty', 'loading', 'error'].forEach(function (s) {
+        document.getElementById('state-' + s).classList.toggle('hidden', s !== active);
+        var btn = document.getElementById('tab-' + s);
+        btn.className = s === active ? 'proto-tab proto-tab-active' : 'proto-tab';
+      });
+    }
+  </script>
+</body>
+</html>
