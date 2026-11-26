@@ -70,6 +70,10 @@ foreach ($Skill in @("shika", "design", "scaffold", "prototype", "craft", "polis
         )
     }
 }
+$ShikaKitchenContent = Get-Content (Join-Path $RepoRoot ".agents\skills\shika\SKILL.md") -Raw
+Assert-Eval "Suite 1" ".agents/skills/shika/SKILL.md enforces Brain Doctor .agents/ & docs/ hygiene audit" (
+    ($ShikaKitchenContent -match "Brain Doctor Hygiene Audit") -and ($ShikaKitchenContent -match "NEVER Auto-Delete")
+)
 
 # ==============================================================================
 # SUITE 2: Universal Stack-Agnostic Templates (<= 80-Line & <= 100-Line Caps)

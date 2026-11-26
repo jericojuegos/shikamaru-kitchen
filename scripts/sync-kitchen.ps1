@@ -12,7 +12,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$ProjectPath,
 
-    [switch]$LocalExclude
+    [switch]$LocalExclude,
+
+    [switch]$Clean
 )
 
 $ErrorActionPreference = "Stop"
@@ -34,6 +36,16 @@ Write-Host "   Target Project : $TargetRoot"
 $AgentsDir = Join-Path $TargetRoot ".agents"
 $DocsDir   = Join-Path $TargetRoot "docs"
 
+$PreservedStackRules = $null
+$ExistingStackRules  = Join-Path $AgentsDir "rules\stack-rules.md"
+if ($Clean -and (Test-Path $AgentsDir)) {
+    if (Test-Path $ExistingStackRules) {
+        $PreservedStackRules = [System.IO.File]::ReadAllText($ExistingStackRules, [System.Text.Encoding]::UTF8)
+    }
+    Write-Host "[CLEAN] Resetting .agents/ to canonical Kitchen layout (preserving stack-rules.md)..." -ForegroundColor Yellow
+    Remove-Item $AgentsDir -Recurse -Force -ErrorAction SilentlyContinue
+}
+
 New-Item -ItemType Directory -Force -Path `
     (Join-Path $AgentsDir "rules"), `
     (Join-Path $AgentsDir "skills"), `
@@ -51,7 +63,9 @@ if (Test-Path (Join-Path $CoreDir "scripts\*")) {
 
 # 2. Initialize starter .agents/rules/stack-rules.md (if missing — /design tailors it to <= 80 lines for any stack)
 $StackRulesMd = Join-Path $AgentsDir "rules\stack-rules.md"
-if (-not (Test-Path $StackRulesMd)) {
+if ($null -ne $PreservedStackRules) {
+    [System.IO.File]::WriteAllText($StackRulesMd, $PreservedStackRules, [System.Text.Encoding]::UTF8)
+} elseif (-not (Test-Path $StackRulesMd)) {
     Copy-Item (Join-Path $CoreDir "templates\stack-rules.md.template") $StackRulesMd -Force
     Write-Host "[OK] Created starter .agents/rules/stack-rules.md (<= 80 lines)" -ForegroundColor Green
 }
