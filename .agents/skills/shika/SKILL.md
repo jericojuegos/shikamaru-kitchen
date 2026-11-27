@@ -29,8 +29,8 @@ description: >-
    - **`.agents/` Strict Check:** Canonical Kitchen subfolders are **only** `rules/`, `skills/`, and `scripts/` (plus `templates/` only inside the Master Kitchen repo itself). Flag `⚠️ .agents/ Drift` if:
      - Legacy root `.agent/` exists, or `.agents/{workflows,roles,knowledge,planning,specs}` exist
      - Multi-engine collision: `execution-protocol.md` or `factory-protocol.md` exists alongside `kitchen-protocol.md`
-     - Foreign skills exist in `.agents/skills/` outside Kitchen (`shika`, `design`, `scaffold`, `prototype`, `craft`, `polish`)
-   - **`docs/` Safe Check (Warn & Confirm Only — NEVER Auto-Delete):** Canonical Brain entries are `INDEX.md`, `foundation/`, `planning/`, `specs/` *(plus optional `audits/`)*. Flag `⚠️ docs/ Hygiene Warning` if legacy paths (`docs/knowledge/`, `docs/foundation/spec.md`) or unexpected folders/files exist in `docs/`. Never delete `docs/` files without explicit user confirmation (offer **Migrate**, **Keep/Ignore**, or **Remove**).
+     - Foreign skills exist in `.agents/skills/` outside Kitchen (`shika`, `intake`, `design`, `scaffold`, `prototype`, `craft`, `polish`)
+   - **`docs/` Safe Check (Warn & Confirm Only — NEVER Auto-Delete):** Canonical Brain entries are `INDEX.md`, `foundation/`, `planning/`, `specs/`, `design-reference/` *(plus optional `audits/`)*. Flag `⚠️ docs/ Hygiene Warning` if legacy paths (`docs/knowledge/`, `docs/foundation/spec.md`) or unexpected folders/files exist in `docs/`. Never delete `docs/` files without explicit user confirmation (offer **Migrate**, **Keep/Ignore**, or **Remove**).
 
 ---
 
@@ -38,6 +38,7 @@ description: >-
 
 | Detected State | Exact Next Command | Why |
 | :--- | :--- | :--- |
+| **Files in `docs/design-reference/` (or `docs/foundation/design-reference/`) + missing `design-system.md`** | **`/intake`** | Extracts visual tokens into `docs/foundation/design-system.md` & syncs `roadmap.md`. |
 | **No `roadmap.md` or `design-system.md`** | **`/design`** | Auto-detects/selects stack, locks PRD, Anti-Slop Design System, and roadmap. |
 | **`00-scaffold` is `[ ]`** | **`/scaffold`** | Runs Phase 0 *Mise en Place* + 0-Token Mechanical Architecture Linter. |
 | **Next `[ ]` `SIGNATURE CRAFT` feature missing `preview.html`** | **`/prototype <NN-feature-slug>`** | Builds interactive 4-state UI prototype before writing production code. |

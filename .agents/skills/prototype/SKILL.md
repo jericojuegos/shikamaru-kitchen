@@ -28,7 +28,7 @@ Check the user's request and `docs/planning/roadmap.md`:
 ## Step 2 — Read Foundation & Design System
 
 1. Read `AGENTS.md`, `docs/foundation/architecture.md`, and `docs/foundation/design-system.md` (especially the **Anti-Slop Craft Manifesto** and color/typography tokens).
-2. Inspect `docs/specs/<NN-feature-slug>/design-reference/` if the user already dropped Figma/reference screenshots (`*.png` / `*.jpg`).
+2. Inspect `docs/design-reference/`, `docs/foundation/design-reference/`, and `docs/specs/<NN-feature-slug>/design-reference/` if the user already dropped Figma/reference screenshots (`*.png` / `*.jpg`).
 
 ---
 
