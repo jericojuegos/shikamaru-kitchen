@@ -12,10 +12,10 @@ Most AI coding workflows fall into two traps:
 2. **The Manual Artisan Bottleneck:** Hand-coding every boilerplate CRUD route, migration, and test yourself, moving too slowly to iterate on what actually matters.
 
 **`shikamaru-kitchen`** solves both by modeling software engineering after a **3-Michelin-Star Kitchen**—using real, production-grade software engineering commands:
-- **Automated *Mise en Place* (`/scaffold`):** AI automates 100% of the repetitive drudgery (base project setup, design tokens, CI, and a dynamically generated **0-Token Mechanical Architecture Linter**) so your codebase is spotless before feature work begins.
-- **Interactive 4-State Prototype First (`/prototype`):** You never build a 1,500-line feature blindly from a static text spec. `/prototype` generates a playable HTML/UI prototype (`design-reference/preview.html` + inline `<agent-embed>`) showing `✨ Happy`, `🌱 Empty`, `⏳ Zero-CLS Skeleton`, and `🛟 Error Recovery` states in under 60 seconds so you can *feel* and tweak the UX before locking `docs/specs/<NN-feature>/spec.md`.
-- **3-Pass Guided Implementation (`/craft`):** Features are built in 3 incremental, verifiable **Passes** (Pass 1: Domain & Unit Tests → Pass 2: Core Interactive UX → Pass 3: Micro-Interactions & Keyboard Ergonomics).
-- **4-Point UX & Code Craft Audit (`/polish`):** Every feature must pass **Mechanical Safety** (0-token mechanical architecture linter, strict types, unit/E2E tests) **AND** the **4-Point UX & Code Craft Audit** (micro-states/zero CLS, empathetic copy, keyboard flow, `< 300-line` idiomatic components) with real browser evidence (`evidence/*.png`) before shipping.
+- **Automated *Mise en Place* (`/scaffold`):** AI automates 100% of the repetitive drudgery (base project setup, Zero-Config In-App Demo & Seed Mode, design tokens, CI, and a dynamically generated **0-Token Mechanical Architecture Linter** + Layer 2 test-tamper/anti-slopsquatting gates) so your codebase is spotless before feature work begins.
+- **Interactive 4-State Prototype First (`/prototype`):** You never build a 1,500-line feature blindly from a static text spec. `/prototype` generates a playable HTML/UI prototype (`design-reference/preview.html` + locked `wp-admin` variant + inline `<agent-embed>`) showing `✨ Happy`, `🌱 Empty`, `⏳ Zero-CLS Skeleton`, and `🛟 Error Recovery` states in under 60 seconds so you can *feel* and tweak the UX before locking `docs/specs/<NN-feature>/spec.md`.
+- **3-Pass Guided Implementation (`/craft`):** Features are built in 3 incremental, verifiable **Passes** (Pass 1: Red-First Domain & Unit Tests → Pass 2: Core Interactive UX → Pass 3: Micro-Interactions & Keyboard Ergonomics).
+- **4-Point UX & Code Craft Audit (`/polish`):** Every feature must pass **Mechanical Safety** (0-token mechanical architecture linter, strict types, unit/E2E tests, 3-viewport DOM overlap + Map-Reduce `flash` critic QA) **AND** the **4-Point UX & Code Craft Audit** (micro-states/zero CLS, empathetic copy, keyboard flow, `< 300-line` idiomatic components) with real browser evidence (`evidence/*.png`) before shipping.
 
 ---
 
@@ -31,11 +31,12 @@ flowchart LR
 
 | Command | Stage | What Happens | Output Artifacts |
 | :--- | :--- | :--- | :--- |
+| **`/shika`** | **0. Project GPS & Brain Doctor** | Inspects repo state, audits `.agents/` + `docs/` hygiene (with `-Clean` reset), and tells you the exact next command. | Compact `/shika` GPS card & next command |
 | **`/design`** | **1. Vision, Design System & Architecture** | 4-round alignment to define **Signature Craft Features** (`✨ SIGNATURE CRAFT`) vs. **Plumbing** (`⚙️ PLUMBING`), aesthetic direction, the **Anti-Slop Craft Manifesto**, and auto-tailored `stack-rules.md` (`<= 80` lines). | `AGENTS.md`, `docs/foundation/{prd,architecture,design-system}.md`, `docs/planning/roadmap.md` |
-| **`/scaffold`** | **2. Automated *Mise en Place*** | Scaffolds the base repo, configures design tokens & CI, and dynamically generates the **0-Token Mechanical Architecture Linter** (`architecture.test.*`). | `docs/specs/00-scaffold/spec.md`, compiling base app + `< 50ms` mechanical boundary tests |
-| **`/prototype`** | **3. Interactive 4-State UI Prototype & Spec** | Generates an interactive 4-state HTML/UI prototype (`design-reference/preview.html` + inline `<agent-embed>`) *before* writing production code. Locks 1 unified `spec.md` (`~72` lines) once approved. | `docs/specs/<NN-feature-slug>/spec.md` + `design-reference/preview.html` |
-| **`/craft`** | **4. 3-Pass Guided Implementation** | Implements the feature across 3 structured Passes (Pass 1: Domain Engine & Unit Tests → Pass 2: Core Interactive UI → Pass 3: Micro-Interactions & Keyboard Ergonomics) with atomic git checkpoints. | Verified production code + unit/invariant tests |
-| **`/polish`** | **5. 4-Point Craft Audit & Ship** | Runs Mechanical Verification + **4-Point UX & Code Craft Audit** + real browser proof (`evidence/*.png`), awaits human sign-off on Signature Craft features, and ships. | `docs/specs/<NN-feature-slug>/evidence/*.png`, updated `roadmap.md`, clean Git commit/PR |
+| **`/scaffold`** | **2. Automated *Mise en Place*** | Scaffolds the base repo with Zero-Config In-App Demo & Seed Mode, configures design tokens & CI, and generates the **0-Token Mechanical Architecture Linter** (`architecture.test.*`). | `docs/specs/00-scaffold/spec.md`, compiling base app + `< 50ms` mechanical boundary tests |
+| **`/prototype`** | **3. Interactive 4-State UI Prototype & Spec** | Generates an interactive 4-state HTML/UI prototype (`design-reference/preview.html` + locked `wp-admin` template + inline `<agent-embed>`) *before* writing production code. Locks 1 unified `spec.md` (`~72` lines) once approved. | `docs/specs/<NN-feature-slug>/spec.md` + `design-reference/preview.html` |
+| **`/craft`** | **4. 3-Pass Guided Implementation** | Implements the feature across 3 structured Passes (Pass 1: Red-First Domain Engine & Unit Tests → Pass 2: Core Interactive UI → Pass 3: Micro-Interactions & Keyboard Ergonomics) with atomic git checkpoints. | Verified production code + unit/invariant tests |
+| **`/polish`** | **5. 4-Point Craft Audit & Ship** | Runs Mechanical Verification + 3-viewport DOM overlap & Map-Reduce `flash` critic QA + **4-Point UX & Code Craft Audit** + real browser proof (`evidence/*.png`), awaits human sign-off on Signature Craft features, and ships. | `docs/specs/<NN-feature-slug>/evidence/*.png`, updated `roadmap.md`, clean Git commit/PR |
 
 ---
 
@@ -44,14 +45,16 @@ flowchart LR
 | Path | Purpose |
 | :--- | :--- |
 | [`.agents/rules/kitchen-protocol.md`](.agents/rules/kitchen-protocol.md) | Always-on Craft Guardrails: *Mise en Place*, Interactive Prototype First, 3-Pass Build Loop, 4-Point Craft Audit, 3-Strike Rule |
+| [`.agents/skills/shika/`](.agents/skills/shika/SKILL.md) | **`/shika`** — Project GPS, Step-by-Step Router & Brain Doctor Hygiene Audit |
 | [`.agents/skills/design/`](.agents/skills/design/SKILL.md) | **`/design`** — Product Vision, Signature Craft vs. Plumbing triage, Design System & auto-tailored `stack-rules.md` (`<= 80` lines) |
-| [`.agents/skills/scaffold/`](.agents/skills/scaffold/SKILL.md) | **`/scaffold`** — Automated *Mise en Place*, base scaffolding, and Dynamic 0-Token Mechanical Architecture Linter Generator |
-| [`.agents/skills/prototype/`](.agents/skills/prototype/SKILL.md) | **`/prototype`** — Interactive 4-State UI Prototyper (`preview.html`) & Unified EARS `spec.md` |
-| [`.agents/skills/craft/`](.agents/skills/craft/SKILL.md) | **`/craft`** — 3-Pass guided implementation engine |
-| [`.agents/skills/polish/`](.agents/skills/polish/SKILL.md) | **`/polish`** — Mechanical Verification + 4-Point UX & Code Craft Audit + Browser Evidence & Ship |
+| [`.agents/skills/scaffold/`](.agents/skills/scaffold/SKILL.md) | **`/scaffold`** — Automated *Mise en Place*, Zero-Config Demo/Seed Mode, and Dynamic 0-Token Mechanical Architecture Linter Generator |
+| [`.agents/skills/prototype/`](.agents/skills/prototype/SKILL.md) | **`/prototype`** — Interactive 4-State UI Prototyper (`preview.html` + locked `wp-admin` variant) & Unified EARS `spec.md` |
+| [`.agents/skills/craft/`](.agents/skills/craft/SKILL.md) | **`/craft`** — 3-Pass guided implementation engine with Red-First & Layer 2 gates |
+| [`.agents/skills/polish/`](.agents/skills/polish/SKILL.md) | **`/polish`** — Mechanical Verification, 3-Viewport Overlap & Map-Reduce `flash` Critic QA, 4-Point UX/Code Craft Audit & Ship |
+| [`.agents/scripts/`](.agents/scripts/) | Runtime Utilities (`office-dashboard.mjs` 2.5D Isometric AI Office & `remote-notify.mjs` 2-Way Mobile Reply Bridge) |
 | [`.agents/templates/`](.agents/templates/) | Universal Stack-Agnostic Starter Templates (`AGENTS.md.template`, `stack-rules.md.template`, `CLAUDE.md.template`) |
-| [`scripts/sync-kitchen.ps1`](scripts/sync-kitchen.ps1) | Syncs the universal `shikamaru-kitchen` `.agents/` engine into any target project (`scripts/sync-kitchen.sh` for Bash) |
-| [`scripts/eval-kitchen.ps1`](scripts/eval-kitchen.ps1) | Automated 4-Suite Universal Software Craft Integrity Eval (`scripts/eval-kitchen.sh`) |
+| [`scripts/sync-kitchen.ps1`](scripts/sync-kitchen.ps1) | Syncs the universal `shikamaru-kitchen` `.agents/` engine into any target project (supports `-Clean`; `scripts/sync-kitchen.sh` for Bash) |
+| [`scripts/eval-kitchen.ps1`](scripts/eval-kitchen.ps1) | Automated Software Craft Integrity & Layer 4 Behavioral Gate Trap / Responsive QA Eval (`scripts/eval-kitchen.sh`) |
 
 ---
 
@@ -59,15 +62,16 @@ flowchart LR
 
 ### 1. Sync the Universal Engine into Any Target Project (Any Tech Stack)
 ```powershell
-# PowerShell (Windows)
+# PowerShell (Windows — add -Clean to reset drifting .agents/ files)
 .\scripts\sync-kitchen.ps1 -ProjectPath "..\my-crafted-app"
 ```
 ```bash
-# Bash (macOS / Linux)
+# Bash (macOS / Linux — add --clean as needed)
 bash scripts/sync-kitchen.sh ../my-crafted-app
 ```
 
 ### 2. Run the 5-Stage Software Craft Workflow in Your AI Coding Agent (Antigravity, Claude Code, Codex, Cursor, OpenCode)
+0. **`/shika`** — Check repo status, audit `.agents/` + `docs/` hygiene, and get your exact next command.
 1. **`/design`** — Define your product vision, Signature Craft features, Design System, and `stack-rules.md`.
 2. **`/scaffold`** — Automate *mise en place* and generate your 0-token Mechanical Architecture Linter.
 3. **`/prototype 01-signature-feature`** — Test-drive the interactive 4-state UI prototype first and lock `spec.md`.
