@@ -35,11 +35,13 @@ Extract concrete craft specifications from the ingested designs and write (or me
 
 ---
 
-## Step 3 — Sync `docs/planning/roadmap.md` & Organize Feature References
+## Step 3 — Brownfield Design-vs-Code Gap Audit & Sync `docs/planning/roadmap.md`
 
-1. **Update `docs/planning/roadmap.md`:**
-   - Map each distinct screen/workflow from the Figma/PRD into `[ ]` rows classified as **`✨ SIGNATURE CRAFT`** or **`⚙️ PLUMBING`** with `Wave`, `Depends On`, and `Touches`, preserving all existing `[x]` and `[>]` rows.
-2. **Link Feature References (Non-Destructive):**
+1. **Design-vs-Code Gap Audit (Automatic if source code already exists):**
+   - Inspect existing routes, views, and components in the repo and classify every screen/section in `docs/design-reference/` as **`✅ Already Implemented`** (keep `[x]`), **`🟡 Partial / Visual Delta`** (queue targeted delta for `/prototype` Mode B), or **`❌ Missing`** (add `[ ]`).
+2. **Update `docs/planning/roadmap.md`:**
+   - Map **`🟡 Partial / Visual Delta`** and **`❌ Missing`** items into rows classified as **`✨ SIGNATURE CRAFT`** or **`⚙️ PLUMBING`** with `Wave`, `Depends On`, and `Touches`, preserving all existing `[x]` and `[>]` rows.
+3. **Link Feature References (Non-Destructive):**
    - Link or copy feature-specific screenshots into `docs/specs/<NN-feature-slug>/design-reference/` without deleting originals in `docs/design-reference/`.
 
 ---
@@ -52,7 +54,12 @@ Do **not** write application code during `/intake`. End with this concise summar
 ## 🎨 Intake Complete: [Project Name]
 - **Inputs Ingested:** `[list files in docs/design-reference/ or Figma URL / PRD]`
 - **Design System:** `docs/foundation/design-system.md` (`Created` | `Updated`)
-- **Roadmap Synced:** `[N] new/updated features in docs/planning/roadmap.md`
+- **Gap Audit:** `[A] ✅ Implemented · [B] 🟡 Partial/Delta · [C] ❌ Missing`
+- **Roadmap Synced:** `[N] new/delta features in docs/planning/roadmap.md`
+
+| Design Screen / Section | Codebase Status | Exact Gap / Delta | Roadmap Action |
+| :--- | :--- | :--- | :--- |
+| `[Screen Name]` | `✅ Implemented \| 🟡 Partial \| ❌ Missing` | `[Matched file or missing UI/logic]` | `[Keep [x] \| Delta [>] \| Add [ ]]` |
 
 👉 **Next Command:** `/prototype <NN-first-feature-slug>`
 *(Reply `go` to generate the interactive 4-state prototype & unified spec from your Figma designs now.)*
